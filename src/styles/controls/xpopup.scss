@@ -1,0 +1,110 @@
+/* xPopup */
+.xpopup {
+  @include transition(opacity 0.3s $easing);
+
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(#000, 0.8);
+  overflow: hidden scroll;
+  display: flex;
+  align-items: center;
+
+  &:not(.is-active) {
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+  }
+
+  &.is-top {
+    z-index: 10000;
+  }
+}
+
+.xpopup__dialog {
+  @include transition(all 0.3s $easing);
+
+  padding: 30px;
+  width: 100%;
+  background-color: #fff;
+  max-width: 900px;
+  margin: auto;
+  position: relative;
+  box-shadow: 0 2px 4px -1px rgba(#000, 0.14), 0 4px 5px 0 rgba(#000, 0.098), 0 1px 10px 0 rgba(#000, 0.084);
+
+  .xpopup--form & {
+    max-width: 500px;
+  }
+
+  .xpopup--transparent & {
+    background-color: rgba(#000, 0.1);
+    box-shadow: none;
+    color: #fff;
+  }
+
+  .xpopup:not(.is-active) & {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  @include media("<tablet") {
+    padding: 30px 15px;
+  }
+}
+
+.xpopup__header {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.xpopup__title {
+  font: $title-font;
+  font-size: 22px;
+  align-self: flex-start;
+}
+
+.xpopup__close {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  margin-left: auto;
+  color: currentColor;
+
+  &::before,
+  &::after {
+    @include absolute-block(22px, 3px);
+
+    left: 50%;
+    top: 50%;
+    background-color: currentColor;
+    border-radius: 2000px;
+  }
+
+  &::before {
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  &::after {
+    bottom: 0;
+    transform: translateX(-50%) rotate(135deg);
+  }
+
+  &:hover,
+  &:focus {
+    outline: none;
+    color: $main-color;
+  }
+}
+
+.xpopup__footer {
+  margin-top: 30px;
+}
+
+.xpopup__footer--right {
+  text-align: right;
+}

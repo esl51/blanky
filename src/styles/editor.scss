@@ -1,0 +1,18 @@
+@import "../../node_modules/include-media/dist/_include-media.scss";
+@import "common/variables";
+@import "common/utils";
+@import "common/fonts";
+@import "common/layout";
+@import "content/text";
+
+body {
+  @extend .text;
+
+  margin: 0;
+  padding: 15px;
+  max-width: $max-width - 30px;
+  height: auto;
+  min-height: 0;
+  display: block;
+  background: #fff;
+}

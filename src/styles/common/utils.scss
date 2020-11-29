@@ -1,0 +1,70 @@
+/* Utils */
+@mixin absolute-block($width: auto, $height: auto) {
+  content: "";
+  position: absolute;
+  display: block;
+  width: $width;
+  height: $height;
+}
+
+@mixin transition($arguments: all 0.3s $easing) {
+  transition: $arguments;
+}
+
+@mixin vmargin($margin: 1em) {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &:not(:first-child) {
+    margin-top: $margin;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: $margin;
+  }
+}
+
+@mixin columns($colcount: 2, $colgap: $col-gutter, $colwidth: auto, $columnRuleColor: transparent, $columnRuleStyle: solid, $columnRuleWidth: 0) {
+  column-width: $colwidth;
+  column-count: $colcount;
+  column-gap: $colgap;
+  column-rule-color: $columnRuleColor;
+  column-rule-style: $columnRuleStyle;
+  column-rule-width: $columnRuleWidth;
+}
+
+@mixin inner {
+  width: 100%;
+  max-width: $max-width;
+  padding-left: $inner-padding;
+  padding-right: $inner-padding;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@function grid-cols($col-count, $base-count: $columns, $add: 0) {
+  @return calc((((100% - (#{$base-count} - 1) * #{$col-gutter}) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * #{$col-gutter}) + #{$add});
+}
+
+@function grid-offset($col-count, $base-count: $columns, $add: $col-gutter) {
+  @return calc((((100% - (#{$base-count} - 1) * #{$col-gutter}) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * #{$col-gutter}) + #{$add});
+}
+
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}

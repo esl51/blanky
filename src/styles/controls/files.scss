@@ -1,0 +1,60 @@
+/* Files */
+.files__item {
+  @include vmargin(5px);
+}
+
+.files__link {
+  display: flex;
+  align-content: stretch;
+  background-color: #fafafa;
+}
+
+.files__title {
+  @include transition;
+
+  flex-grow: 1;
+  padding: 15px 20px;
+
+  a.files__link:hover &,
+  a.files__link:focus & {
+    outline: none;
+    color: $main-color;
+  }
+
+  @include media("<tablet") {
+    font-size: 14px;
+  }
+}
+
+.files__download {
+  @include transition;
+
+  flex: 0 0 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $text-color;
+  font-size: 18px;
+  text-align: center;
+  border-right: 1px solid rgba(#000, 0.05);
+
+  a.files__link:hover &,
+  a.files__link:focus & {
+    background-color: $main-color;
+    color: #fff;
+  }
+
+  @include media("<tablet") {
+    flex-basis: 60px;
+  }
+}
+
+a.files__download {
+  &:hover,
+  &:focus {
+    outline: none;
+    background-color: $main-color;
+    color: #fff;
+  }
+}

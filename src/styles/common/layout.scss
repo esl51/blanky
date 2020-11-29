@@ -1,0 +1,83 @@
+/* Box sizing */
+* {
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Selection */
+::selection {
+  background: $main-color;
+  color: #fff;
+  text-shadow: none;
+}
+
+/* Scrollbar */
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar-track {
+    background-color: rgba(#000, 0.1);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(#000, 0.4);
+  }
+}
+
+/* Html */
+html {
+  background: #f6f6f6;
+  height: 100%;
+  -webkit-tap-highlight-color: rgba(#000, 0);
+  margin: 0;
+  padding: 0;
+}
+
+/* Body */
+body {
+  font: $text-font;
+  color: $text-color;
+  min-height: 100%;
+  min-width: $min-width;
+  max-width: 2560px;
+  margin: 0 auto;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sections */
+.sections {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  max-width: 100%;
+  padding-top: $section-padding;
+  padding-bottom: $section-padding;
+  background-color: #fff;
+}
+
+.section__inner {
+  @include inner;
+}
+
+.section__title {
+  @include vmargin(20px);
+
+  font-size: $title-font-size;
+}
+
+.section__footer--center {
+  text-align: center;
+}

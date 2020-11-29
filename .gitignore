@@ -1,0 +1,10 @@
+/cache
+/node_modules
+/public
+/vendor
+composer.lock
+package-lock.json
+sftp-config.json
+*.sublime-project
+*.sublime-workspace
+.vscode

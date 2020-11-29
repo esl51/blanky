@@ -1,0 +1,43 @@
+/* Cookie */
+.cookie {
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(#000, 0.8);
+  padding: 15px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.cookie__inner {
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include media(">=tablet") {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.cookie__text {
+  a {
+    color: $main-color;
+  }
+}
+
+.cookie__button {
+  padding: 10px 15px;
+  font-size: 12px;
+
+  @include media("<tablet") {
+    margin-top: 15px;
+  }
+
+  @include media(">=tablet") {
+    margin-left: 15px;
+  }
+}

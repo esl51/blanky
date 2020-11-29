@@ -1,0 +1,37 @@
+/* Breadcrumbs */
+.breadcrumbs__item {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+
+.breadcrumbs__corner {
+  font-size: 0.5em;
+  margin-left: 1em;
+  opacity: 0.5;
+
+  .breadcrumbs__item:last-child & {
+    display: none;
+  }
+}
+
+a.breadcrumbs__link {
+  @include transition;
+
+  color: $main-color;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    color: $main-color;
+    text-decoration: underline;
+  }
+
+  .breadcrumbs__item:last-child & {
+    color: $text-color;
+
+    &:hover,
+    &:focus {
+      color: $main-color;
+    }
+  }
+}

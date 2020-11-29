@@ -1,0 +1,8 @@
+User-agent: *
+Disallow:
+# Host: example.ru
+# Sitemap: http://example.ru/sitemap.xml
+
+User-agent: Yandex
+Disallow:
+# Sitemap: http://example.ru/sitemap.xml

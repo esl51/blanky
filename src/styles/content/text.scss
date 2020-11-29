@@ -1,0 +1,245 @@
+/* Text */
+.text {
+  /* Strong */
+  strong {
+    font-weight: $strong-weight;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    padding: 1em 1.5em;
+    margin-left: 0;
+    margin-right: 0;
+    background: rgba(#afafaf, 0.1);
+    border-left: 2px solid $main-color;
+  }
+
+  /* Links */
+  a {
+    text-decoration: none;
+
+    &:not(.button) {
+      color: $main-color;
+    }
+
+    &:not(.button):hover,
+    &:not(.button):focus {
+      outline: none;
+      text-decoration: underline;
+    }
+  }
+
+  /* Images */
+  img {
+    max-width: 100%;
+    display: inline-block;
+  }
+
+  figure {
+    display: table;
+    margin: 1em 0;
+
+    figcaption {
+      display: table-caption;
+      caption-side: bottom;
+      line-height: 1.3em;
+      color: #777;
+      font-size: 13px;
+    }
+  }
+
+  img.right,
+  img.align_right,
+  img.align-right,
+  figure.align_right,
+  figure.align-right {
+    float: right;
+    margin-left: 15px;
+    margin-right: 0;
+    margin-top: 0;
+  }
+
+  img.left,
+  img.align_left,
+  img.align-left,
+  figure.align_left,
+  figure.align-left {
+    float: left;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 15px;
+  }
+
+  img.align_center,
+  img.align-center,
+  figure.align_center,
+  figure.align-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  a > img {
+    padding: 1px;
+    margin: 1px;
+    border: none;
+    outline: 1px solid $main-color;
+  }
+
+  /* Headers */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $title-font-family;
+    font-weight: $title-font-weight;
+    line-height: $title-line-height;
+  }
+
+  h1 {
+    font-size: $title-font-size;
+  }
+
+  h2 {
+    font-size: $title-font-size * 0.73;
+  }
+
+  h3 {
+    font-size: $title-font-size * 0.7;
+  }
+
+  h4 {
+    font-size: $title-font-size * 0.67;
+  }
+
+  h5 {
+    font-size: $title-font-size * 0.63;
+  }
+
+  h6 {
+    font-size: $title-font-size * 0.6;
+  }
+
+  /* Horizontal line */
+  hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+  }
+
+  /* Tables */
+  table {
+    font-size: 0.9em;
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+  }
+
+  td,
+  th {
+    border: 1px solid rgba(#fff, 0.3);
+    padding: 0.8em 2em;
+
+    @include media("<desktop") {
+      padding: 0.4em 1.5em;
+    }
+  }
+
+  tbody td {
+    background: rgba(#000, 0.05);
+  }
+
+  thead td,
+  th {
+    background: $main-color;
+    color: #fff;
+    font-weight: $text-font-weight;
+    border-color: $main-color;
+    border-right-color: rgba(#fff, 0.2);
+    text-align: left;
+
+    &:last-child {
+      border-right-color: $main-color;
+    }
+  }
+
+  .table-container {
+    min-height: 0.01%;
+    overflow-x: auto;
+  }
+
+  /* Lists */
+  ul,
+  ol {
+    padding-left: 1.9em;
+  }
+
+  ol {
+    counter-reset: list;
+  }
+
+  li {
+    list-style-type: none;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+
+    &::before {
+      display: inline-block;
+      line-height: 1;
+      margin-left: -1.5em;
+      width: 1.5em;
+      color: $main-color;
+    }
+  }
+
+  ul li::before {
+    line-height: $text-line-height;
+    font-size: 1.2em;
+    content: "•";
+  }
+
+  ol li::before {
+    margin-left: -2em;
+    width: 2em;
+    content: counter(list) ".";
+    counter-increment: list;
+  }
+
+  li:first-child {
+    margin-top: 0;
+  }
+
+  li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Vertical margin */
+  p,
+  blockquote,
+  ul,
+  ol,
+  table,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  figure,
+  .table-container {
+    @include vmargin(1em);
+  }
+
+  /* Marker */
+  .marker {
+    background-color: lighten($main-color, 30%);
+  }
+}
+
+/* Columns */
+.text--columns-2 {
+  @include media("<desktop") {
+    @include columns(2);
+  }
+}

@@ -1,0 +1,426 @@
+/* xForm */
+$xform-margin: 10px !default;
+
+$xform-input-margin: 5px !default;
+$xform-input-background-color: #f6f6f6 !default;
+$xform-input-border-radius: 3px !default;
+$xform-input-border-width: 1px !default;
+$xform-input-border-color: #d2d2d2 !default;
+$xform-input-border-color-active: #aaa !default;
+$xform-input-placeholder-color: #5e5e5e !default;
+$xform-input-color: $text-color !default;
+$xform-input-font-size: $text-font-size !default;
+$xform-input-line-height: $text-line-height !default;
+$xform-input-padding-vertical: 9px !default;
+$xform-input-padding-horizontal: 18px !default;
+
+$xform-label-color: $text-color !default;
+$xform-label-font-size: $xform-input-font-size !default;
+$xform-label-line-height: $text-line-height !default;
+
+$xform-section-margin: $xform-margin * 2 !default;
+$xform-section-title-margin: $xform-margin * 1.5 !default;
+$xform-section-title-font-size: 20px !default;
+$xform-section-title-color: $title-color !default;
+
+$xform-hint-color: $muted-color !default;
+$xform-hint-font-size: $xform-input-font-size * 0.8 !default;
+
+$xform-error-color: #ed4337 !default;
+
+@keyframes xform-preloader {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.xform {
+  position: relative;
+  width: 100%;
+
+  &::before {
+    @include absolute-block(100%,100%);
+
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background: rgba(#fff, 0.7);
+    display: none;
+  }
+
+  &::after {
+    @include absolute-block(30px,30px);
+
+    bottom: 0;
+    right: 0;
+    animation: xform-preloader 1s infinite linear;
+    margin: 0 auto;
+    z-index: 2;
+    border: 2px solid rgba(#000, 0.2);
+    border-bottom-color: #2a2a2a;
+    border-radius: 50%;
+    display: none;
+  }
+}
+
+.xform__section {
+  @include vmargin($xform-section-margin);
+}
+
+.xform__section-header {
+  @include vmargin($xform-section-title-margin);
+}
+
+.xform__section-title {
+  font: $title-font;
+  font-size: $xform-section-title-font-size;
+  color: $xform-section-title-color;
+}
+
+.xform__row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -$xform-margin / 2;
+}
+
+.xform__col {
+  flex-basis: 100%;
+  max-width: 100%;
+  padding: $xform-margin / 2;
+
+  @include media(">=tablet") {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+}
+
+.xform__field {
+  @include vmargin($xform-margin);
+
+  position: relative;
+}
+
+.xform__label,
+.xform__legend {
+  @include vmargin($xform-input-margin);
+
+  appearance: none;
+  display: block;
+  color: $xform-label-color;
+  font-size: $xform-label-font-size;
+  line-height: $xform-label-line-height;
+
+  .xform__field--required & {
+    &::after {
+      content: ' *';
+      color: $main-color;
+      font-size: 0.8em;
+      vertical-align: text-top;
+    }
+  }
+}
+
+.xform__input {
+  @include vmargin($xform-input-margin);
+
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: $xform-input-padding-vertical $xform-input-padding-horizontal;
+  background-color: $xform-input-background-color;
+  border: $xform-input-border-width solid $xform-input-border-color;
+  border-radius: $xform-input-border-radius;
+  color: $xform-input-color;
+  font-size: $xform-input-font-size;
+  line-height: $xform-input-line-height;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    border-color: $xform-input-border-color-active;
+  }
+
+  &::placeholder {
+    color: $xform-input-placeholder-color;
+  }
+}
+
+.xform__input--text {
+  resize: vertical;
+  min-height: 130px;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+}
+
+.xform__input--select {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" width="10" height="10"><path fill="' + str-replace('#{$xform-input-border-color}', '#', '%23') + '" d="M74.123 56.571L42.694 88 11.266 56.571zM11.266 31.429L42.694 0l31.429 31.429z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 20px top 50%;
+  padding-right: 52px;
+
+  .ie & {
+    padding-right: $xform-input-padding-horizontal;
+    background-image: none;
+  }
+}
+
+.xform__fieldset {
+  margin: 0;
+
+  @include vmargin($xform-margin);
+
+  padding: 0;
+  border: none;
+}
+
+.xform__radio {
+  label {
+    &::before {
+      border-radius: 50%;
+    }
+
+    &::after {
+      @include absolute-block(0.6em,0.6em);
+
+      left: 0.45em;
+      top: 0.45em;
+      background-color: $main-color;
+      border-radius: 50%;
+    }
+  }
+}
+
+.xform__checkbox {
+  label {
+    &::after {
+      @include absolute-block(0.5em,0.9em);
+
+      left: 0.5em;
+      top: 0.2em;
+      transform: rotate(30deg);
+      border: 0.1em solid $main-color;
+      border-left: none;
+      border-top: none;
+    }
+  }
+}
+
+.xform__radio,
+.xform__checkbox {
+  @include vmargin($xform-margin);
+
+  position: relative;
+
+  label {
+    position: relative;
+    display: block;
+    padding-left: 2em;
+    padding-bottom: $xform-input-border-width;
+    font-size: $xform-input-font-size;
+
+    &::before {
+      @include absolute-block(1.5em, 1.5em);
+
+      left: 0;
+      top: 0;
+      border: $xform-input-border-width solid $xform-input-border-color;
+      background-color: $xform-input-background-color;
+    }
+
+    &::after {
+      opacity: 0;
+    }
+
+    &:hover {
+      &::before {
+        border-color: $xform-input-border-color-active;
+      }
+    }
+
+    a {
+      color: $main-color;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  input {
+    appearance: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+
+    &:focus {
+      outline: none;
+
+      & + label {
+        &::before {
+          border-color: $xform-input-border-color-active;
+        }
+      }
+    }
+
+    &:checked + label {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.xform__file {
+  @extend .xform__input;
+
+  display: flex;
+  overflow: hidden;
+
+  input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: $xform-input-border-radius;
+  }
+
+  &:hover,
+  &:focus-within {
+    border-color: $xform-input-border-color-active;
+  }
+}
+
+.xform__file-value {
+  visibility: hidden;
+  margin-right: auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  .xform__field--activated & {
+    visibility: visible;
+  }
+}
+
+.xform__file-button {
+  font: $text-font;
+  font-size: $xform-input-font-size;
+  border-radius: $xform-input-border-radius;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: $xform-input-padding-vertical $xform-input-padding-horizontal;
+  margin-left: 0;
+  margin-right: calc(-1 * (#{$xform-input-padding-horizontal} + #{$xform-input-border-width}));
+  margin-top: calc(-1 * (#{$xform-input-padding-vertical} + #{$xform-input-border-width}));
+  margin-bottom: calc(-1 * (#{$xform-input-padding-vertical} + #{$xform-input-border-width}));
+  background-color: $xform-input-background-color;
+  color: $xform-input-border-color;
+  flex: 0 0 52px;
+  text-align: center;
+
+  .xform__file:hover &,
+  .xform__file:focus-within & {
+    color: $text-color;
+  }
+}
+
+.xform__hint,
+.xform__error {
+  font-size: $xform-hint-font-size;
+  margin-top: -$xform-margin / 3;
+}
+
+.xform__hint {
+  color: $xform-hint-color;
+}
+
+.xform__error {
+  color: $xform-error-color;
+}
+
+.xform__footer {
+  margin-top: $xform-section-margin;
+}
+
+.xform__footer--center {
+  text-align: center;
+}
+
+.xform--blocked {
+  pointer-events: none;
+
+  &::before {
+    display: block;
+  }
+}
+
+.xform--submitting {
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    display: block;
+  }
+}
+
+.xform--placeholders {
+  .xform__label {
+    @include transition;
+
+    padding: $xform-input-padding-vertical $xform-input-padding-horizontal;
+    position: absolute;
+    top: $xform-input-border-width;
+    left: $xform-input-border-width;
+    width: calc(100% - 2 * #{$xform-input-border-width} - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: $xform-input-border-radius;
+    color: $xform-input-placeholder-color;
+    pointer-events: none;
+  }
+
+  .xform__input,
+  .xform__file {
+    @include transition;
+  }
+
+  .xform__input--select {
+    color: transparent;
+
+    option {
+      color: $xform-input-color;
+    }
+  }
+
+  .xform__field--activated {
+    .xform__label {
+      font-size: $xform-label-font-size * 0.75;
+      padding-top: $xform-input-padding-vertical * 0.35;
+      padding-bottom: 0;
+      background-color: $xform-input-background-color;
+    }
+
+    .xform__input,
+    .xform__file {
+      padding-top: $xform-input-padding-vertical * 1.75;
+      padding-bottom: $xform-input-padding-vertical * 0.25;
+    }
+
+    .xform__input--select {
+      color: $xform-input-color;
+    }
+  }
+}
