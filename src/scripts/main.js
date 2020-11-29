@@ -44,12 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Cookie */
   const cookieCloseBtn = document.querySelector('.js-cookie-close')
   const cookieContainer = document.querySelector('.js-cookie')
-  cookieCloseBtn.addEventListener('click', () => {
-    setCookie('cookieConsent', true, 365)
-    cookieContainer.style.display = 'none'
-  })
-  if (!getCookie('cookieConsent')) {
-    cookieContainer.style.display = null
+  if (cookieCloseBtn && cookieContainer) {
+    cookieCloseBtn.addEventListener('click', () => {
+      setCookie('cookieConsent', true, 365)
+      cookieContainer.style.display = 'none'
+    })
+    if (!getCookie('cookieConsent')) {
+      cookieContainer.style.display = null
+    }
   }
 
   /* Object fit images */
