@@ -41,7 +41,7 @@ export default class XPopup {
   }
 
   toggleEvent (name) {
-    const event = document.createEvent('Event')
+    const event = document.createEvent('CustomEvent')
     event.initEvent(name, true, true)
     this.container.dispatchEvent(event)
   }
@@ -87,6 +87,7 @@ export default class XPopup {
       }
     })
     this.setTop()
+    document.body.classList.add('is-popup')
     document.body.style.marginRight = this.getScrollbarWidth() + 'px'
     document.body.style.overflow = 'hidden'
     this.toggleEvent('show')
@@ -102,6 +103,7 @@ export default class XPopup {
       }
     })
     if (activePopupsCount === 0) {
+      document.body.classList.remove('is-popup')
       document.body.style.marginRight = ''
       document.body.style.overflow = ''
     }

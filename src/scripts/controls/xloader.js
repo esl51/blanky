@@ -68,7 +68,7 @@ export default class XLoader {
   }
 
   toggleEvent (name) {
-    const event = document.createEvent('Event')
+    const event = document.createEvent('CustomEvent')
     event.initEvent(name, true, true)
     this.container.dispatchEvent(event)
   }

@@ -1,5 +1,4 @@
 import Noty from 'noty'
-import animatedScrollTo from 'animated-scrollto'
 
 export default class XForm {
   constructor (elem, options) {
@@ -53,7 +52,7 @@ export default class XForm {
 
   toggleEvent (name) {
     const event = document.createEvent('CustomEvent')
-    event.initEvent(name, true, true)
+    event.initEvent(name)
     this.form.dispatchEvent(event)
   }
 
@@ -211,7 +210,7 @@ export default class XForm {
               scrollContainer = wrap
               scrollTop = scrollContainer.scrollTop + fieldOffsetTop - baseScrollTop
             }
-            animatedScrollTo(scrollContainer, scrollTop, 300)
+            //animatedScrollTo(scrollContainer, scrollTop, 300)
           }
         }
         this.toggleEvent('error')
@@ -223,7 +222,7 @@ export default class XForm {
         if (success) {
           new Noty({
             type: 'success',
-            text: 'success'
+            text: success
           }).show()
         }
         this.toggleEvent('success')
