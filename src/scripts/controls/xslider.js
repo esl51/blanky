@@ -18,8 +18,11 @@ export default class XSlider {
       activeClass: 'is-active',
       mountedClass: 'is-mounted',
       hiddenClass: 'is-hidden',
+      forwardClass: 'is-forward',
+      backwardClass: 'is-backward',
       bulletTag: 'li',
-      hideBullets: true
+      hideBullets: true,
+      wheel: false
     }
     for (const attrname in options) {
       this.settings[attrname] = options[attrname]
@@ -59,6 +62,12 @@ export default class XSlider {
     this.isMoving = false
 
     elem.xSlider = this
+  }
+
+  toggleEvent (name) {
+    const event = document.createEvent('CustomEvent')
+    event.initEvent(name, true, true)
+    this.slider.dispatchEvent(event)
   }
 
   getTransitionDuration (elem) {
@@ -302,6 +311,17 @@ export default class XSlider {
     }
 
     clearTimeout(this.durationTimeout)
+    if (this.current > this.prev) {
+      this.slider.classList.remove(this.settings.backwardClass)
+      this.slider.classList.add(this.settings.forwardClass)
+    } else {
+      this.slider.classList.remove(this.settings.forwardClass)
+      this.slider.classList.add(this.settings.backwardClass)
+    }
+    if (this.current !== this.prev) {
+      this.toggleEvent('beforeChange')
+      this.prev = this.current
+    }
     this.durationTimeout = setTimeout(() => {
       this.items[this.current].classList.add(this.settings.currentClass)
       this.inTransition = false
@@ -311,9 +331,7 @@ export default class XSlider {
       this.viewport.removeEventListener('click', this._click)
       this.track.classList.remove(this.settings.movingClass)
       if (this.current !== this.prev) {
-        const event = document.createEvent('Event')
-        event.initEvent('change', true, true)
-        this.slider.dispatchEvent(event)
+        this.toggleEvent('change')
         this.prev = this.current
       }
     }, this.duration)
@@ -466,6 +484,79 @@ export default class XSlider {
     return this._dragSwipe(e, 'swipe')
   }
 
+  _wheel (e) {
+    e.stopPropagation()
+    if (this.xDiff === undefined) {
+      this.xDiff = 0
+    }
+    if (this.yDiff === undefined) {
+      this.yDiff = 0
+    }
+    this.xDiff += e.deltaX
+    this.yDiff += e.deltaY
+    if (this.xDiff > 0) {
+      this.moveDirection = 'next'
+    } else {
+      this.moveDirection = 'prev'
+    }
+    if (Math.abs(this.xDiff) > Math.abs(this.yDiff)) {
+      this.isMoving = true
+      this.track.classList.add(this.settings.movingClass)
+      if (e.cancelable) {
+        e.preventDefault()
+      }
+      const transform = 'translate3d(' + (this.xDiff * -1) + 'px,0,0)'
+      let canMove = true
+      if (!this.settings.loop && ((this.current === this.items.length - 1 && this.xDiff > 0) || (this.current === 0 && this.xDiff < 0))) {
+        canMove = false
+      }
+      if (canMove) {
+        this.track.style.transition = 'none'
+        this.track.style.transform = this.currentTransform + ' ' + transform
+      }
+      clearTimeout(this.wheelTimeout)
+      this.wheelTimeout = setTimeout(() => {
+        const xDiff = Math.abs(this.xDiff)
+        const yDiff = Math.abs(this.yDiff)
+        let moveTo
+        if (xDiff > yDiff) {
+          if (this.settings.moveToFirst) {
+            const vRect = this.viewport.getBoundingClientRect()
+            const tRect = this.track.getBoundingClientRect()
+            const left = tRect.left - vRect.left
+            moveTo = -1;
+            [].forEach.call(this.items, item => {
+              const index = [].indexOf.call(this.items, item)
+              if (item.offsetLeft < (left * -1)) {
+                const nextItem = this.items[index + 1]
+                if (nextItem && nextItem.offsetLeft > (left * -1)) {
+                  moveTo = this.moveDirection === 'prev' ? index : index + 1
+                } else if (!nextItem) {
+                  moveTo = index
+                }
+              }
+            })
+          }
+          if (moveTo > -1) {
+            this.goTo(moveTo)
+          } else if (moveTo === -1) {
+            this.goToFirst()
+          } else if (this.xDiff > 0) {
+            this.goToNext()
+          } else {
+            this.goToPrev()
+          }
+        } else {
+          this.reposition()
+        }
+        this.xDiff = 0
+        this.yDiff = 0
+        this.isMoving = false
+        this.track.classList.remove(this.settings.movingClass)
+      }, 250)
+    }
+  }
+
   mount () {
     this.recalc()
 
@@ -498,6 +589,7 @@ export default class XSlider {
     this._dragHandler = this._drag.bind(this)
     this._dragEndHandler = this._dragEnd.bind(this)
     this._dragLeaveHandler = this._dragLeave.bind(this)
+    this._wheelHandler = this._wheel.bind(this)
 
     this.viewport.addEventListener('mousedown', e => {
       e.preventDefault()
@@ -509,6 +601,10 @@ export default class XSlider {
       this.viewport.addEventListener('mouseup', this._dragEndHandler, false)
       this.viewport.addEventListener('mouseleave', this._dragLeaveHandler, false)
     })
+
+    if (this.settings.wheel) {
+      this.viewport.addEventListener('wheel', this._wheelHandler, false)
+    }
 
     this._swipeHandler = this._swipe.bind(this)
     this._swipeEndHandler = this._swipeEnd.bind(this)
@@ -548,9 +644,7 @@ export default class XSlider {
 
     this.slider.classList.add(this.settings.mountedClass)
 
-    const event = document.createEvent('Event')
-    event.initEvent('mount', true, true)
-    this.slider.dispatchEvent(event)
+    this.toggleEvent('mount')
   }
 
   unmount () {
