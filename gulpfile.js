@@ -15,6 +15,7 @@ const gulpif = require('gulp-if')
 const browserSync = require('browser-sync')
 const rimraf = require('rimraf')
 const postcss = require('gulp-postcss')
+const inject = require('gulp-inject-string')
 const argv = require('yargs').argv
 
 sass.compiler = require('node-sass')
@@ -91,7 +92,9 @@ function wrapPipe (taskFn) {
 
 /* HTML */
 gulp.task('html:build', function () {
+  const ts = +new Date()
   return gulp.src(path.src.html)
+    .pipe(inject.replace('#TS#', ts))
     .pipe(fileinclude())
     .pipe(gulp.dest(path.dest.html))
     .pipe(browserSync.stream())

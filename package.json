@@ -56,6 +56,7 @@
     "gulp-file-include": "^2.2.2",
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.1.0",
+    "gulp-inject-string": "^1.1.2",
     "gulp-newer": "^1.4.0",
     "gulp-postcss": "^9.0.0",
     "gulp-sass": "^4.0.2",
