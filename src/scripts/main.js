@@ -19,9 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Scroll To */
   document.addEventListener('click', e => {
-    if (e.target && e.target.dataset.scroll) {
+    let target = e.target
+    while (target && (!target.dataset || !target.dataset.scroll)) {
+      target = target.parentNode
+    }
+    if (target && target.dataset && target.dataset.scroll) {
       e.preventDefault()
-      scrollTo(e.target.dataset.scroll)
+      scrollTo(target.dataset.scroll)
       return false
     }
   })

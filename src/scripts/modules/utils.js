@@ -5,15 +5,21 @@ export function scrollTo (target, duration, callback) {
   if (typeof target === 'string') {
     target = document.querySelector(target)
   }
+  if (!target) {
+    return
+  }
   if (typeof duration === 'function') {
     callback = duration
-    duration = 500
+    duration = 300
   }
   if (typeof duration === 'undefined') {
-    duration = 500
+    duration = 300
   }
   animateScrollTo(target, {
-    speed: duration
+    speed: duration,
+    // easeInOutQuad
+    // https://gist.github.com/gre/1650294
+    easing: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
   }).then(() => {
     if (typeof callback === 'function') {
       callback()
