@@ -1,5 +1,3 @@
-import animatedScrollTo from 'animated-scrollto'
-
 /* Scroll to target */
 export function scrollTo (target, duration, callback) {
   if (typeof target === 'string') {
@@ -14,7 +12,29 @@ export function scrollTo (target, duration, callback) {
   }
   const scrollContainer = document.scrollingElement || document.documentElement
   if (target.offsetTop !== undefined) {
-    animatedScrollTo(scrollContainer, target.offsetTop, duration, callback)
+    const start = scrollContainer.scrollTop
+    const change = target.offsetTop - start
+    let currentTime = 0
+    const increment = 20
+
+    const easeInOutQuad = function (t, b, c, d) {
+      t /= d / 2
+      if (t < 1) {
+        return c / 2 * t * t + b
+      }
+      t--
+      return -c / 2 * (t * (t - 2) - 1) + b
+    }
+
+    const animateScroll = function () {
+      currentTime += increment
+      const val = easeInOutQuad(currentTime, start, change, duration)
+      scrollContainer.scrollTop = val
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment)
+      }
+    }
+    animateScroll()
   }
 }
 

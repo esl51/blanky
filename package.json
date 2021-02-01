@@ -21,7 +21,6 @@
   "license": "MIT",
   "dependencies": {
     "animate.css": "^4.1.1",
-    "animated-scrollto": "^1.1.0",
     "custom-event-polyfill": "^1.0.7",
     "element-closest-polyfill": "^1.0.2",
     "element-qsa-scope": "^1.1.0",
