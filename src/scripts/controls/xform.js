@@ -1,4 +1,5 @@
 import Noty from 'noty'
+import animateScrollTo from 'animated-scroll-to'
 
 export default class XForm {
   constructor (elem, options) {
@@ -84,18 +85,18 @@ export default class XForm {
       fileName = fileInput.value.replace('C:\\fakepath\\', '')
     }
     if (!fileName.length) {
-      fileValue.innerText = this.filePlaceholderText
+      fileValue.textContent = this.filePlaceholderText
       fileValue.classList.remove(this.settings.fileValueActivatedClass)
       field.classList.remove(this.settings.fieldActivatedClass)
       return
     }
     if (fileValue.offsetWidth || fileValue.offsetHeight || fileValue.getClientRects().length) {
-      fileValue.innerText = fileName
+      fileValue.textContent = fileName
       fileValue.classList.add(this.settings.fileValueActivatedClass)
       field.classList.add(this.settings.fieldActivatedClass)
-      fileButton.innerText = this.settings.fileButtonText
+      fileButton.textContent = this.settings.fileButtonText
     } else {
-      fileButton.innerText = fileName
+      fileButton.textContent = fileName
     }
   }
 
@@ -189,7 +190,7 @@ export default class XForm {
                 errors[field].forEach(err => {
                   const errElem = document.createElement('div')
                   errElem.classList.add(this.settings.errorClass)
-                  errElem.innerText = err
+                  errElem.textContent = err
                   input.closest('.' + this.settings.fieldClass).appendChild(errElem)
                 })
               }
@@ -210,7 +211,10 @@ export default class XForm {
               scrollContainer = wrap
               scrollTop = scrollContainer.scrollTop + fieldOffsetTop - baseScrollTop
             }
-            //animatedScrollTo(scrollContainer, scrollTop, 300)
+            animateScrollTo(scrollTop, {
+              elementToScroll: scrollContainer,
+              speed: 300
+            })
           }
         }
         this.toggleEvent('error')
@@ -302,12 +306,12 @@ export default class XForm {
 
       const fileValue = document.createElement('span')
       fileValue.classList.add(this.settings.fileValueClass)
-      fileValue.innerText = this.settings.filePlaceholderText
+      fileValue.textContent = this.settings.filePlaceholderText
       fileWrapper.appendChild(fileValue)
 
       const fileButton = document.createElement('span')
       fileButton.classList.add(this.settings.fileButtonClass)
-      fileButton.innerText = this.settings.fileButtonText
+      fileButton.textContent = this.settings.fileButtonText
       fileWrapper.appendChild(fileButton)
 
       fileWrapper.appendChild(fileInput)
