@@ -132,35 +132,18 @@ export const scripts = () => {
     .pipe(sync.stream())
 }
 
-/* Main styles */
-
-export const mainStyles = () => {
-  return gulp.src(config.styles + 'main.scss')
-    .pipe(gulpif(yargs.argv.dev, sourcemaps.init({ loadMaps: true }).on('error', error)))
-    .pipe(sass().on('error', error))
-    .pipe(postcss().on('error', error))
-    .pipe(cleancss().on('error', error))
-    .pipe(gulpif(yargs.argv.dev, sourcemaps.write('.')))
-    .pipe(gulp.dest(config.dest + 'css/'))
-    .pipe(sync.stream())
-}
-
-/* Editor styles */
-
-export const editorStyles = () => {
-  return gulp.src(config.styles + 'editor.scss')
-    .pipe(gulpif(yargs.argv.dev, sourcemaps.init({ loadMaps: true }).on('error', error)))
-    .pipe(sass().on('error', error))
-    .pipe(postcss().on('error', error))
-    .pipe(cleancss().on('error', error))
-    .pipe(gulpif(yargs.argv.dev, sourcemaps.write('.')))
-    .pipe(gulp.dest(config.dest + 'css/'))
-    .pipe(sync.stream())
-}
-
 /* Styles */
 
-export const styles = gulp.parallel(mainStyles, editorStyles)
+export const styles = () => {
+  return gulp.src(config.styles + '*.scss')
+    .pipe(gulpif(yargs.argv.dev, sourcemaps.init({ loadMaps: true }).on('error', error)))
+    .pipe(sass().on('error', error))
+    .pipe(postcss().on('error', error))
+    .pipe(cleancss().on('error', error))
+    .pipe(gulpif(yargs.argv.dev, sourcemaps.write('.')))
+    .pipe(gulp.dest(config.dest + 'css/'))
+    .pipe(sync.stream())
+}
 
 /* Timestamps */
 
