@@ -188,8 +188,8 @@ export const server = () => {
 
 export const watch = () => {
   gulp.watch([
-    config.root + '**/*.*',
-    config.root + '**/.*'
+    config.assets + 'root/**/*.*',
+    config.assets + 'root/**/.*'
   ], root)
   gulp.watch(config.assets + 'fonts/**/*.*', fonts)
   gulp.watch(config.assets + 'icons/**/*.svg', icons)
