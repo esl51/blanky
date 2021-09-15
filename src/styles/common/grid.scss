@@ -1,12 +1,14 @@
 /* Grid */
+@use "sass:math";
+
 .row {
-  margin: (-$row-gutter / 2) (-$col-gutter/2);
+  margin: math.div(-$row-gutter, 2) math.div(-$col-gutter, 2);
   display: flex;
   flex-wrap: wrap;
 }
 
 .col {
-  padding: ($row-gutter / 2) ($col-gutter / 2);
+  padding: math.div($row-gutter, 2) math.div($col-gutter, 2);
   flex: 0 0 100%;
   max-width: 100%;
 }
@@ -15,8 +17,8 @@
   @for $column from 1 through $columns {
     @include media(">=" + $bp-name) {
       .col--#{str-slice($bp-name, 0, 1)}-#{$column} {
-        flex-basis: percentage($column / $columns);
-        max-width: percentage($column / $columns);
+        flex-basis: percentage(math.div($column, $columns));
+        max-width: percentage(math.div($column, $columns));
       }
     }
   }

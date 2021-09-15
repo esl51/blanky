@@ -3,10 +3,11 @@ import cache from 'gulp-cache'
 import cleancss from 'gulp-clean-css'
 import include from 'gulp-file-include'
 import gulpif from 'gulp-if'
-import imagemin from 'gulp-imagemin'
+import imagemin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin'
 import postcss from 'gulp-postcss'
 import replace from 'gulp-replace'
-import sass from 'gulp-sass'
+import sassCompiler from 'sass'
+import gulpSass from 'gulp-sass'
 import sourcemaps from 'gulp-sourcemaps'
 import terser from 'gulp-terser'
 import cwebp from 'gulp-webp'
@@ -16,7 +17,9 @@ import sync from 'browser-sync'
 import del from 'del'
 import buffer from 'vinyl-buffer'
 import source from 'vinyl-source-stream'
-import yargs from 'yargs'
+
+const isDev = process.env.NODE_ENV === 'development'
+const sass = gulpSass(sassCompiler)
 
 /* Config */
 
@@ -64,14 +67,16 @@ export const icons = () => {
   return gulp.src(config.assets + 'icons/**/*.svg')
     .pipe(cache(
       imagemin([
-        imagemin.svgo({
+        svgo({
           plugins: [
-            { removeXMLNS: true },
-            { removeViewBox: false },
-            { removeDimensions: true }
+            { name: 'removeXMLNS', active: true },
+            { name: 'removeViewBox', active: false },
+            { name: 'removeDimensions', active: true }
           ]
         })
-      ]),
+      ], {
+        verbose: true
+      }),
       { name: 'icons' }
     ))
     .pipe(gulp.dest(config.dest + 'icons/'))
@@ -84,11 +89,13 @@ export const images = () => {
   return gulp.src(config.assets + 'images/**/*.{png,jpg,gif,svg}')
     .pipe(cache(
       imagemin([
-        imagemin.gifsicle({ interlaced: true }),
-        imagemin.mozjpeg({ progressive: true, quality: 85 }),
-        imagemin.optipng({ optimizationLevel: 7 }),
-        imagemin.svgo()
-      ]),
+        gifsicle({ interlaced: true }),
+        mozjpeg({ progressive: true, quality: 85 }),
+        optipng({ optimizationLevel: 7 }),
+        svgo()
+      ], {
+        verbose: true
+      }),
       { name: 'images' }
     ))
     .pipe(gulp.dest(config.dest + 'img/'))
@@ -125,9 +132,9 @@ export const scripts = () => {
     .bundle().on('error', error)
     .pipe(source('main.js'))
     .pipe(buffer())
-    .pipe(gulpif(yargs.argv.dev, sourcemaps.init({ loadMaps: true }).on('error', error)))
-    .pipe(gulpif(!yargs.argv.dev, terser().on('error', error)))
-    .pipe(gulpif(yargs.argv.dev, sourcemaps.write('.')))
+    .pipe(gulpif(isDev, sourcemaps.init({ loadMaps: true }).on('error', error)))
+    .pipe(gulpif(!isDev, terser().on('error', error)))
+    .pipe(gulpif(isDev, sourcemaps.write('.')))
     .pipe(gulp.dest(config.dest + 'js/'))
     .pipe(sync.stream())
 }
@@ -136,11 +143,11 @@ export const scripts = () => {
 
 export const styles = () => {
   return gulp.src(config.styles + '*.scss')
-    .pipe(gulpif(yargs.argv.dev, sourcemaps.init({ loadMaps: true }).on('error', error)))
-    .pipe(sass().on('error', error))
+    .pipe(gulpif(isDev, sourcemaps.init({ loadMaps: true }).on('error', error)))
+    .pipe(sass().on('error', sass.logError))
     .pipe(postcss().on('error', error))
     .pipe(cleancss().on('error', error))
-    .pipe(gulpif(yargs.argv.dev, sourcemaps.write('.')))
+    .pipe(gulpif(isDev, sourcemaps.write('.')))
     .pipe(gulp.dest(config.dest + 'css/'))
     .pipe(sync.stream())
 }
@@ -150,9 +157,15 @@ export const styles = () => {
 export const timestamps = () => {
   const ts = +new Date()
   return gulp.src(config.dest + '*.html')
-    .pipe(gulpif(!yargs.argv.dev, replace(/#TS#/g, ts)))
-    .pipe(gulpif(yargs.argv.dev, replace(/\?#TS#/g, '')))
+    .pipe(gulpif(!isDev, replace(/#TS#/g, ts)))
+    .pipe(gulpif(isDev, replace(/\?#TS#/g, '')))
     .pipe(gulp.dest(config.dest))
+}
+
+/* Flush cache */
+
+export const flush = () => {
+  return cache.clearAll()
 }
 
 /* Build */

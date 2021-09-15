@@ -1,4 +1,6 @@
 /* xForm */
+@use "sass:math";
+
 $xform-margin: 10px !default;
 
 $xform-input-margin: 5px !default;
@@ -84,13 +86,13 @@ $xform-error-color: #ed4337 !default;
 .xform__row {
   display: flex;
   flex-wrap: wrap;
-  margin: -$xform-margin / 2;
+  margin: math.div(-$xform-margin, 2);
 }
 
 .xform__col {
   flex-basis: 100%;
   max-width: 100%;
-  padding: $xform-margin / 2;
+  padding: math.div($xform-margin, 2);
 
   @include media(">=tablet") {
     flex-basis: 50%;
@@ -339,7 +341,7 @@ $xform-error-color: #ed4337 !default;
 .xform__hint,
 .xform__error {
   font-size: $xform-hint-font-size;
-  margin-top: -$xform-margin / 3;
+  margin-top: math.div(-$xform-margin, 3);
 }
 
 .xform__hint {
