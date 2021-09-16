@@ -1,6 +1,6 @@
 /* Vendor utils */
-@import "../../node_modules/normalize.css/normalize.css";
-@import "../../node_modules/include-media/dist/_include-media.scss";
+@import "../../node_modules/normalize.css/normalize";
+@import "../../node_modules/include-media/dist/_include-media";
 
 /* Common */
 @import "common/variables";
@@ -28,7 +28,7 @@
 @import "controls/xslider";
 
 /* Vendor */
-@import "../../node_modules/animate.css/animate.css";
+@import "../../node_modules/animate.css/animate";
 
 /* Sections */
 @import "sections/header";
