@@ -286,7 +286,7 @@ export default class XSlider {
 
     this.distance = -1 * first * this.itemWidth
     this.inTransition = true
-    this.currentTransform = 'translate3d(' + this.distance + '%,0,0)'
+    this.currentTransform = this._getTransform(this.distance, '%')
     this.track.style.transition = ''
     this.track.style.transform = this.currentTransform
     if (this.settings.autoHeight) {
@@ -376,6 +376,32 @@ export default class XSlider {
     return this
   }
 
+  _getMoveTo () {
+    const vRect = this.viewport.getBoundingClientRect()
+    const tRect = this.track.getBoundingClientRect()
+    const left = tRect.left - vRect.left
+    let moveTo = -1;
+    [].forEach.call(this.items, item => {
+      const index = [].indexOf.call(this.items, item)
+      if (item.offsetLeft < (left * -1)) {
+        const nextItem = this.items[index + 1]
+        if (nextItem && nextItem.offsetLeft > (left * -1)) {
+          moveTo = this.moveDirection === 'prev' ? index : index + 1
+        } else if (!nextItem) {
+          moveTo = index
+        }
+      }
+    })
+    return moveTo
+  }
+
+  _getTransform (value, units) {
+    if (!units) {
+      units = 'px'
+    }
+    return 'translate3d(' + value + units + ',0,0)'
+  }
+
   _click (e) {
     e.preventDefault()
   }
@@ -399,7 +425,7 @@ export default class XSlider {
       if (e.cancelable) {
         e.preventDefault()
       }
-      const transform = 'translate3d(' + (this.xDiff * -1) + 'px,0,0)'
+      const transform = this._getTransform(this.xDiff * -1)
       let canMove = true
       if (!this.settings.loop && ((this.current === this.items.length - 1 && this.xDiff > 0) || (this.current === 0 && this.xDiff < 0))) {
         canMove = false
@@ -419,21 +445,7 @@ export default class XSlider {
     let moveTo
     if (xDiff > yDiff && xDiff > this.settings.threshold) {
       if (this.settings.moveToFirst) {
-        const vRect = this.viewport.getBoundingClientRect()
-        const tRect = this.track.getBoundingClientRect()
-        const left = tRect.left - vRect.left
-        moveTo = -1;
-        [].forEach.call(this.items, item => {
-          const index = [].indexOf.call(this.items, item)
-          if (item.offsetLeft < (left * -1)) {
-            const nextItem = this.items[index + 1]
-            if (nextItem && nextItem.offsetLeft > (left * -1)) {
-              moveTo = this.moveDirection === 'prev' ? index : index + 1
-            } else if (!nextItem) {
-              moveTo = index
-            }
-          }
-        })
+        moveTo = this._getMoveTo()
       }
       if (moveTo > -1) {
         this.goTo(moveTo)
@@ -505,7 +517,7 @@ export default class XSlider {
       if (e.cancelable) {
         e.preventDefault()
       }
-      const transform = 'translate3d(' + (this.xDiff * -1) + 'px,0,0)'
+      const transform = this._getTransform(this.xDiff * -1)
       let canMove = true
       if (!this.settings.loop && ((this.current === this.items.length - 1 && this.xDiff > 0) || (this.current === 0 && this.xDiff < 0))) {
         canMove = false
@@ -521,21 +533,7 @@ export default class XSlider {
         let moveTo
         if (xDiff > yDiff) {
           if (this.settings.moveToFirst) {
-            const vRect = this.viewport.getBoundingClientRect()
-            const tRect = this.track.getBoundingClientRect()
-            const left = tRect.left - vRect.left
-            moveTo = -1;
-            [].forEach.call(this.items, item => {
-              const index = [].indexOf.call(this.items, item)
-              if (item.offsetLeft < (left * -1)) {
-                const nextItem = this.items[index + 1]
-                if (nextItem && nextItem.offsetLeft > (left * -1)) {
-                  moveTo = this.moveDirection === 'prev' ? index : index + 1
-                } else if (!nextItem) {
-                  moveTo = index
-                }
-              }
-            })
+            moveTo = this._getMoveTo()
           }
           if (moveTo > -1) {
             this.goTo(moveTo)
