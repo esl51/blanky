@@ -146,7 +146,7 @@ export const styles = () => {
     .pipe(gulpif(isDev, sourcemaps.init({ loadMaps: true }).on('error', error)))
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss().on('error', error))
-    .pipe(cleancss().on('error', error))
+    .pipe(gulpif(!isDev, cleancss().on('error', error)))
     .pipe(gulpif(isDev, sourcemaps.write('.')))
     .pipe(gulp.dest(config.dest + 'css/'))
     .pipe(sync.stream())
