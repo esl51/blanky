@@ -28,7 +28,7 @@
     "element-qsa-scope": "^1.1.0",
     "include-media": "^1.4.9",
     "normalize.css": "^8.0.1",
-    "noty": "^3.2.0-beta",
+    "notyf": "^3.10.0",
     "object-fit-images": "^3.2.4",
     "sharer.js": "^0.4.0",
     "ymaps": "^0.2.1"

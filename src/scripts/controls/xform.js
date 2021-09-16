@@ -1,5 +1,7 @@
-import Noty from 'noty'
+import XNotify from './xnotify'
 import animateScrollTo from 'animated-scroll-to'
+
+const xnotify = new XNotify()
 
 export default class XForm {
   constructor (elem, options) {
@@ -177,10 +179,7 @@ export default class XForm {
       const hasErrors = (error && error.length) || (errors && Object.keys(errors).length > 0)
       if (hasErrors) {
         if (error && error.length) {
-          new Noty({
-            type: 'error',
-            text: error
-          }).show()
+          xnotify.error(error)
         }
         if (errors && Object.keys(errors).length > 0) {
           for (const field in errors) {
@@ -224,10 +223,7 @@ export default class XForm {
           this.reset()
         }
         if (success) {
-          new Noty({
-            type: 'success',
-            text: success
-          }).show()
+          xnotify.success(success)
         }
         this.toggleEvent('success')
       }
