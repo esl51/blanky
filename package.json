@@ -15,8 +15,7 @@
   "scripts": {
     "dev": "NODE_ENV=development gulp",
     "build": "NODE_ENV=production gulp build",
-    "lint": "eslint --fix --ext .js --ignore-path .gitignore ./src/scripts && npx stylelint --fix ./src/styles",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint --fix --ext .js --ignore-path .gitignore ./src/scripts && npx stylelint --fix ./src/styles"
   },
   "author": "Maxim Zhgulev",
   "license": "MIT",
