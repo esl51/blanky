@@ -62,10 +62,13 @@ body {
 }
 
 .section {
-  max-width: 100%;
-  padding-top: $section-padding;
-  padding-bottom: $section-padding;
+  @include section;
+
   background-color: #fff;
+
+  .sections &:last-child {
+    flex-grow: 1;
+  }
 }
 
 .section__inner {
