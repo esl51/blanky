@@ -61,7 +61,7 @@
   }
 
   @include media(">=desktop") {
-    padding-top: $inner-padding;
+    padding-left: $inner-padding;
     padding-right: $inner-padding;
   }
 }
