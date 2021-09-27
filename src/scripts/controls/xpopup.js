@@ -41,8 +41,7 @@ export default class XPopup {
   }
 
   toggleEvent (name) {
-    const event = document.createEvent('CustomEvent')
-    event.initEvent(name, true, true)
+    const event = new Event(name)
     this.container.dispatchEvent(event)
   }
 

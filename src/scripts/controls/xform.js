@@ -54,8 +54,7 @@ export default class XForm {
   }
 
   toggleEvent (name) {
-    const event = document.createEvent('CustomEvent')
-    event.initEvent(name)
+    const event = new Event(name)
     this.form.dispatchEvent(event)
   }
 

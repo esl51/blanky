@@ -65,8 +65,7 @@ export default class XSlider {
   }
 
   toggleEvent (name) {
-    const event = document.createEvent('CustomEvent')
-    event.initEvent(name, true, true)
+    const event = new Event(name)
     this.slider.dispatchEvent(event)
   }
 
