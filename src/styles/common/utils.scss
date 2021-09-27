@@ -76,7 +76,7 @@
   @return $string;
 }
 
-@function grid-cols($col-count, $base-count: $columns, $add: 0) {
+@function grid-cols($col-count, $base-count: $columns, $add: 0px) {
   @return calc((((100% - (#{$base-count} - 1) * #{$col-gutter}) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * #{$col-gutter}) + #{$add});
 }
 
