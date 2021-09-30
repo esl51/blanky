@@ -11,7 +11,9 @@ export default class XMap {
       icon: null,
       iconSize: null,
       iconOffset: null,
-      language: 'en_US'
+      language: 'en_US',
+      route: false,
+      key: null
     }
     for (const attrname in options) {
       this.settings[attrname] = options[attrname]
@@ -75,10 +77,23 @@ export default class XMap {
     this.ymap = new this.ymaps.Map(this.container.id, {
       center: [this.settings.lat, this.settings.lng],
       zoom: this.settings.zoom
-    });
-    [].forEach.call(this.markers, item => {
-      this.ymap.geoObjects.add(item)
     })
+    if (this.settings.route && this.settings.key) {
+      const referencePoints = []
+      this.markers.forEach(item => {
+        referencePoints.push(item.geometry.getCoordinates())
+      })
+      const multiRoute = new this.ymaps.multiRouter.MultiRoute({
+        referencePoints
+      }, {
+        boundsAutoApply: true
+      })
+      this.ymap.geoObjects.add(multiRoute)
+    } else {
+      [].forEach.call(this.markers, item => {
+        this.ymap.geoObjects.add(item)
+      })
+    }
     this.ymap.behaviors.disable('scrollZoom')
     this.ymap.controls.remove('trafficControl')
     this.ymap.controls.remove('searchControl')
@@ -101,7 +116,7 @@ export default class XMap {
     this.container.id = this.container.id || 'map-' + Math.random().toString(36).substr(2, 10)
     this.toggleEvent('mount')
     this.resizeTimout = null
-    this.ymaps = await ymaps.load('https://api-maps.yandex.ru/2.1/?lang=' + this.settings.language)
+    this.ymaps = await ymaps.load('https://api-maps.yandex.ru/2.1/?lang=' + this.settings.language + (this.settings.key ? ('&apikey=' + this.settings.key) : ''))
     this.loadMarkers()
     this.initMap()
     this.refresh()
