@@ -90,7 +90,7 @@ export const images = () => {
     .pipe(cache(
       imagemin([
         gifsicle({ interlaced: true }),
-        mozjpeg({ progressive: true, quality: 85 }),
+        mozjpeg({ progressive: true, quality: 90 }),
         optipng({ optimizationLevel: 7 }),
         svgo()
       ], {
@@ -108,7 +108,7 @@ export const webp = () => {
   return gulp.src(config.assets + 'images/**/*.{png,jpg,gif}')
     .pipe(cache(
       cwebp({
-        quality: 85
+        quality: 90
       }),
       { name: 'webp' }
     ))
@@ -173,15 +173,15 @@ export const flush = () => {
 export const build = gulp.series(
   clean,
   gulp.parallel(
-    root,
-    fonts,
     icons,
     images,
     webp,
-    html,
+    root,
+    fonts,
     scripts,
     styles
   ),
+  html,
   timestamps
 )
 
