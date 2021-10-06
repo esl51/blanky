@@ -172,7 +172,7 @@
   /* Lists */
   ul,
   ol {
-    padding-left: 1.9em;
+    padding-left: 3em;
   }
 
   ol {
@@ -186,22 +186,22 @@
 
     &::before {
       display: inline-block;
-      line-height: 1;
-      margin-left: -1.5em;
-      width: 1.5em;
       color: $main-color;
     }
   }
 
   ul li::before {
+    vertical-align: middle;
     line-height: $text-line-height;
-    font-size: 1.2em;
-    content: "•";
+    font-size: 0.5em;
+    margin-left: -3em;
+    width: 3em;
+    content: "●";
   }
 
   ol li::before {
-    margin-left: -2em;
-    width: 2em;
+    margin-left: -1.5em;
+    width: 1.5em;
     content: counter(list) ".";
     counter-increment: list;
   }
