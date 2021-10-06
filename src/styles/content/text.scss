@@ -172,7 +172,7 @@
   /* Lists */
   ul,
   ol {
-    padding-left: 3em;
+    padding-left: 2em;
   }
 
   ol {
@@ -192,16 +192,15 @@
 
   ul li::before {
     vertical-align: middle;
-    line-height: $text-line-height;
     font-size: 0.5em;
-    margin-left: -3em;
-    width: 3em;
+    margin-left: -4em;
+    width: 4em;
     content: "●";
   }
 
   ol li::before {
-    margin-left: -1.5em;
-    width: 1.5em;
+    margin-left: -2em;
+    width: 2em;
     content: counter(list) ".";
     counter-increment: list;
   }
