@@ -238,7 +238,7 @@
 
 /* Columns */
 .text--columns-2 {
-  @include media("<desktop") {
+  @include media(">=desktop") {
     @include columns(2);
   }
 }
