@@ -1,5 +1,6 @@
 /* Image link */
-.image-link {
+.image-link,
+%image-link {
   display: block;
   position: relative;
   overflow: hidden;
@@ -31,7 +32,8 @@
   }
 }
 
-.image-link__title {
+.image-link__title,
+%image-link__title {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -46,7 +48,8 @@
   }
 }
 
-.image-link__play {
+.image-link__play,
+%image-link__play {
   @include transition;
 
   display: flex;
@@ -82,7 +85,7 @@
 
 /* Iframe Video */
 .iframe-video {
-  @extend .image-link;
+  @extend %image-link;
 
   width: 100%;
   cursor: pointer;
@@ -132,7 +135,7 @@
 }
 
 .iframe-video__title {
-  @extend .image-link__title;
+  @extend %image-link__title;
 
   .iframe-video.is-active & {
     display: none;
@@ -140,7 +143,7 @@
 }
 
 .iframe-video__play {
-  @extend .image-link__play;
+  @extend %image-link__play;
 
   .iframe-video:hover & {
     transform: translate(-50%, -50%) translateY(-5px);

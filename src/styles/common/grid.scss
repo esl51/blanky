@@ -17,8 +17,8 @@
   @for $column from 1 through $columns {
     @include media(">=" + $bp-name) {
       .col--#{str-slice($bp-name, 0, 1)}-#{$column} {
-        flex-basis: percentage(math.div($column, $columns));
-        max-width: percentage(math.div($column, $columns));
+        flex-basis: math.percentage(math.div($column, $columns));
+        max-width: math.percentage(math.div($column, $columns));
       }
     }
   }

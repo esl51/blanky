@@ -1,5 +1,8 @@
+@use "sass:color";
+
 /* Text */
-.text {
+.text,
+%text {
   /* Strong */
   strong {
     font-weight: $strong-weight;
@@ -232,13 +235,14 @@
 
   /* Marker */
   .marker {
-    background-color: lighten($main-color, 30%);
+    background-color: color.adjust($main-color, $lightness: 30%);
   }
 }
 
 /* Columns */
 .text--columns-2 {
   @include media(">=desktop") {
-    @include columns(2);
+    columns: 2;
+    column-gap: $col-gutter;
   }
 }

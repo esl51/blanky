@@ -1,4 +1,4 @@
-@import "../../node_modules/include-media/dist/_include-media.scss";
+@import "../../node_modules/include-media/dist/include-media";
 @import "common/variables";
 @import "common/utils";
 @import "common/fonts";
@@ -6,7 +6,7 @@
 @import "content/text";
 
 body {
-  @extend .text;
+  @extend %text;
 
   margin: 0;
   padding: 15px;

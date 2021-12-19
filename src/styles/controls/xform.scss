@@ -2,7 +2,6 @@
 @use "sass:math";
 
 $xform-margin: 10px !default;
-
 $xform-input-margin: 5px !default;
 $xform-input-background-color: #f6f6f6 !default;
 $xform-input-border-radius: 3px !default;
@@ -15,19 +14,15 @@ $xform-input-font-size: $text-font-size !default;
 $xform-input-line-height: $text-line-height !default;
 $xform-input-padding-vertical: 9px !default;
 $xform-input-padding-horizontal: 18px !default;
-
 $xform-label-color: $text-color !default;
 $xform-label-font-size: $xform-input-font-size !default;
 $xform-label-line-height: $text-line-height !default;
-
 $xform-section-margin: $xform-margin * 2 !default;
 $xform-section-title-margin: $xform-margin * 1.5 !default;
 $xform-section-title-font-size: 20px !default;
 $xform-section-title-color: $title-color !default;
-
 $xform-hint-color: $muted-color !default;
 $xform-hint-font-size: $xform-input-font-size * 0.8 !default;
-
 $xform-error-color: #ed4337 !default;
 
 @keyframes xform-preloader {
@@ -118,7 +113,7 @@ $xform-error-color: #ed4337 !default;
 
   .xform__field--required & {
     &::after {
-      content: ' *';
+      content: " *";
       color: $main-color;
       font-size: 0.8em;
       vertical-align: text-top;
@@ -126,7 +121,8 @@ $xform-error-color: #ed4337 !default;
   }
 }
 
-.xform__input {
+.xform__input,
+%xform__input {
   @include vmargin($xform-input-margin);
 
   appearance: none;
@@ -161,7 +157,7 @@ $xform-error-color: #ed4337 !default;
 }
 
 .xform__input--select {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" width="10" height="10"><path fill="' + str-replace('#{$xform-input-border-color}', '#', '%23') + '" d="M74.123 56.571L42.694 88 11.266 56.571zM11.266 31.429L42.694 0l31.429 31.429z"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" width="10" height="10"><path fill="' + str-replace("#{$xform-input-border-color}", "#", "%23") + '" d="M74.123 56.571L42.694 88 11.266 56.571zM11.266 31.429L42.694 0l31.429 31.429z"/></svg>');
   background-repeat: no-repeat;
   background-position: right 20px top 50%;
   padding-right: 52px;
@@ -283,7 +279,7 @@ $xform-error-color: #ed4337 !default;
 }
 
 .xform__file {
-  @extend .xform__input;
+  @extend %xform__input;
 
   display: flex;
   overflow: hidden;

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 /* Button */
 .button {
   display: inline-block;
@@ -13,7 +15,7 @@
 
   &:hover,
   &:focus {
-    background: lighten($main-color, 10%);
+    background: color.adjust($main-color, $lightness: 10%);
     outline: none;
     text-decoration: none;
   }
