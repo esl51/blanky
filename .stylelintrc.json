@@ -5,6 +5,7 @@
     "selector-class-pattern": null,
     "max-line-length": null,
     "declaration-block-no-redundant-longhand-properties": null,
-    "scss/percent-placeholder-pattern": null
+    "scss/percent-placeholder-pattern": null,
+    "scss/at-import-partial-extension": null
   }
 }
