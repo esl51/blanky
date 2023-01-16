@@ -14,7 +14,7 @@ import cwebp from 'gulp-webp'
 import babelify from 'babelify'
 import browserify from 'browserify'
 import sync from 'browser-sync'
-import del from 'del'
+import { deleteAsync } from 'del'
 import buffer from 'vinyl-buffer'
 import source from 'vinyl-source-stream'
 
@@ -40,7 +40,7 @@ function error (error) {
 
 /* Clean */
 
-export const clean = () => del(config.dest)
+export const clean = () => deleteAsync(config.dest)
 
 /* Root */
 
