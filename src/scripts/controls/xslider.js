@@ -317,7 +317,9 @@ export default class XSlider {
       this.slider.classList.remove(this.settings.forwardClass)
       this.slider.classList.add(this.settings.backwardClass)
     }
+    let change = false
     if (this.current !== this.prev) {
+      change = true
       this.toggleEvent('beforeChange')
       this.prev = this.current
     }
@@ -329,7 +331,7 @@ export default class XSlider {
       }
       this.viewport.removeEventListener('click', this._click)
       this.track.classList.remove(this.settings.movingClass)
-      if (this.current !== this.prev) {
+      if (change) {
         this.toggleEvent('change')
         this.prev = this.current
       }
