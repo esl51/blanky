@@ -70,20 +70,28 @@ export const favicon = () => {
       for (const name in items) {
         const size = items[name]
         const buf = await sharp(src.path).resize(...size).toFormat('png').toBuffer()
-        const png = src.clone()
+        const img = src.clone()
         const ext = name.split('.')[1]
         if (ext === 'ico') {
-          png.contents = sharpIco.encode([buf])
+          img.contents = sharpIco.encode([buf])
         } else {
-          png.contents = buf
+          img.contents = buf
         }
-        png.stem = name.split('.')[0]
-        png.extname = '.' + ext
-        this.push(png)
+        img.stem = name.split('.')[0]
+        img.extname = '.' + ext
+        this.push(img)
       }
 
       cb()
-    })))
+    }), { name: 'favicon' }))
+    .pipe(cache(
+      imagemin([
+        optipng({ optimizationLevel: 7 })
+      ], {
+        verbose: true
+      }),
+      { name: 'favicon-optimize' }
+    ))
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
 }
