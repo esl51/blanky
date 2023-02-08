@@ -59,7 +59,7 @@ export const root = () => {
 /* Favicon */
 
 export const favicon = () => {
-  return gulp.src(config.assets + 'root/favicon.svg')
+  return gulp.src(config.assets + 'root/icon.svg')
     .pipe(cache(through.obj(async function (src, enc, cb) {
       const items = {
         'favicon.ico': [32, 32],
@@ -248,7 +248,7 @@ export const watch = () => {
     config.assets + 'root/**/*.*',
     config.assets + 'root/**/.*'
   ], root)
-  gulp.watch(config.assets + 'root/favicon.ico', favicon)
+  gulp.watch(config.assets + 'root/icon.svg', favicon)
   gulp.watch(config.assets + 'fonts/**/*.*', fonts)
   gulp.watch(config.assets + 'icons/**/*.svg', icons)
   gulp.watch(config.assets + 'images/**/*.{png,jpg,gif,svg}', gulp.parallel(images, webp))
