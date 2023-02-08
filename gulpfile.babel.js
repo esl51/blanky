@@ -17,6 +17,9 @@ import sync from 'browser-sync'
 import { deleteAsync } from 'del'
 import buffer from 'vinyl-buffer'
 import source from 'vinyl-source-stream'
+import through from 'through2'
+import sharp from 'sharp'
+import sharpIco from 'sharp-ico'
 
 const isDev = process.env.NODE_ENV === 'development'
 const sass = gulpSass(sassCompiler)
@@ -49,6 +52,38 @@ export const root = () => {
     config.assets + 'root/**/*.*',
     config.assets + 'root/**/.*'
   ])
+    .pipe(gulp.dest(config.dest))
+    .pipe(sync.stream())
+}
+
+/* Favicon */
+
+export const favicon = () => {
+  return gulp.src(config.assets + 'root/favicon.svg')
+    .pipe(cache(through.obj(async function (src, enc, cb) {
+      const items = {
+        'favicon.ico': [32, 32],
+        'apple-touch-icon.png': [180, 180],
+        'icon-192.png': [192, 192],
+        'icon-512.png': [512, 512]
+      }
+      for (const name in items) {
+        const size = items[name]
+        const buf = await sharp(src.path).resize(...size).toFormat('png').toBuffer()
+        const png = src.clone()
+        const ext = name.split('.')[1]
+        if (ext === 'ico') {
+          png.contents = sharpIco.encode([buf])
+        } else {
+          png.contents = buf
+        }
+        png.stem = name.split('.')[0]
+        png.extname = '.' + ext
+        this.push(png)
+      }
+
+      cb()
+    })))
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
 }
@@ -177,6 +212,7 @@ export const build = gulp.series(
     images,
     webp,
     root,
+    favicon,
     fonts,
     scripts,
     styles
@@ -204,6 +240,7 @@ export const watch = () => {
     config.assets + 'root/**/*.*',
     config.assets + 'root/**/.*'
   ], root)
+  gulp.watch(config.assets + 'root/favicon.ico', favicon)
   gulp.watch(config.assets + 'fonts/**/*.*', fonts)
   gulp.watch(config.assets + 'icons/**/*.svg', icons)
   gulp.watch(config.assets + 'images/**/*.{png,jpg,gif,svg}', gulp.parallel(images, webp))
