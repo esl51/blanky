@@ -2,31 +2,30 @@
 @use "sass:math";
 
 .row {
-  margin: math.div(-$row-gutter, 2) math.div(-$col-gutter, 2);
+  margin: calc($row-gutter * -0.5) calc($col-gutter * -0.5);
   display: flex;
   flex-wrap: wrap;
 }
 
 .col {
-  padding: math.div($row-gutter, 2) math.div($col-gutter, 2);
+  padding: calc($row-gutter * 0.5) calc($col-gutter * 0.5);
   flex: 0 0 100%;
   max-width: 100%;
 }
 
 @each $bp-name, $bp-size in $breakpoints {
-  @for $column from 1 through $columns {
+  @for $column from 1 through $columns-count {
     @include media(">=" + $bp-name) {
       .col--#{str-slice($bp-name, 0, 1)}-#{$column} {
-        flex-basis: math.percentage(math.div($column, $columns));
-        max-width: math.percentage(math.div($column, $columns));
+        flex-basis: math.percentage(math.div($column, $columns-count));
+        max-width: math.percentage(math.div($column, $columns-count));
       }
     }
   }
 }
 
 .grid-demo__item {
-  background-color: #ddd;
-  padding: 10px;
-  border: 1px solid #fff;
-  border-radius: 3px;
+  background-color: $gray-color;
+  padding: $spacing-sm $spacing;
+  border-radius: $border-radius;
 }

@@ -1,18 +1,21 @@
 /* Cookie */
 .cookie {
+  @include dark;
+
   position: fixed;
   z-index: 99999;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgba(#000, 0.8);
-  padding: 15px;
-  color: #fff;
+  background-color: rgba(#000, 0.75);
   font-size: 14px;
+  padding-top: $spacing-lg;
+  padding-bottom: $spacing-lg;
 }
 
 .cookie__inner {
-  max-width: $max-width;
+  @include inner;
+
   margin-left: auto;
   margin-right: auto;
 
@@ -30,8 +33,7 @@
 }
 
 .cookie__button {
-  padding: 10px 15px;
-  font-size: 12px;
+  @include t2;
 
   @include media("<tablet") {
     margin-top: 15px;

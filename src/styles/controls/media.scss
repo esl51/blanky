@@ -34,16 +34,18 @@
 
 .image-link__title,
 %image-link__title {
+  @include dark;
+  @include h2;
+  @include vmargin(0);
+
   position: absolute;
   left: 0;
   bottom: 0;
   padding: 45px 60px;
-  font: $title-font;
-  font-size: 50px;
   width: 100%;
   background-image: linear-gradient(to bottom, rgba(#000, 0) 0%, rgba(#000, 0.6) 100%);
 
-  @include media("<desktop") {
+  @include media("<laptop") {
     padding: 25px 30px;
   }
 }
@@ -59,7 +61,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 50px;
+  font-size: 48px;
   color: #fff;
   z-index: 2;
   width: 75px;
@@ -67,6 +69,11 @@
   border-radius: 50%;
   overflow: hidden;
   text-align: center;
+
+  svg {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .image-link--video {
@@ -90,6 +97,7 @@
   width: 100%;
   cursor: pointer;
   padding-bottom: 56.25%;
+  border-radius: $border-radius;
 
   iframe,
   img {
@@ -120,13 +128,6 @@
       visibility: visible;
       pointer-events: auto;
     }
-  }
-
-  .xpopup__dialog & {
-    width: auto;
-    margin-left: -30px;
-    margin-right: -30px;
-    margin-bottom: -30px;
   }
 
   &::before {

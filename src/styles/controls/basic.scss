@@ -28,17 +28,28 @@ img {
 }
 
 /* Headers */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @include vmargin(1em);
+h1 {
+  @include h1;
+}
 
-  font-family: $title-font-family;
-  font-weight: $title-font-weight;
-  line-height: $title-line-height;
+h2 {
+  @include h2;
+}
+
+h3 {
+  @include h3;
+}
+
+h4 {
+  @include h4;
+}
+
+h5 {
+  @include h5;
+}
+
+h6 {
+  @include h6;
 }
 
 /* Buttons */
@@ -55,12 +66,14 @@ input[type="reset"] {
 
 /* Icons */
 .icon {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
   svg {
-    display: block;
-    width: 1em;
-    height: 1em;
+    stroke-width: 1;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
 
@@ -68,21 +81,20 @@ input[type="reset"] {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-left: -10px;
-  margin-right: -10px;
+  margin: calc($spacing * -0.5);
 }
 
 .icons-demo__item {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  margin: calc($spacing * 0.5);
   width: 60px;
   height: 60px;
-  padding: 10px;
+  padding: $spacing;
   text-align: center;
-  font-size: 25px;
-  color: #000;
-  background-color: #ddd;
-  border-radius: 3px;
+  font-size: 24px;
+  color: $text-color;
+  background-color: $light-gray-color;
+  border-radius: $border-radius;
 }

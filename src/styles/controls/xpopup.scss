@@ -12,6 +12,7 @@
   overflow: hidden scroll;
   display: flex;
   align-items: center;
+  padding: $spacing-lg;
 
   &:not(.is-active) {
     opacity: 0;
@@ -22,27 +23,34 @@
   &.is-top {
     z-index: 10000;
   }
+
+  @include media("<tablet") {
+    padding: 0;
+  }
 }
 
 .xpopup__dialog {
   @include transition(all 0.3s $easing);
 
-  padding: 30px;
+  padding: $spacing-xl;
   width: 100%;
   background-color: #fff;
   max-width: 900px;
   margin: auto;
   position: relative;
   box-shadow: 0 2px 4px -1px rgba(#000, 0.14), 0 4px 5px 0 rgba(#000, 0.098), 0 1px 10px 0 rgba(#000, 0.084);
+  border-radius: $border-radius-lg;
 
   .xpopup--form & {
     max-width: 500px;
   }
 
   .xpopup--transparent & {
-    background-color: rgba(#000, 0.1);
+    @include dark;
+
+    background-color: transparent;
     box-shadow: none;
-    color: #fff;
+    padding: 0;
   }
 
   .xpopup:not(.is-active) & {
@@ -51,53 +59,45 @@
   }
 
   @include media("<tablet") {
-    padding: 30px 15px;
+    border-radius: 0;
   }
 }
 
 .xpopup__header {
-  margin-bottom: 30px;
+  @include h1;
+
+  margin-bottom: $spacing-lg;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .xpopup__title {
-  font: $title-font;
-  font-size: 22px;
+  @include vmargin(0);
+
   align-self: flex-start;
 }
 
 .xpopup__close {
+  @include vmargin(0);
+
+  color: $text-color;
   position: relative;
-  width: 18px;
-  height: 18px;
-  margin-left: auto;
-  color: currentColor;
-
-  &::before,
-  &::after {
-    @include absolute-block(22px, 3px);
-
-    left: 50%;
-    top: 50%;
-    background-color: currentColor;
-    border-radius: 2000px;
-  }
-
-  &::before {
-    transform: translateX(-50%) rotate(45deg);
-  }
-
-  &::after {
-    bottom: 0;
-    transform: translateX(-50%) rotate(135deg);
-  }
+  align-self: flex-start;
+  line-height: 1;
+  display: flex;
 
   &:hover,
   &:focus {
     outline: none;
     color: $main-color;
+  }
+}
+
+.xpopup__close-icon {
+  svg {
+    width: 1em;
+    height: 1em;
   }
 }
 

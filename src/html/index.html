@@ -1,44 +1,61 @@
 @@include('./_head.html')
 
-<div class="section" style="background: #f5f5f5;">
+<div class="section">
+	<div class="section__inner">
+		<div class="block">
+      <h2 class="block__title">Block</h2>
+      <div class="text">
+        <p>Block content</p>
+      </div>
+    </div>
+		<div class="block">
+      <h2 class="block__title">Second block</h2>
+      <div class="text">
+        <p>Second block content</p>
+      </div>
+    </div>
+	</div>
+</div>
+
+<div class="section" style="background: var(--light-gray-color);">
 	<div class="section__inner">
 		<h2 class="section__title">Grid</h2>
 		<div class="grid-demo">
 			<div class="row">
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
-				<div class="col col--p-6 col--t-4 col--d-3">
+				<div class="col col--p-6 col--t-4 col--l-3">
 					<div class="grid-demo__item">col</div>
 				</div>
 			</div>
@@ -51,31 +68,31 @@
 		<h2 class="section__title">Icons</h2>
 		<div class="icons-demo">
 			<span class="icons-demo__item icon">
-        @@include('../assets/icons/close.svg')
+        @@include('../../public/icons/close.svg')
       </span>
 			<span class="icons-demo__item icon">
-        @@include('../assets/icons/download.svg')
+        @@include('../../public/icons/download.svg')
       </span>
 			<span class="icons-demo__item icon">
-        @@include('../assets/icons/menu.svg')
+        @@include('../../public/icons/menu.svg')
       </span>
 			<span class="icons-demo__item icon">
-        @@include('../assets/icons/next.svg')
+        @@include('../../public/icons/next.svg')
       </span>
 			<span class="icons-demo__item icon">
-        @@include('../assets/icons/play.svg')
+        @@include('../../public/icons/play.svg')
       </span>
 			<span class="icons-demo__item icon">
-        @@include('../assets/icons/prev.svg')
+        @@include('../../public/icons/prev.svg')
       </span>
 			<span class="icons-demo__item icon">
-        @@include('../assets/icons/search.svg')
+        @@include('../../public/icons/search.svg')
       </span>
 		</div>
 	</div>
 </div>
 
-<div class="section" style="background: #f5f5f5;">
+<div class="section" style="background: var(--light-gray-color);">
 	<div class="section__inner">
 		<h2 class="section__title">xSlider: basic</h2>
 		<div class="xslider js-xslider">
@@ -101,12 +118,12 @@
 			<div class="xslider__arrows">
 				<button class="xslider__arrow" data-prev>
           <span class="icon">
-            @@include('../assets/icons/prev.svg')
+            @@include('../../public/icons/prev.svg')
           </span>
         </button>
 				<button class="xslider__arrow" data-next>
           <span class="icon">
-            @@include('../assets/icons/next.svg')
+            @@include('../../public/icons/next.svg')
           </span>
         </button>
 			</div>
@@ -140,12 +157,12 @@
 			<div class="xslider__arrows">
 				<button class="xslider__arrow" data-prev>
           <span class="icon">
-            @@include('../assets/icons/prev.svg')
+            @@include('../../public/icons/prev.svg')
           </span>
         </button>
 				<button class="xslider__arrow" data-next>
           <span class="icon">
-            @@include('../assets/icons/next.svg')
+            @@include('../../public/icons/next.svg')
           </span>
         </button>
 			</div>
@@ -153,7 +170,7 @@
 	</div>
 </div>
 
-<div class="section section--breadcrumbs" style="background: #f5f5f5;">
+<div class="section section--breadcrumbs" style="background: var(--light-gray-color);">
 	<div class="section__inner section__inner--breadcrumbs">
 		<h2 class="section__title">Breadcrumbs</h2>
     @@include('./_breadcrumbs.html')
@@ -183,18 +200,18 @@
 				<p>Согласно ставшей уже классической работе Филипа Котлера, потребление развивает презентационный материал, не считаясь с затратами. Управление брендом сознательно экономит типичный пресс-клиппинг, повышая конкуренцию.</p>
 				<p style="text-align: right;">&copy; Питер Пен</p>
 			</blockquote>
-			<h2>Креативный инструмент маркетинга: методология и особенности</h2>
-			<p>Как отмечает Майкл Мескон, комплексный анализ ситуации раскручивает бюджет на размещение, используя опыт предыдущих кампаний. К тому же баинг и селлинг однообразно <a href="img/temp/tmp1.jpg" target="_blank">тормозит эмпирический медиамикс</a>, не считаясь с затратами. Спонсорство достижимо в разумные сроки. Позиционирование на рынке настроено позитивно. Еще Траут показал, что российская специфика тормозит коллективный стиль менеджмента, расширяя долю рынка.</p>
+			<h2>Креативный инструмент маркетинга: методология и особенности (h2)</h2>
+			<p>Как отмечает Майкл Мескон, комплексный анализ ситуации раскручивает бюджет на размещение, используя опыт предыдущих кампаний. К тому же баинг и селлинг однообразно <a href="img/temp/tmp1.jpg" target="_blank">тормозит эмпирический медиамикс</a>, не считаясь с затратами. Спонсорство достижимо в разумные сроки. Позиционирование на рынке настроено позитивно. Еще Траут показал, что российская специфика тормозит <span class="marker">коллективный стиль</span> менеджмента, расширяя долю рынка.</p>
 			<p>Согласно ставшей уже классической работе <em>Филипа Котлера</em>, потребление развивает презентационный материал, не считаясь с затратами. Управление брендом сознательно экономит типичный пресс-клиппинг, повышая конкуренцию. Продвижение <a href="img/temp/tmp2.jpg" target="_blank">проекта реально переворачивает</a> эмпирический отраслевой стандарт, работая над проектом. Формирование имиджа ригиден как никогда. Общество потребления восстанавливает креативный бюджет на размещение, осознав маркетинг как часть производства.</p>
 			<p>Ассортиментная политика предприятия без оглядки на авторитеты все еще интересна для многих. Представляется логичным, что традиционный канал традиционно тормозит продуктовый ассортимент, осознавая социальную <strong>ответственность бизнеса</strong>. Ретроконверсия национального наследия решительно индуцирует типичный рекламный клаттер, учитывая современные тенденции. Взаимодействие корпорации и клиента порождает побочный PR-эффект, работая над проектом. Российская специфика, как следует из <a href="http://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">вышесказанного</a>, директивно изменяет эксклюзивный инвестиционный продукт, осознавая социальную ответственность бизнеса. Стратегический рыночный план, на первый взгляд, индуцирует системный анализ, не считаясь с затратами.</p>
-			<h3>Маркированный список</h3>
+			<h3>Маркированный список (h3)</h3>
 			<ul>
 				<li>Как найти новый источник клиентов не затратив при этом ни копейки;</li>
 				<li>Основные принципы переговоров с клиентами и партнерами;</li>
 				<li>Взаимодействие корпорации и клиента порождает побочный PR-эффект, работая над проектом. Российская специфика, как следует из вышесказанного, директивно изменяет эксклюзивный инвестиционный продукт, осознавая социальную ответственность бизнеса. Стратегический рыночный план, на первый взгляд, индуцирует системный анализ, не считаясь с затратами;</li>
 				<li>Основные принципы мотивации...</li>
 			</ul>
-			<h4>Нумерованный список</h4>
+			<h4>Нумерованный список (h4)</h4>
 			<ol>
 				<li>Как найти новый источник клиентов не затратив при этом ни копейки;</li>
 				<li>Основные принципы переговоров с клиентами и партнерами;</li>
@@ -209,7 +226,7 @@
 				<li>Как уничтожить взглядом конкурентов и вывести свой бизнес на новый уровень;</li>
 				<li>Основные принципы мотивации...</li>
 			</ol>
-			<h5>Таблица</h5>
+			<h5>Таблица (h5)</h5>
 			<table>
 				<thead>
 					<tr>
@@ -246,26 +263,26 @@
 					</tr>
 				</tbody>
 			</table>
-			<h6>Код</h6>
+			<h6>Код (h6)</h6>
 			<code>
 			&lt;a class="file__download" href="#" target="_blank"&gt;
 			<br>&nbsp; &nbsp; &lt;span class="i-download"&gt;&lt;/span&gt;
 			<br>&lt;/a&gt;
 			</code>
-			<h2>Встроенное адаптивное видео</h2>
+			<h2>Встроенное адаптивное видео 16:9</h2>
 			<div class="iframe-video" data-iframe tabindex="0">
         <img src="img/temp/tmp1.jpg" alt>
 				<iframe data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&amp;rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         <div class="iframe-video__title">Iframe video</div>
         <span class="iframe-video__play icon">
-          @@include('../assets/icons/play.svg')
+          @@include('../../public/icons/play.svg')
         </span>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="section section--pagination" style="background: #f5f5f5;">
+<div class="section section--pagination" style="background: var(--light-gray-color);">
 	<div class="section__inner section__inner--pagination">
     <h2 class="section__title">Pagination</h2>
     @@include('./_pagination.html')
@@ -279,7 +296,7 @@
 	</div>
 </div><!-- /files -->
 
-<div class="section section--buttons" style="background: #f5f5f5;">
+<div class="section section--buttons" style="background: var(--light-gray-color);">
 	<div class="section__inner section__inner--buttons">
 		<h2 class="section__title">Popups</h2>
 		<div class="buttons">
@@ -294,9 +311,16 @@
 	<div class="xpopup__dialog">
 		<div class="xpopup__header">
 			<div class="xpopup__title">xPopup xForm</div>
-			<button class="xpopup__close" aria-label="Закрыть" data-close></button>
+			<button class="xpopup__close" aria-label="Закрыть" data-close>
+        <span class="xpopup__close-icon icon">
+          @@include('../../public/icons/close.svg')
+        </span>
+      </button>
 		</div>
-		<form class="xform xform--placeholders js-xform">
+    <div class="text">
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore laborum fugiat totam ipsum minima accusantium unde ratione perspiciatis, aspernatur, quasi cum. Aperiam esse atque dolorem architecto sit voluptates cupiditate enim?</p>
+    </div>
+		<form class="xform xform--placeholders js-xform" action="xform.html">
       <input id="hidden-5fc20c76b9d7c" name="xform" type="hidden" value="feedback">
       <div class="xform__section">
         <div class="xform__section-header">
@@ -305,15 +329,16 @@
         <div class="xform__field xform__field--required xform__field--activated">
           <label class="xform__label" for="input-5fc20c76b9d81">Ваше имя</label>
           <input class="xform__input" id="input-5fc20c76b9d81" name="name" type="text" title="Ваше имя" value="robert paulson" required>
+          <div class="xform__hint">Пояснение к полю</div>
         </div>
-        <div class="xform__row">
-          <div class="xform__col">
+        <div class="xform__row row">
+          <div class="xform__col col col--t-6">
             <div class="xform__field xform__field--required xform__field--activated">
               <label class="xform__label" for="input-5fc20c76b9d88">E-mail</label>
               <input class="xform__input" id="input-5fc20c76b9d88" name="email" type="email" title="E-mail" value="r.paulson@example.com" required>
             </div>
           </div>
-          <div class="xform__col">
+          <div class="xform__col col col--t-6">
             <div class="xform__field">
               <label class="xform__label" for="input-5fc20c76b9d8b">Номер телефона</label>
               <input class="xform__input" id="input-5fc20c76b9d8b" name="phone" type="tel" title="Номер телефона" value>
@@ -323,6 +348,7 @@
         <div class="xform__field">
           <label class="xform__label" for="textarea-5fc20c76b9d8e">Сообщение</label>
           <textarea id="textarea-5fc20c76b9d8e" class="xform__input xform__input--text" name="message" title="Сообщение"></textarea>
+          <div class="xform__error">Кажется, тут какая-то ошибка</div>
         </div>
         <div class="xform__field">
           <label class="xform__label" for="select-5fc20c76b9d91">Тема</label>
@@ -337,8 +363,8 @@
         <div class="xform__section-header">
           <h3 class="xform__section-title">Дополнительно</h3>
         </div>
-        <div class="xform__row">
-          <div class="xform__col">
+        <div class="xform__row row">
+          <div class="xform__col col col--t-6">
             <div class="xform__field">
               <fieldset class="xform__fieldset">
                 <legend class="xform__legend">Радио-кнопки</legend>
@@ -353,7 +379,7 @@
               </fieldset>
             </div>
           </div>
-          <div class="xform__col">
+          <div class="xform__col col col--t-6">
             <div class="xform__field">
               <fieldset class="xform__fieldset">
                 <legend class="xform__legend">Флаги</legend>
@@ -394,7 +420,11 @@
 	<div class="xpopup__dialog">
 		<div class="xpopup__header">
 			<div class="xpopup__title">xPopup Iframe</div>
-			<button class="xpopup__close" aria-label="Закрыть" data-close></button>
+			<button class="xpopup__close" aria-label="Закрыть" data-close>
+        <span class="xpopup__close-icon icon">
+          @@include('../../public/icons/close.svg')
+        </span>
+      </button>
 		</div>
 		<div class="iframe-video" data-iframe tabindex="0">
 			<iframe data-src="http://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&amp;rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -406,9 +436,13 @@
 	<div class="xpopup__dialog">
 		<div class="xpopup__header">
 			<div class="xpopup__title">xPopup Ajax</div>
-			<button class="xpopup__close" aria-label="Закрыть" data-close></button>
+			<button class="xpopup__close" aria-label="Закрыть" data-close>
+        <span class="xpopup__close-icon icon">
+          @@include('../../public/icons/close.svg')
+        </span>
+      </button>
 		</div>
-		<div class="js-xloader" data-ajax data-url="ajax.html" data-params='{ "data": "test" }' data-load-on-mount="false" data-append="false"></div>
+		<div class="js-xloader" data-ajax data-url="xloader.html" data-params='{ "data": "test" }' data-load-on-mount="false" data-append="false"></div>
 	</div>
 </div>
 

@@ -29,16 +29,8 @@
 
 @mixin section {
   max-width: 100%;
-
-  @include media("<desktop") {
-    padding-top: math.div($section-padding, 2);
-    padding-bottom: math.div($section-padding, 2);
-  }
-
-  @include media(">=desktop") {
-    padding-top: $section-padding;
-    padding-bottom: $section-padding;
-  }
+  padding-top: calc($section-spacing * 0.5);
+  padding-bottom: calc($section-spacing * 0.5);
 }
 
 @mixin inner {
@@ -46,16 +38,91 @@
   max-width: $max-width;
   margin-left: auto;
   margin-right: auto;
+  padding-left: $inner-spacing;
+  padding-right: $inner-spacing;
+}
 
-  @include media("<desktop") {
-    padding-left: math.div($inner-padding, 2);
-    padding-right: math.div($inner-padding, 2);
-  }
+@mixin block {
+  @include vmargin($block-spacing);
 
-  @include media(">=desktop") {
-    padding-left: $inner-padding;
-    padding-right: $inner-padding;
-  }
+  width: 100%;
+}
+
+@mixin text {
+  font-family: $text-family;
+  font-weight: $text-weight;
+  color: $text-color;
+}
+
+@mixin t1 {
+  @include text;
+
+  font-size: $text-size;
+  line-height: $text-height;
+}
+
+@mixin t2 {
+  @include text;
+
+  font-size: $text-size-sm;
+  line-height: $text-height-sm;
+}
+
+@mixin dark {
+  --text-color: #fff;
+  --heading-color: #fff;
+
+  color: var(--text-color);
+}
+
+@mixin heading {
+  @include vmargin($heading-spacing);
+
+  font-family: $heading-family;
+  font-weight: $heading-weight;
+  color: $heading-color;
+}
+
+@mixin h1 {
+  @include heading;
+
+  font-size: $h1-size;
+  line-height: $h1-height;
+}
+
+@mixin h2 {
+  @include heading;
+
+  font-size: $h2-size;
+  line-height: $h2-height;
+}
+
+@mixin h3 {
+  @include heading;
+
+  font-size: $h3-size;
+  line-height: $h3-height;
+}
+
+@mixin h4 {
+  @include heading;
+
+  font-size: $h4-size;
+  line-height: $h4-height;
+}
+
+@mixin h5 {
+  @include heading;
+
+  font-size: $h5-size;
+  line-height: $h5-height;
+}
+
+@mixin h6 {
+  @include heading;
+
+  font-size: $h6-size;
+  line-height: $h6-height;
 }
 
 @function str-replace($string, $search, $replace: "") {

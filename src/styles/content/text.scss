@@ -10,11 +10,11 @@
 
   /* Blockquotes */
   blockquote {
-    padding: 1em 1.5em;
+    padding: $spacing-sm $spacing-lg;
     margin-left: 0;
     margin-right: 0;
-    background: rgba(#afafaf, 0.1);
-    border-left: 2px solid $main-color;
+    background: $light-gray-color;
+    border-left: 3px solid $main-color;
   }
 
   /* Links */
@@ -40,13 +40,12 @@
 
   figure {
     display: table;
-    margin: 1em 0;
 
     figcaption {
       display: table-caption;
       caption-side: bottom;
       line-height: 1.3em;
-      color: #777;
+      color: $gray-color;
       font-size: 13px;
     }
   }
@@ -90,39 +89,28 @@
   }
 
   /* Headers */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: $title-font-family;
-    font-weight: $title-font-weight;
-    line-height: $title-line-height;
-  }
-
   h1 {
-    font-size: $title-font-size;
+    @include h1;
   }
 
   h2 {
-    font-size: $title-font-size * 0.73;
+    @include h2;
   }
 
   h3 {
-    font-size: $title-font-size * 0.7;
+    @include h3;
   }
 
   h4 {
-    font-size: $title-font-size * 0.67;
+    @include h4;
   }
 
   h5 {
-    font-size: $title-font-size * 0.63;
+    @include h5;
   }
 
   h6 {
-    font-size: $title-font-size * 0.6;
+    @include h6;
   }
 
   /* Horizontal line */
@@ -133,7 +121,8 @@
 
   /* Tables */
   table {
-    font-size: 0.9em;
+    @include t2;
+
     width: 100%;
     border: none;
     border-collapse: collapse;
@@ -141,29 +130,57 @@
 
   td,
   th {
-    border: 1px solid rgba(#fff, 0.3);
-    padding: 0.8em 2em;
+    padding: $spacing-sm $spacing-lg;
 
-    @include media("<desktop") {
-      padding: 0.4em 1.5em;
+    @include media("<tablet") {
+      padding-left: $spacing-sm;
+      padding-right: $spacing-sm;
     }
   }
 
   tbody td {
-    background: rgba(#000, 0.05);
+    background: $light-gray-color;
+    border-bottom: 1px solid #fff;
   }
 
   thead td,
   th {
     background: $main-color;
     color: #fff;
-    font-weight: $text-font-weight;
-    border-color: $main-color;
-    border-right-color: rgba(#fff, 0.2);
+    font-weight: $text-weight;
     text-align: left;
+    border-bottom: 1px solid #fff;
+  }
 
-    &:last-child {
-      border-right-color: $main-color;
+  tr:first-child td:first-child,
+  tr:first-child th:first-child {
+    border-top-left-radius: $border-radius;
+  }
+
+  tr:first-child td:last-child,
+  tr:first-child th:last-child {
+    border-top-right-radius: $border-radius;
+  }
+
+  thead + tbody {
+    tr:first-child td:first-child,
+    tr:first-child th:first-child {
+      border-top-left-radius: 0;
+    }
+
+    tr:first-child td:last-child,
+    tr:first-child th:last-child {
+      border-top-right-radius: 0;
+    }
+
+    tr:last-child td:first-child,
+    tr:last-child th:first-child {
+      border-bottom-left-radius: $border-radius;
+    }
+
+    tr:last-child td:last-child,
+    tr:last-child th:last-child {
+      border-bottom-right-radius: $border-radius;
     }
   }
 
@@ -176,6 +193,7 @@
   ul,
   ol {
     padding-left: 2em;
+    margin-left: $spacing-lg;
   }
 
   ol {
@@ -183,9 +201,9 @@
   }
 
   li {
+    @include vmargin($spacing-sm);
+
     list-style-type: none;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
 
     &::before {
       display: inline-block;
@@ -222,26 +240,23 @@
   ul,
   ol,
   table,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
   figure,
   .table-container {
-    @include vmargin(1em);
+    @include vmargin($text-spacing);
   }
 
   /* Marker */
   .marker {
-    background-color: color.adjust($main-color, $lightness: 30%);
+    background-color: color.adjust($main-color-hex, $lightness: 45%);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-radius: $border-radius-sm;
   }
 }
 
 /* Columns */
 .text--columns-2 {
-  @include media(">=desktop") {
+  @include media(">=laptop") {
     columns: 2;
     column-gap: $col-gutter;
   }

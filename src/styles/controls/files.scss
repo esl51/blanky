@@ -1,41 +1,41 @@
 /* Files */
+.files__list {
+  overflow: hidden;
+  border-radius: $border-radius;
+}
+
 .files__item {
-  @include vmargin(5px);
+  @include vmargin(1px);
 }
 
 .files__link {
   display: flex;
   align-content: stretch;
-  background-color: #fafafa;
+  background-color: $light-gray-color;
 }
 
 .files__title {
   @include transition;
 
   flex-grow: 1;
-  padding: 15px 20px;
+  padding: $spacing-sm $spacing-lg;
 
   a.files__link:hover &,
   a.files__link:focus & {
     outline: none;
     color: $main-color;
   }
-
-  @include media("<tablet") {
-    font-size: 14px;
-  }
 }
 
 .files__download {
   @include transition;
 
-  flex: 0 0 100px;
+  padding: $spacing-sm $spacing-lg;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: $text-color;
-  font-size: 18px;
   text-align: center;
   border-right: 1px solid rgba(#000, 0.05);
 

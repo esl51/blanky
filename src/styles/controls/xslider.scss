@@ -1,6 +1,11 @@
 /* xSlider */
 .xslider {
   position: relative;
+
+  @include media("<tablet") {
+    margin-left: calc($inner-spacing * -1);
+    margin-right: calc($inner-spacing * -1);
+  }
 }
 
 .xslider__viewport {
@@ -37,7 +42,7 @@
   .xslider--carousel-3 & {
     flex-basis: 33.3333%;
 
-    @include media("<desktop") {
+    @include media("<laptop") {
       flex-basis: 50%;
     }
   }
@@ -45,7 +50,7 @@
   .xslider--carousel-4 & {
     flex-basis: 25%;
 
-    @include media("<desktop") {
+    @include media("<laptop") {
       flex-basis: 50%;
     }
   }
@@ -53,7 +58,7 @@
   .xslider--carousel-5 & {
     flex-basis: 20%;
 
-    @include media("<desktop") {
+    @include media("<laptop") {
       flex-basis: 50%;
     }
   }
@@ -66,29 +71,29 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   pointer-events: none;
+  padding-left: $spacing-lg;
+  padding-right: $spacing-lg;
 
-  @include media("<desktop") {
-    padding-left: 0;
-    padding-right: 0;
+  @media (hover: hover) and (pointer: fine) {
+    display: flex;
   }
 }
 
 .xslider__arrow {
   @include transition;
 
-  width: 35px;
-  height: 85px;
   background-color: rgba(#000, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
   color: #fff;
   pointer-events: auto;
+  border-radius: $border-radius;
+  padding: $spacing;
 
   &:hover,
   &:focus {
@@ -145,7 +150,7 @@
       display: block;
       width: 10px;
       height: 10px;
-      background-color: #e8e8e8;
+      background-color: $light-gray-color;
       border-radius: 50%;
     }
 

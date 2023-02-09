@@ -1,7 +1,8 @@
 /* Header */
 .section--header {
+  @include dark;
+
   background: $main-color;
-  color: #fff;
   padding-top: 20px;
   padding-bottom: 20px;
   position: relative;

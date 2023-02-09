@@ -3,7 +3,7 @@ import { Notyf } from 'notyf'
 export default class XNotify {
   constructor () {
     this.notyf = new Notyf({
-      duration: 7000,
+      duration: 5000,
       dismissible: true,
       position: {
         x: 'center',

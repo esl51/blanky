@@ -2,20 +2,22 @@
 
 /* Button */
 .button {
+  @include t1;
+  @include transition;
+
   display: inline-block;
   background: $main-color;
-  padding: 8px 18px;
-  font: $text-font;
+  padding: $spacing-sm $spacing-lg;
   color: #fff;
   text-align: center;
   cursor: pointer;
   text-decoration: none;
-  border: none;
-  border-radius: 0;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
 
   &:hover,
   &:focus {
-    background: color.adjust($main-color, $lightness: 10%);
+    background: color.adjust($main-color-hex, $lightness: 10%);
     outline: none;
     text-decoration: none;
   }

@@ -1,6 +1,7 @@
 /* Footer */
 .section--footer {
-  background: #1c1c1b;
-  color: #fff;
+  @include dark;
+
+  background: $text-color-hex;
   flex-shrink: 0;
 }

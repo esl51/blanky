@@ -5,6 +5,10 @@
   z-index: 99999;
 }
 
+.notyf__toast {
+  border-radius: $border-radius;
+}
+
 .notyf__icon i {
   display: block;
   width: 22px;

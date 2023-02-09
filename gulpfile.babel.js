@@ -236,7 +236,15 @@ export const server = () => {
     ui: false,
     notify: false,
     server: {
-      baseDir: config.dest
+      baseDir: config.dest,
+      routes: {},
+      middleware: function (req, res, next) {
+        if (/\.json|\.txt|\.html/.test(req.url) && req.method.toUpperCase() === 'POST') {
+          console.log('[POST => GET] : ' + req.url)
+          req.method = 'GET'
+        }
+        next()
+      }
     }
   })
 }
