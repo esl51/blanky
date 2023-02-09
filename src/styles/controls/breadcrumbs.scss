@@ -1,16 +1,14 @@
 /* Breadcrumbs */
 .breadcrumbs__item {
-  display: inline-block;
+  display: inline;
   margin-right: 0.5em;
-}
 
-.breadcrumbs__corner {
-  font-size: 0.5em;
-  margin-left: 1em;
-  opacity: 0.5;
-
-  .breadcrumbs__item:last-child & {
-    display: none;
+  &:not(:last-child) {
+    &::after {
+      display: inline-block;
+      content: "/";
+      margin-left: 0.5em;
+    }
   }
 }
 
