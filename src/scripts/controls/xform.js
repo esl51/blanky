@@ -120,7 +120,7 @@ export default class XForm {
     const box = element.getBoundingClientRect()
     const top = box.top + window.pageYOffset - de.clientTop
     const left = box.left + window.pageXOffset - de.clientLeft
-    return { top: top, left: left }
+    return { top, left }
   }
 
   readFiles (callback) {
@@ -160,19 +160,17 @@ export default class XForm {
     }
   }
 
-  sendForm (formData) {
+  async sendForm (formData) {
     const errored = this.form.querySelectorAll('.' + this.settings.errorClass)
     errored.forEach(err => {
       err.remove()
     })
-
-    const xhr = new XMLHttpRequest()
-    xhr.open('post', this.settings.action)
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-    xhr.responseType = 'json'
-
-    xhr.onload = () => {
-      const data = xhr.response
+    const response = await fetch(this.settings.action, {
+      method: 'post',
+      body: formData
+    })
+    if (response.ok) {
+      const data = await response.json()
       const error = data.error
       const errors = data.errors
       const hasErrors = (error && error.length) || (errors && Object.keys(errors).length > 0)
@@ -226,24 +224,17 @@ export default class XForm {
         }
         this.toggleEvent('success')
       }
-    }
-
-    xhr.onloadend = () => {
-      if (this.securityInput) {
-        this.securityInput.remove()
-      }
-      this.submitButtons.forEach(button => {
-        button.disabled = false
-      })
-      this.form.classList.remove(this.settings.submittingClass)
-      this.toggleEvent('complete')
-    }
-
-    xhr.onerror = () => {
+    } else {
       this.toggleEvent('error')
     }
-
-    xhr.send(formData)
+    if (this.securityInput) {
+      this.securityInput.remove()
+    }
+    this.submitButtons.forEach(button => {
+      button.disabled = false
+    })
+    this.form.classList.remove(this.settings.submittingClass)
+    this.toggleEvent('complete')
   }
 
   _formSubmit (e) {
