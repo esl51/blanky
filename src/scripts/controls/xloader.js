@@ -157,7 +157,7 @@ export default class XLoader {
     this.toggleEvent('finish')
   }
 
-  load () {
+  async load () {
     this.loadItems()
     if (!this.settings.append) {
       if (this.settings.clearAfterLoad) {
@@ -178,13 +178,9 @@ export default class XLoader {
 
     this.beforeLoad()
 
-    const xhr = new XMLHttpRequest()
-    xhr.open('get', url)
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-    xhr.responseType = 'json'
-
-    xhr.onload = () => {
-      const data = xhr.response
+    const response = await fetch(url)
+    if (response.ok) {
+      const data = await response.json()
       if (data.html) {
         this.loadItems()
         if (this.items.length) {
@@ -201,13 +197,9 @@ export default class XLoader {
       if (data.last) {
         this.afterFinish()
       }
-    }
-
-    xhr.onerror = () => {
+    } else {
       this.toggleEvent('error')
     }
-
-    xhr.send()
 
     return this
   }
