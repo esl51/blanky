@@ -160,6 +160,48 @@ export default class XForm {
     }
   }
 
+  handleErrors (error, errors) {
+    if (error && error.length) {
+      xnotify.error(error)
+    }
+    if (errors && Object.keys(errors).length > 0) {
+      for (const field in errors) {
+        if (Object.prototype.hasOwnProperty.call(errors, field)) {
+          const input = this.form.querySelector('[name=' + field + ']')
+          if (input) {
+            errors[field].forEach(err => {
+              const errElem = document.createElement('div')
+              errElem.classList.add(this.settings.errorClass)
+              errElem.textContent = err
+              input.closest('.' + this.settings.fieldClass).appendChild(errElem)
+            })
+          }
+        }
+      }
+      let fieldElem
+      const errElem = this.form.querySelector('.' + this.settings.errorClass)
+      if (errElem) {
+        fieldElem = errElem.closest('.' + this.settings.fieldClass)
+      }
+      if (fieldElem) {
+        const fieldOffsetTop = this.getElementOffset(fieldElem).top
+        let scrollTop = fieldOffsetTop
+        let scrollContainer = document.scrollingElement || document.documentElement
+        const wrap = fieldElem.closest('.xpopup')
+        if (wrap) {
+          const baseScrollTop = scrollContainer.scrollTop
+          scrollContainer = wrap
+          scrollTop = scrollContainer.scrollTop + fieldOffsetTop - baseScrollTop
+        }
+        animateScrollTo(scrollTop, {
+          elementToScroll: scrollContainer,
+          speed: 300
+        })
+      }
+    }
+    this.toggleEvent('error')
+  }
+
   async sendForm (formData) {
     const errored = this.form.querySelectorAll('.' + this.settings.errorClass)
     errored.forEach(err => {
@@ -175,45 +217,7 @@ export default class XForm {
       const errors = data.errors
       const hasErrors = (error && error.length) || (errors && Object.keys(errors).length > 0)
       if (hasErrors) {
-        if (error && error.length) {
-          xnotify.error(error)
-        }
-        if (errors && Object.keys(errors).length > 0) {
-          for (const field in errors) {
-            if (Object.prototype.hasOwnProperty.call(errors, field)) {
-              const input = this.form.querySelector('[name=' + field + ']')
-              if (input) {
-                errors[field].forEach(err => {
-                  const errElem = document.createElement('div')
-                  errElem.classList.add(this.settings.errorClass)
-                  errElem.textContent = err
-                  input.closest('.' + this.settings.fieldClass).appendChild(errElem)
-                })
-              }
-            }
-          }
-          let fieldElem
-          const errElem = this.form.querySelector('.' + this.settings.errorClass)
-          if (errElem) {
-            fieldElem = errElem.closest('.' + this.settings.fieldClass)
-          }
-          if (fieldElem) {
-            const fieldOffsetTop = this.getElementOffset(fieldElem).top
-            let scrollTop = fieldOffsetTop
-            let scrollContainer = document.scrollingElement || document.documentElement
-            const wrap = fieldElem.closest('.mfp-wrap')
-            if (wrap) {
-              const baseScrollTop = scrollContainer.scrollTop
-              scrollContainer = wrap
-              scrollTop = scrollContainer.scrollTop + fieldOffsetTop - baseScrollTop
-            }
-            animateScrollTo(scrollTop, {
-              elementToScroll: scrollContainer,
-              speed: 300
-            })
-          }
-        }
-        this.toggleEvent('error')
+        this.handleErrors(error, errors)
       } else {
         const success = data.success
         if (this.settings.resetOnSuccess) {
