@@ -8,7 +8,7 @@ $gray-color-hex: #d5d5d5;
 $dark-gray-color-hex: #5a5a5a;
 $dark-color-hex: #2a2a2a;
 $red-color-hex: #ed4337;
-$muted-color-hex: color.adjust($text-color-hex, $lightness: 35%);
+$muted-color-hex: color.adjust($dark-color-hex, $lightness: 35%);
 $default-fonts: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
 // Breakpoints
