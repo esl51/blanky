@@ -3,7 +3,7 @@
   @include dark;
   @include transition;
 
-  background-color: $main-color-hex;
+  background-color: $main-color;
   padding-top: $spacing;
   padding-bottom: $spacing;
   position: sticky;
@@ -12,6 +12,6 @@
   z-index: 1000;
 
   &.is-scrolled {
-    background-color: $text-color-hex;
+    background-color: $dark-color;
   }
 }

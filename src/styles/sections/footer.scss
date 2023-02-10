@@ -2,7 +2,7 @@
 .section--footer {
   @include dark;
 
-  background-color: $text-color-hex;
+  background-color: $dark-color;
   padding-top: $spacing;
   padding-bottom: $spacing;
   flex-shrink: 0;

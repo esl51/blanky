@@ -3,10 +3,10 @@
 
 // Colors
 $main-color-hex: #4581ab;
-$text-color-hex: #2a2a2a;
 $light-gray-color-hex: #f7f7f7;
 $gray-color-hex: #d5d5d5;
 $dark-gray-color-hex: #5a5a5a;
+$dark-color-hex: #2a2a2a;
 $red-color-hex: #ed4337;
 $muted-color-hex: color.adjust($text-color-hex, $lightness: 35%);
 $default-fonts: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -26,11 +26,13 @@ $columns-count: 12;
 :root {
   // Colors
   --main-color: #{$main-color-hex};
-  --muted-color: #{$muted-color-hex};
   --light-gray-color: #{$light-gray-color-hex};
   --gray-color: #{$gray-color-hex};
   --dark-gray-color: #{$dark-gray-color-hex};
+  --dark-color: #{$dark-color-hex};
   --red-color: #{$red-color-hex};
+  --danger-color: var(--red-color);
+  --muted-color: #{$muted-color-hex};
 
   // Spacing
   --spacing: 16px;
@@ -51,7 +53,7 @@ $columns-count: 12;
   --text-height-sm: 20px;
   --text-size-lg: 20px;
   --text-height-lg: 28px;
-  --text-color: #{$text-color-hex};
+  --text-color: var(--dark-color);
   --text-weight: 400;
   --text-family: "Open Sans", #{$default-fonts};
   --text-spacing: var(--spacing);
@@ -93,11 +95,13 @@ $columns-count: 12;
 
 // Colors
 $main-color: var(--main-color);
-$muted-color: var(--muted-color);
 $light-gray-color: var(--light-gray-color);
 $gray-color: var(--gray-color);
 $dark-gray-color: var(--dark-gray-color);
+$dark-color: var(--dark-gray-color);
 $red-color: var(--red-color);
+$danger-color: var(--danger-color);
+$muted-color: var(--muted-color);
 
 // Spacing
 $spacing: var(--spacing);

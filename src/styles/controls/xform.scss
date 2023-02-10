@@ -23,7 +23,7 @@ $xform-hint-color: $muted-color !default;
 $xform-hint-font-size: $text-size-sm !default;
 $xform-hint-line-height: $text-height-sm !default;
 $xform-hint-margin: $spacing-xs !default;
-$xform-error-color: $red-color !default;
+$xform-error-color: $danger-color !default;
 
 @keyframes xform-preloader {
   from {
@@ -58,7 +58,7 @@ $xform-error-color: $red-color !default;
     margin: 0 auto;
     z-index: 2;
     border: 2px solid rgba(#000, 0.2);
-    border-bottom-color: $text-color;
+    border-bottom-color: $dark-color;
     border-radius: 50%;
     display: none;
   }
