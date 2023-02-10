@@ -3,12 +3,11 @@
 .social {
   display: flex;
   flex-wrap: wrap;
+  margin: calc($spacing * -0.5);
 }
 
 .social__item {
-  &:not(:last-child) {
-    margin-right: $spacing-sm;
-  }
+  margin: calc($spacing * 0.5);
 }
 
 .social__link {
