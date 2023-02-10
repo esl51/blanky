@@ -25,6 +25,7 @@
     "custom-event-polyfill": "^1.0.7",
     "element-closest-polyfill": "^1.0.2",
     "element-qsa-scope": "^1.1.0",
+    "glightbox": "^3.2.0",
     "include-media": "^2.0.0",
     "normalize.css": "^8.0.1",
     "notyf": "^3.10.0",

@@ -4,7 +4,7 @@
 // Colors
 $main-color-hex: #4581ab;
 $text-color-hex: #2a2a2a;
-$light-gray-color-hex: #fafafa;
+$light-gray-color-hex: #f7f7f7;
 $gray-color-hex: #d5d5d5;
 $dark-gray-color-hex: #5a5a5a;
 $red-color-hex: #ed4337;
@@ -49,6 +49,8 @@ $columns-count: 12;
   --text-height: 24px;
   --text-size-sm: 12px;
   --text-height-sm: 20px;
+  --text-size-lg: 20px;
+  --text-height-lg: 28px;
   --text-color: #{$text-color-hex};
   --text-weight: 400;
   --text-family: "Open Sans", #{$default-fonts};
@@ -74,7 +76,7 @@ $columns-count: 12;
   --heading-spacing: var(--spacing-lg);
 
   // Sizes
-  --section-spacing: 120px;
+  --section-spacing: 100px;
   --inner-spacing: 40px;
   --block-spacing: var(--spacing-lg);
   --min-width: 320px;
@@ -116,6 +118,8 @@ $text-size: var(--text-size);
 $text-height: var(--text-height);
 $text-size-sm: var(--text-size-sm);
 $text-height-sm: var(--text-height-sm);
+$text-size-lg: var(--text-size-lg);
+$text-height-lg: var(--text-height-lg);
 $text-family: var(--text-family);
 $text-spacing: var(--text-spacing);
 $strong-weight: var(--strong-weight);
@@ -167,6 +171,8 @@ $col-gutter: var(--col-gutter);
 
     // Text
     --text-size: 14px;
+    --text-size-sm: 12px;
+    --text-size-lg: 16px;
 
     // Headings
     --h1-size: 24px;

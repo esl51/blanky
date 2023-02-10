@@ -64,8 +64,6 @@ body {
 .section {
   @include section;
 
-  background-color: #fff;
-
   .sections &:last-child {
     flex-grow: 1;
   }
@@ -73,32 +71,6 @@ body {
 
 .section__inner {
   @include inner;
-}
-
-.section__header {
-  @include vmargin($heading-spacing);
-
-  display: flex;
-}
-
-.section__title {
-  @include h1;
-
-  .section__header & {
-    @include vmargin(0);
-
-    &:not(:last-child) {
-      margin-right: $heading-spacing;
-    }
-  }
-}
-
-.section__footer {
-  @include vmargin($heading-spacing);
-}
-
-.section__footer--center {
-  text-align: center;
 }
 
 .block {
@@ -121,4 +93,10 @@ body {
       margin-right: $heading-spacing;
     }
   }
+}
+
+.block__footer {
+  @include vmargin($heading-spacing);
+
+  display: flex;
 }

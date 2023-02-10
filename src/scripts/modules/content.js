@@ -2,6 +2,9 @@ import XForm from './../controls/xform'
 import XMap from './../controls/xmap'
 import XPopup from './../controls/xpopup'
 import XSlider from './../controls/xslider'
+import GLightbox from 'glightbox'
+import Header from './../controls/Header'
+import Nav from './../controls/Nav'
 
 /* Init content */
 export function initContent (container) {
@@ -84,6 +87,12 @@ export function initContent (container) {
   /* xForm */
   const xForms = container.querySelectorAll('.js-xform')
   xForms.forEach(xform => {
+    xform.addEventListener('success', () => {
+      const xpopup = xform.closest('.xpopup')
+      if (xpopup && xpopup.xPopup && xpopup.classList.contains('is-active')) {
+        xpopup.xPopup.hide()
+      }
+    })
     new XForm(xform).mount()
   })
 
@@ -100,4 +109,29 @@ export function initContent (container) {
       loop: true
     }).mount()
   })
+
+  /* Gallery */
+  GLightbox({
+    selector: '.text a[href$=".jpg"], .text a[href$=".jpeg"], .text a[href$=".png"], .text a[href$=".gif"]',
+    loop: true,
+    autoplayVideos: true
+  })
+  GLightbox({
+    selector: '.js-gallery-link',
+    loop: true,
+    autoplayVideos: true
+  })
+
+  /* Header */
+  const header = container.querySelector('.js-header')
+  if (header) {
+    new Header(header).mount()
+  }
+
+  /* Nav */
+  const nav = container.querySelector('.js-nav')
+  const navToggle = container.querySelector('.js-nav-toggle')
+  if (nav && navToggle) {
+    new Nav(nav, navToggle).mount()
+  }
 }

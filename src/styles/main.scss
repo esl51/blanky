@@ -18,8 +18,10 @@
 @import "controls/buttons";
 @import "controls/cookie";
 @import "controls/files";
+@import "controls/logo";
 @import "controls/media";
-@import "controls/menu-toggle";
+@import "controls/nav";
+@import "controls/nav-toggle";
 @import "controls/pagination";
 @import "controls/xform";
 @import "controls/xmap";
@@ -29,7 +31,14 @@
 
 /* Vendor */
 @import "../../node_modules/animate.css/animate";
+@import "../../node_modules/glightbox/dist/css/glightbox";
 
 /* Sections */
 @import "sections/header";
+@import "sections/page-header";
+@import "sections/basic";
 @import "sections/footer";
+
+/* Blocks */
+@import "blocks/header";
+@import "blocks/footer";

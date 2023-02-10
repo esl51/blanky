@@ -8,9 +8,8 @@
   bottom: 0;
   width: 100%;
   background-color: rgba(#000, 0.75);
-  font-size: 14px;
-  padding-top: $spacing-lg;
-  padding-bottom: $spacing-lg;
+  padding-top: $spacing-sm;
+  padding-bottom: $spacing-sm;
 }
 
 .cookie__inner {
@@ -27,19 +26,21 @@
 }
 
 .cookie__text {
+  @include t2;
+
   a {
     color: $main-color;
   }
 }
 
-.cookie__button {
+.cookie__submit {
   @include t2;
 
   @include media("<tablet") {
-    margin-top: 15px;
+    margin-top: $spacing;
   }
 
   @include media(">=tablet") {
-    margin-left: 15px;
+    margin-left: $spacing;
   }
 }

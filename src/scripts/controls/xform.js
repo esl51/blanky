@@ -187,7 +187,7 @@ export default class XForm {
         const fieldOffsetTop = this.getElementOffset(fieldElem).top
         let scrollTop = fieldOffsetTop
         let scrollContainer = document.scrollingElement || document.documentElement
-        const wrap = fieldElem.closest('.xpopup')
+        const wrap = fieldElem.closest('.js-xform-scroll')
         if (wrap) {
           const baseScrollTop = scrollContainer.scrollTop
           scrollContainer = wrap

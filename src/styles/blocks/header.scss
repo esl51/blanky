@@ -1,0 +1,34 @@
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  margin-right: $spacing;
+
+  @include media("<laptop") {
+    position: relative;
+    z-index: 2001;
+  }
+}
+
+.header__nav {
+  z-index: 2000;
+
+  @include media(">=laptop") {
+    margin-left: auto;
+  }
+}
+
+.header__nav-toggle {
+  margin-left: auto;
+
+  @include media("<laptop") {
+    position: relative;
+    z-index: 2001;
+  }
+
+  @include media(">=laptop") {
+    display: none;
+  }
+}
