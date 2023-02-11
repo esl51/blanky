@@ -351,11 +351,12 @@ $xform-error-color: $danger-color !default;
 }
 
 .xform__footer {
-  margin-top: $xform-section-margin;
+  @include vmargin($xform-section-margin);
 }
 
 .xform__comment {
   @include t2;
+  @include vmargin($xform-margin);
 }
 
 .xform__footer--center {
