@@ -83,6 +83,11 @@ $xform-error-color: $danger-color !default;
 
 .xform__col {
   padding: calc(#{$xform-margin} * 0.5);
+
+  .xform__button:first-child:last-child {
+    display: block;
+    width: 100%;
+  }
 }
 
 .xform__field {
@@ -347,6 +352,10 @@ $xform-error-color: $danger-color !default;
 
 .xform__footer {
   margin-top: $xform-section-margin;
+}
+
+.xform__comment {
+  @include t2;
 }
 
 .xform__footer--center {
