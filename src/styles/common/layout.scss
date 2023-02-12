@@ -86,6 +86,8 @@ body {
 .block__title {
   @include h1;
 
+  display: block;
+
   .block__header & {
     @include vmargin(0);
 
