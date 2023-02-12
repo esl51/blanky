@@ -242,29 +242,30 @@ export default class XForm {
   }
 
   _formSubmit (e) {
-    if (e && this.settings.ajax) {
-      e.preventDefault()
-    }
-    const xform = this.form.querySelector('[name=xform]')
-    if (!xform) {
-      console.error('[xForm] input[name="xform"] not found')
-    }
-
-    this.securityInput = document.createElement('input')
-    this.securityInput.classList.add(this.settings.securityClass)
-    this.securityInput.type = 'hidden'
-    this.securityInput.name = 'security'
-    this.securityInput.value = '1'
-    this.form.appendChild(this.securityInput)
-
-    this.submitButtons.forEach(button => {
-      button.disabled = true
-    })
-
-    this.toggleEvent('beforesubmit')
-    this.form.classList.add(this.settings.submittingClass)
-
     if (this.settings.ajax) {
+      if (e) {
+        e.preventDefault()
+      }
+
+      const xform = this.form.querySelector('[name=xform]')
+      if (!xform) {
+        console.error('[xForm] input[name="xform"] not found')
+      }
+
+      this.securityInput = document.createElement('input')
+      this.securityInput.classList.add(this.settings.securityClass)
+      this.securityInput.type = 'hidden'
+      this.securityInput.name = 'security'
+      this.securityInput.value = '1'
+      this.form.appendChild(this.securityInput)
+
+      this.submitButtons.forEach(button => {
+        button.disabled = true
+      })
+
+      this.toggleEvent('beforesubmit')
+      this.form.classList.add(this.settings.submittingClass)
+
       const formData = new FormData(this.form)
 
       this.readFiles(files => {
