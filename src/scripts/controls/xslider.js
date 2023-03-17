@@ -7,6 +7,7 @@ export default class XSlider {
       startAt: 0,
       perSlide: 1,
       autoplay: 0,
+      autoplayVisible: true,
       lazyLoad: 2,
       pauseOnHover: false,
       disableButtons: true,
@@ -22,7 +23,8 @@ export default class XSlider {
       backwardClass: 'is-backward',
       bulletTag: 'li',
       hideBullets: true,
-      wheel: false
+      wheel: false,
+      muteVideos: true
     }
     for (const attrname in options) {
       this.settings[attrname] = options[attrname]
@@ -50,14 +52,13 @@ export default class XSlider {
     this.nextButtons = this.slider.querySelectorAll('[data-next]')
     this.firstButtons = this.slider.querySelectorAll('[data-first]')
     this.lastButtons = this.slider.querySelectorAll('[data-last]')
-
-    this.listeners = []
+    this.progressBars = this.slider.querySelectorAll('[data-progress]')
 
     this.current = 0
+    this.autoplayPosition = 0
     this.prev = null
     this.inTransition = false
     this.activeItems = []
-    this.canPlay = true
 
     this.isMoving = false
 
@@ -132,7 +133,7 @@ export default class XSlider {
   recalc () {
     this.loadItems()
     this.duration = this.getTransitionDuration(this.track)
-    if (this.duration && this.settings.autoplay > 0 && this.settings.autoplay < this.duration) {
+    if (this.settings.autoplay > 0 && this.duration && this.settings.autoplay < this.duration) {
       this.settings.autoplay = this.duration
     }
     this.flexBasis = this.getFlexBasis(this.items[0])
@@ -323,18 +324,21 @@ export default class XSlider {
       this.toggleEvent('beforeChange')
       this.prev = this.current
     }
+    this.pauseAutoplay()
+    clearInterval(this.autoplayPositionInterval)
+    this.updateAutoplayPosition(0)
+    this.pauseVideos(true)
     this.durationTimeout = setTimeout(() => {
       this.items[this.current].classList.add(this.settings.currentClass)
       this.inTransition = false
-      if (this.settings.autoplay > 0 && this.current < this.items.length - 1) {
-        this.play()
-      }
       this.viewport.removeEventListener('click', this._click)
       this.track.classList.remove(this.settings.movingClass)
       if (change) {
         this.toggleEvent('change')
         this.prev = this.current
       }
+      this.playCurrentVideo(true)
+      this.startAutoplay()
     }, this.duration)
 
     return this
@@ -356,23 +360,76 @@ export default class XSlider {
     return this.goTo(this.items.length - 1)
   }
 
-  pause () {
-    clearInterval(this.autoplayInterval)
-    this.canPlay = false
+  playCurrentVideo (reset) {
+    const video = this.items[this.current].querySelector('video')
+    if (video && video.readyState >= 2) {
+      if (reset === true) {
+        video.currentTime = 0
+      }
+      video.play()
+    }
+  }
+
+  pauseVideos (reset) {
+    [].forEach.call(this.videos, video => {
+      video.pause()
+      if (reset === true) {
+        video.currentTime = 0
+      }
+    })
+  }
+
+  getAutoplayDuration () {
+    const video = this.items[this.current].querySelector('video')
+    if (video && video.dataset.duration) {
+      return video.dataset.duration
+    }
+    return this.settings.autoplay
+  }
+
+  pauseAutoplay () {
+    clearTimeout(this.autoplayTimeout)
+    clearInterval(this.autoplayPositionInterval)
     return this
   }
 
-  play () {
-    if (this.settings.autoplay > 0 && this.canPlay && this.current < this.items.length - 1) {
-      clearInterval(this.autoplayInterval)
-      this.autoplayInterval = setInterval(() => {
+  updateAutoplayPosition (position) {
+    this.autoplayPosition = position;
+    [].forEach.call(this.progressBars, (progress) => {
+      if (progress.dataset.progress === 'width') {
+        progress.style.width = this.getAutoplayProgress(position) + '%'
+      } else {
+        progress.style.setProperty('--value', this.getAutoplayProgress(position))
+      }
+    })
+  }
+
+  getAutoplayProgress (position) {
+    return Math.min(Math.round(position / this.getAutoplayDuration() * 100), 100)
+  }
+
+  startAutoplay () {
+    if (this.settings.autoplay > 0) {
+      this.pauseAutoplay()
+      const video = this.items[this.current].querySelector('video')
+      if (this.settings.autoplay > 0) {
+        this.autoplayPositionInterval = setInterval(() => {
+          if (video && video.dataset.duration) {
+            this.autoplayPosition = Math.round(video.currentTime * 1000)
+          } else {
+            this.autoplayPosition = this.autoplayPosition + 100
+          }
+          this.updateAutoplayPosition(this.autoplayPosition)
+        }, 100)
+      }
+      this.autoplayTimeout = setInterval(() => {
         if (!this.settings.loop && this.current === this.items.length - 1) {
-          this.pause()
-          this.canPlay = true
+          this.pauseVideos()
+          this.pauseAutoplay()
           return this
         }
         this.goToNext()
-      }, this.settings.autoplay)
+      }, this.getAutoplayDuration() - this.autoplayPosition)
     }
     return this
   }
@@ -569,12 +626,57 @@ export default class XSlider {
 
     if (this.settings.autoplay > 0 && this.settings.pauseOnHover) {
       this.viewport.addEventListener('mouseenter', () => {
-        this.pause()
+        this.pauseAutoplay()
       })
       this.viewport.addEventListener('mouseleave', () => {
-        this.canPlay = true
-        this.play()
+        this.startAutoplay()
       })
+    }
+
+    this.videos = this.track.querySelectorAll('video');
+
+    [].forEach.call(this.videos, video => {
+      video.playsinline = true
+      video.loop = true
+      if (this.settings.muteVideos) {
+        video.muted = true
+      }
+      if (video.duration) {
+        video.dataset.duration = Math.floor(video.duration * 1000)
+      }
+      if (!video.dataset.duration) {
+        video.addEventListener('loadedmetadata', () => {
+          video.dataset.duration = Math.floor(video.duration * 1000)
+        })
+      }
+      if (this.settings.autoplay > 0) {
+        video.addEventListener('waiting', () => {
+          this.pauseAutoplay()
+        })
+        video.addEventListener('playing', () => {
+          this.startAutoplay()
+        })
+      }
+      video.addEventListener('contextmenu', (e) => {
+        e.preventDefault()
+      })
+    })
+
+    if (this.autoplay > 0 && this.autoplayVisible && window.IntersectionObserver) {
+      this.autoplayObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.intersectionRatio !== 1) {
+            this.pauseVideos()
+            this.pauseAutoplay()
+          } else {
+            this.playCurrentVideo()
+            this.startAutoplay()
+          }
+        })
+      }, {
+        threshold: 1
+      })
+      this.autoplayObserver.observe(this.viewport)
     }
 
     [].forEach.call(this.thumbs, thumb => {
@@ -639,7 +741,7 @@ export default class XSlider {
     })
 
     this.goTo(this.settings.startAt)
-    this.play()
+    this.startAutoplay()
 
     this.slider.classList.add(this.settings.mountedClass)
 
