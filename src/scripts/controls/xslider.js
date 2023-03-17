@@ -662,7 +662,7 @@ export default class XSlider {
       })
     })
 
-    if (this.autoplay > 0 && this.autoplayVisible && window.IntersectionObserver) {
+    if (this.settings.autoplay > 0 && this.settings.autoplayVisible && window.IntersectionObserver) {
       this.autoplayObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
           if (entry.intersectionRatio !== 1) {
