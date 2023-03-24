@@ -1,26 +1,15 @@
 @@include('./_head.html')
 
-<header class="section section--page-header">
-  <div class="section__inner">
-    <div class="block">
-      <h1 class="block__title">Заголовок страницы</h1>
-    </div>
-    <div class="block">
-      @@include('./_breadcrumbs.html')
-    </div>
-  </div>
-</header>
-
 <section class="section section--fluid section--fill">
   <div class="section__inner">
     <div class="block">
-      <div class="xslider js-xslider" data-autoplay="3000" data-loop="true">
+      <div class="xslider xslider--stretch xslider--100vh js-xslider" data-autoplay="3000" data-loop="true">
         <div class="xslider__inner">
           <div class="xslider__viewport" data-viewport>
             <ul class="xslider__track" data-track>
               <li class="xslider__item">
                 <div class="xslider__image">
-                  <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"></video>
+                  <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" poster="img/temp/tmp1.jpg"></video>
                 </div>
                 <div class="xslider__content">
                   <div class="xslider__data">
@@ -33,6 +22,8 @@
               </li>
               <li class="xslider__item">
                 <picture class="xslider__image">
+                  <source srcset="img/temp/tmp2v.webp" type="image/webp" media="(orientation: portrait)">
+                  <source srcset="img/temp/tmp2v.jpg" type="image/jpeg" media="(orientation: portrait)">
                   <source srcset="img/temp/tmp2.webp" type="image/webp">
                   <source srcset="img/temp/tmp2.jpg" type="image/jpeg">
                   <img src="img/temp/tmp2.jpg" alt>
@@ -48,7 +39,7 @@
               </li>
               <li class="xslider__item">
                 <div class="xslider__image">
-                  <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"></video>
+                  <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" poster="img/temp/tmp3.jpg"></video>
                 </div>
                 <div class="xslider__content">
                   <div class="xslider__data">
@@ -61,6 +52,8 @@
               </li>
               <li class="xslider__item">
                 <picture class="xslider__image">
+                  <source srcset="img/temp/tmp4v.webp" type="image/webp" media="(orientation: portrait)">
+                  <source srcset="img/temp/tmp4v.jpg" type="image/jpeg" media="(orientation: portrait)">
                   <source srcset="img/temp/tmp4.webp" type="image/webp">
                   <source srcset="img/temp/tmp4.jpg" type="image/jpeg">
                   <img src="img/temp/tmp4.jpg" alt>
@@ -76,6 +69,8 @@
               </li>
               <li class="xslider__item">
                 <picture class="xslider__image">
+                  <source srcset="img/temp/tmp5v.webp" type="image/webp" media="(orientation: portrait)">
+                  <source srcset="img/temp/tmp5v.jpg" type="image/jpeg" media="(orientation: portrait)">
                   <source srcset="img/temp/tmp5.webp" type="image/webp">
                   <source srcset="img/temp/tmp5.jpg" type="image/jpeg">
                   <img src="img/temp/tmp5.jpg" alt>
@@ -109,6 +104,17 @@
     </div>
   </div>
 </section>
+
+<header class="section section--page-header">
+  <div class="section__inner">
+    <div class="block">
+      <h1 class="block__title">Заголовок страницы</h1>
+    </div>
+    <div class="block">
+      @@include('./_breadcrumbs.html')
+    </div>
+  </div>
+</header>
 
 <section class="section section--basic">
 	<div class="section__inner">
@@ -469,7 +475,7 @@
         <h2>Встроенное адаптивное видео 16:9</h2>
         <div class="iframe-video" data-iframe tabindex="0">
           <img src="img/temp/tmp1.jpg" alt>
-          <iframe data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&amp;rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&amp;rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           <div class="iframe-video__title">Iframe video</div>
           <span class="iframe-video__play icon">
             @@include('../../public/icons/play.svg')
@@ -617,7 +623,7 @@
       </button>
 		</div>
 		<div class="iframe-video" data-iframe tabindex="0">
-			<iframe data-src="http://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&amp;rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			<iframe src="http://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&amp;rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 		</div>
 	</div>
 </div>
