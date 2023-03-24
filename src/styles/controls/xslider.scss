@@ -1,11 +1,6 @@
 /* xSlider */
 .xslider {
   position: relative;
-
-  @include media("<tablet") {
-    margin-left: calc($inner-spacing * -1);
-    margin-right: calc($inner-spacing * -1);
-  }
 }
 
 .xslider__inner {
@@ -70,7 +65,63 @@
   }
 }
 
+.xslider__image {
+  display: flex;
+  align-items: center;
+}
+
+.xslider__content {
+  @include section;
+  @include dark;
+
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+
+  &::before {
+    @include absolute-block(100%, 100%);
+
+    left: 0;
+    top: 0;
+    background-color: rgba(#000, 0.1);
+  }
+}
+
+.xslider__data {
+  @include inner;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.xslider__title {
+  @include h1;
+
+  transition: all 1s 0.5s $easing;
+
+  .xslider__item:not(.is-active) & {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+.xslider__summary {
+  transition: all 1s 1s $easing;
+
+  .xslider__item:not(.is-active) & {
+    opacity: 0;
+  }
+}
+
 .xslider__arrows {
+  @include inner;
+
   position: absolute;
   z-index: 2;
   left: 50%;
@@ -81,8 +132,6 @@
   align-items: center;
   justify-content: space-between;
   pointer-events: none;
-  padding-left: $spacing-lg;
-  padding-right: $spacing-lg;
 
   @media (hover: hover) and (pointer: fine) {
     display: flex;
