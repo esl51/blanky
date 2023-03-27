@@ -31,7 +31,8 @@ const config = {
   scripts: 'src/scripts/',
   styles: 'src/styles/',
   assets: 'src/assets/',
-  dest: 'public/'
+  dest: 'public/',
+  pw: '../site/templates/'
 }
 
 /* Errors handler */
@@ -228,6 +229,24 @@ export const build = gulp.series(
   html,
   timestamps
 )
+
+/* PW */
+
+export const pw = gulp.series(build, function () {
+  return gulp.src([
+    config.dest + 'icons/**/*',
+    config.dest + 'img/**/*',
+    config.dest + 'js/**/*',
+    config.dest + 'css/**/*'
+  ], {
+    base: config.dest,
+    ignore: [
+      config.dest + 'img/temp/**/*',
+      config.dest + 'img/temp'
+    ]
+  })
+    .pipe(gulp.dest(config.pw))
+})
 
 /* Server */
 
