@@ -12,6 +12,26 @@ export function initContent (container) {
     container = document
   }
 
+  /* Blocks */
+  if (window.IntersectionObserver) {
+    const visibleClass = 'is-visible'
+    const blocks = container.querySelectorAll('.block')
+    blocks.forEach(block => {
+      block.visibleObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.intersectionRatio < 0.5) {
+            block.classList.remove(visibleClass)
+          } else {
+            block.classList.add(visibleClass)
+          }
+        })
+      }, {
+        threshold: 0.5
+      })
+      block.visibleObserver.observe(block)
+    })
+  }
+
   /* Popups */
   const xPopups = container.querySelectorAll('.js-xpopup')
   xPopups.forEach(xpopup => {
