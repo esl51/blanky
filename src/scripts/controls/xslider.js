@@ -8,6 +8,7 @@ export default class XSlider {
       perSlide: 1,
       autoplay: 0,
       autoplayVisible: true,
+      autoplayThreshold: 0.5,
       lazyLoad: 2,
       pauseOnHover: false,
       disableButtons: true,
@@ -665,7 +666,7 @@ export default class XSlider {
     if (this.settings.autoplay > 0 && this.settings.autoplayVisible && window.IntersectionObserver) {
       this.autoplayObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
-          if (entry.intersectionRatio !== 1) {
+          if (entry.intersectionRatio < this.settings.autoplayThreshold) {
             this.pauseVideos()
             this.pauseAutoplay()
           } else {
@@ -674,7 +675,7 @@ export default class XSlider {
           }
         })
       }, {
-        threshold: 1
+        threshold: this.settings.autoplayThreshold
       })
       this.autoplayObserver.observe(this.viewport)
     }
