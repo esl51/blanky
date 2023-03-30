@@ -1,7 +1,7 @@
 .section--basic {
   background-color: #fff;
 
-  & + .section--basic {
-    padding-top: 0;
+  & + & {
+    --section-padding-top: 0;
   }
 }
