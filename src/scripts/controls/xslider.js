@@ -22,6 +22,7 @@ export default class XSlider {
       hiddenClass: 'is-hidden',
       forwardClass: 'is-forward',
       backwardClass: 'is-backward',
+      itemSelector: '*',
       bulletTag: 'li',
       hideBullets: true,
       wheel: false,
@@ -87,7 +88,7 @@ export default class XSlider {
   }
 
   loadItems () {
-    this.items = this.track.querySelectorAll(':scope > *')
+    this.items = this.track.querySelectorAll(':scope > ' + this.settings.itemSelector)
   }
 
   goTo (index) {
