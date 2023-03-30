@@ -55,6 +55,8 @@ export default class XSlider {
     this.firstButtons = this.slider.querySelectorAll('[data-first]')
     this.lastButtons = this.slider.querySelectorAll('[data-last]')
     this.progressBars = this.slider.querySelectorAll('[data-progress]')
+    this.counterCurrents = this.slider.querySelectorAll('[data-current]')
+    this.counterCounts = this.slider.querySelectorAll('[data-count]')
 
     this.current = 0
     this.autoplayPosition = 0
@@ -213,6 +215,15 @@ export default class XSlider {
     }
   }
 
+  refreshCounter () {
+    [].forEach.call(this.counterCurrents, current => {
+      current.innerText = this.current + 1
+    });
+    [].forEach.call(this.counterCounts, count => {
+      count.innerText = this.items.length
+    })
+  }
+
   reposition () {
     let first = this.current
     if (first > this.maxCurrent) {
@@ -220,6 +231,7 @@ export default class XSlider {
     }
 
     this.refreshButtonsState()
+    this.refreshCounter()
 
     if (this.bulletsContainer) {
       while (this.bulletsContainer.firstChild) {

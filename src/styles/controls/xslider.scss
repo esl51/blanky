@@ -293,3 +293,29 @@ a.xslider__thumbs-link {
     object-fit: cover;
   }
 }
+
+.xslider__counter {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+  padding-top: $spacing-lg;
+  padding-left: $spacing-lg;
+  padding-right: $spacing-lg;
+}
+
+.xslider__counter-current {
+  color: $main-color;
+}
+
+.xslider__counter-all {
+  &::before {
+    content: "/";
+  }
+}
