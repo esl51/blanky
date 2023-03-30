@@ -1,4 +1,4 @@
-export default class Nav {
+export default class Header {
   constructor (elem) {
     this.headerElem = elem
     this.scrolledClass = 'is-scrolled'

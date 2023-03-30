@@ -3,8 +3,8 @@ import XMap from './../controls/xmap'
 import XPopup from './../controls/xpopup'
 import XSlider from './../controls/xslider'
 import GLightbox from 'glightbox'
-import Header from './../controls/Header'
-import Nav from './../controls/Nav'
+import Header from './../controls/header'
+import Nav from './../controls/nav'
 
 /* Init content */
 export function initContent (container) {
