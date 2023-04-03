@@ -2,6 +2,11 @@ import animateScrollTo from 'animated-scroll-to'
 
 /* Scroll to target */
 export function scrollTo (target, duration, callback) {
+  const headerElem = document.querySelector('.section--header')
+  let offset = 0
+  if (headerElem) {
+    offset = -headerElem.offsetHeight
+  }
   if (typeof target === 'string') {
     target = document.querySelector(target)
   }
@@ -17,6 +22,7 @@ export function scrollTo (target, duration, callback) {
   }
   animateScrollTo(target, {
     speed: duration,
+    verticalOffset: offset,
     // easeInOutQuad
     // https://gist.github.com/gre/1650294
     easing: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
