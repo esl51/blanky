@@ -20,6 +20,19 @@ $breakpoints: (
   wide: 1600px
 );
 
+// Media expressions
+$media-expressions: (
+  'screen': 'screen',
+  'print': 'print',
+  'handheld': 'handheld',
+  'landscape': '(orientation: landscape)',
+  'portrait': '(orientation: portrait)',
+  'retina2x': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)',
+  'retina3x': '(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi)',
+  'touch': '(hover: none)',
+  'hover': '(hover: hover)'
+);
+
 // Grid
 $columns-count: 12;
 
@@ -79,10 +92,12 @@ $columns-count: 12;
 
   // Sizes
   --section-spacing: 100px;
+  --section-spacing-lg: 200px;
   --inner-spacing: 40px;
   --block-spacing: var(--spacing-lg);
   --min-width: 320px;
   --max-width: #{map.get($breakpoints, "desktop")};
+  --max-body-width: 2560px;
 
   // Easing
   --easing: cubic-bezier(0.23, 1, 0.32, 1);
@@ -150,10 +165,12 @@ $heading-spacing: var(--heading-spacing);
 
 // Sizes
 $section-spacing: var(--section-spacing);
+$section-spacing-lg: var(--section-spacing-lg);
 $inner-spacing: var(--inner-spacing);
 $block-spacing: var(--block-spacing);
 $min-width: var(--min-width);
 $max-width: var(--max-width);
+$max-body-width: var(--max-body-width);
 
 // Easing
 $easing: var(--easing);
@@ -162,6 +179,13 @@ $easing: var(--easing);
 $columns: var(--columns);
 $row-gutter: var(--row-gutter);
 $col-gutter: var(--col-gutter);
+
+@include media(">=desktop") {
+  :root {
+    --max-width: #{map.get($breakpoints, "desktop")};
+    --inner-spacing: 80px;
+  }
+}
 
 // Responsive
 @include media("<laptop") {
@@ -175,8 +199,11 @@ $col-gutter: var(--col-gutter);
 
     // Text
     --text-size: 14px;
+    --text-height: 22px;
     --text-size-sm: 12px;
+    --text-height-sm: 20px;
     --text-size-lg: 16px;
+    --text-height-lg: 24px;
 
     // Headings
     --h1-size: 24px;
@@ -198,6 +225,7 @@ $col-gutter: var(--col-gutter);
   :root {
     // Sizes
     --section-spacing: 60px;
+    --section-spacing-lg: 120px;
     --inner-spacing: 16px;
     --block-spacing: 16px;
 
