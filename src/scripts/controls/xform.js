@@ -17,6 +17,7 @@ export default class XForm {
       errorClass: 'xform__error',
       securityClass: 'xform__security',
       resetOnSuccess: true,
+      notifyOnSuccess: true,
       filePlaceholderText: '...',
       fileButtonText: '...',
       action: null,
@@ -223,7 +224,7 @@ export default class XForm {
         if (this.settings.resetOnSuccess) {
           this.reset()
         }
-        if (success) {
+        if (success && this.settings.notifyOnSuccess) {
           xnotify.success(success)
         }
         this.toggleEvent('success')
