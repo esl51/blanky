@@ -12,6 +12,11 @@
   z-index: 1;
   overflow: hidden;
   touch-action: pan-y;
+
+  .xslider--vertical & {
+    height: 300px;
+    touch-action: pan-x;
+  }
 }
 
 .xslider__track {
@@ -24,6 +29,11 @@
 
   .xslider--stretch & {
     align-items: stretch;
+  }
+
+  .xslider--vertical & {
+    flex-direction: column;
+    height: 100%;
   }
 }
 
@@ -67,6 +77,10 @@
     @include media("<laptop") {
       flex-basis: 50%;
     }
+  }
+
+  .xslider--vertical & {
+    width: 100%;
   }
 
   .xslider--100vh & {

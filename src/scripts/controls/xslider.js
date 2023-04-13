@@ -3,7 +3,7 @@ export default class XSlider {
     this.settings = {
       loop: false,
       loopActive: true,
-      autoHeight: false,
+      autoSize: false,
       startAt: 0,
       perSlide: 1,
       autoplay: 0,
@@ -64,6 +64,11 @@ export default class XSlider {
     this.inTransition = false
     this.activeItems = []
 
+    this.type = 'horizontal'
+    if (this.getFlexDirection(this.track) === 'column') {
+      this.type = 'vertical'
+    }
+
     this.isMoving = false
 
     elem.xSlider = this
@@ -87,6 +92,12 @@ export default class XSlider {
     if (!elem) return null
     const cStyle = window.getComputedStyle(elem)
     return cStyle.getPropertyValue('flex-basis')
+  }
+
+  getFlexDirection (elem) {
+    if (!elem) return null
+    const cStyle = window.getComputedStyle(elem)
+    return cStyle.getPropertyValue('flex-direction')
   }
 
   loadItems () {
@@ -144,19 +155,23 @@ export default class XSlider {
     if (this.flexBasis && this.flexBasis.indexOf('%') < 0) {
       this.flexBasis = 'auto'
     }
-    this.itemWidth = 100
-    let width = 0;
+    this.itemSize = 100
+    let size = 0;
     [].forEach.call(this.items, item => {
       item.style.flexBasis = ''
     })
     if (this.flexBasis === 'auto') {
-      const viewportWidth = this.viewport.offsetWidth
-      const elemWidth = this.items[0].offsetWidth
-      this.perView = Math.floor(viewportWidth / elemWidth)
-      width = 100 / this.perView
+      let viewportSize = this.viewport.offsetWidth
+      let elemSize = this.items[0].offsetWidth
+      if (this.type === 'vertical') {
+        viewportSize = this.viewport.offsetHeight
+        elemSize = this.items[0].offsetHeight
+      }
+      this.perView = Math.floor(viewportSize / elemSize)
+      size = 100 / this.perView
     } else {
-      width = parseFloat(this.flexBasis)
-      this.perView = Math.floor(100 / width)
+      size = parseFloat(this.flexBasis)
+      this.perView = Math.floor(100 / size)
     }
     if (this.perView < 1) {
       this.perView = 1
@@ -164,12 +179,12 @@ export default class XSlider {
     if (this.perView > this.items.length) {
       this.perView = this.items.length
     }
-    if (width > 0 && width <= 100) {
-      this.itemWidth = width
+    if (size > 0 && size <= 100) {
+      this.itemSize = size
     }
     if (this.flexBasis === 'auto') {
       [].forEach.call(this.items, item => {
-        item.style.flexBasis = this.itemWidth + '%'
+        item.style.flexBasis = this.itemSize + '%'
       })
     }
 
@@ -289,22 +304,34 @@ export default class XSlider {
       })
     })
     let maxHeight = 0
-    this.track.style.height = 'auto'
+    let maxWidth = 0
+    if (this.type === 'horizontal') {
+      this.track.style.height = 'auto'
+    } else if (this.type === 'vertical') {
+      this.track.style.width = 'auto'
+    }
     this.activeItems = [].slice.call(this.items, first, first + this.perView)
     this.activeItems.forEach(item => {
       item.classList.add(this.settings.activeClass)
       if (item.offsetHeight > maxHeight) {
         maxHeight = item.offsetHeight
       }
+      if (item.offsetWidth > maxWidth) {
+        maxWidth = item.offsetWidth
+      }
     })
 
-    this.distance = -1 * first * this.itemWidth
+    this.distance = -1 * first * this.itemSize
     this.inTransition = true
     this.currentTransform = this._getTransform(this.distance, '%')
     this.track.style.transition = ''
     this.track.style.transform = this.currentTransform
-    if (this.settings.autoHeight) {
-      this.track.style.height = maxHeight + 'px'
+    if (this.settings.autoSize) {
+      if (this.type === 'horizontal') {
+        this.track.style.height = maxHeight + 'px'
+      } else if (this.type === 'vertical') {
+        this.track.style.width = maxWidth + 'px'
+      }
     }
 
     if (this.bulletsContainer) {
@@ -471,7 +498,11 @@ export default class XSlider {
     if (!units) {
       units = 'px'
     }
-    return 'translate3d(' + value + units + ',0,0)'
+    if (this.type === 'horizontal') {
+      return 'translate3d(' + value + units + ',0,0)'
+    } else if (this.type === 'vertical') {
+      return 'translate3d(0,' + value + units + ',0)'
+    }
   }
 
   _click (e) {
@@ -486,20 +517,35 @@ export default class XSlider {
     this.track.classList.add(this.settings.movingClass)
     this.xUp = type === 'drag' ? e.clientX : e.touches[0].clientX
     this.yUp = type === 'drag' ? e.clientY : e.touches[0].clientY
-    if (this.xDown > this.xUp) {
-      this.moveDirection = 'next'
-    } else {
-      this.moveDirection = 'prev'
+    if (this.type === 'horizontal') {
+      if (this.xDown > this.xUp) {
+        this.moveDirection = 'next'
+      } else {
+        this.moveDirection = 'prev'
+      }
+    } else if (this.type === 'vertical') {
+      if (this.yDown > this.yUp) {
+        this.moveDirection = 'next'
+      } else {
+        this.moveDirection = 'prev'
+      }
     }
     this.xDiff = this.xDown - this.xUp
     this.yDiff = this.yDown - this.yUp
-    if (Math.abs(this.xDiff) > Math.abs(this.yDiff)) {
+
+    let diff = null
+    if (this.type === 'horizontal' && Math.abs(this.xDiff) > Math.abs(this.yDiff)) {
+      diff = this.xDiff
+    } else if (this.type === 'vertical' && Math.abs(this.yDiff) > Math.abs(this.xDiff)) {
+      diff = this.yDiff
+    }
+    if (diff !== null) {
       if (e.cancelable) {
         e.preventDefault()
       }
-      const transform = this._getTransform(this.xDiff * -1)
+      const transform = this._getTransform(diff * -1)
       let canMove = true
-      if (!this.settings.loop && ((this.current === this.items.length - 1 && this.xDiff > 0) || (this.current === 0 && this.xDiff < 0))) {
+      if (!this.settings.loop && ((this.current === this.items.length - 1 && diff > 0) || (this.current === 0 && diff < 0))) {
         canMove = false
       }
       if (canMove) {
@@ -515,7 +561,14 @@ export default class XSlider {
     const xDiff = Math.abs(this.xDiff)
     const yDiff = Math.abs(this.yDiff)
     let moveTo
-    if (xDiff > yDiff && xDiff > this.settings.threshold) {
+
+    let diff = null
+    if (this.type === 'horizontal' && xDiff > yDiff && xDiff > this.settings.threshold) {
+      diff = this.xDiff
+    } else if (this.type === 'vertical' && yDiff > xDiff && yDiff > this.settings.threshold) {
+      diff = this.yDiff
+    }
+    if (diff !== null) {
       if (this.settings.moveToFirst) {
         moveTo = this._getMoveTo()
       }
@@ -523,7 +576,7 @@ export default class XSlider {
         this.goTo(moveTo)
       } else if (moveTo === -1) {
         this.goToFirst()
-      } else if (this.xDiff > 0) {
+      } else if (diff > 0) {
         this.goToNext()
       } else {
         this.goToPrev()
