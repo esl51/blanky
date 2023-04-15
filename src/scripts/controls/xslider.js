@@ -64,11 +64,6 @@ export default class XSlider {
     this.inTransition = false
     this.activeItems = []
 
-    this.type = 'horizontal'
-    if (this.getFlexDirection(this.track) === 'column') {
-      this.type = 'vertical'
-    }
-
     this.isMoving = false
 
     elem.xSlider = this
@@ -148,6 +143,10 @@ export default class XSlider {
   recalc () {
     this.loadItems()
     this.duration = this.getTransitionDuration(this.track)
+    this.type = 'horizontal'
+    if (this.getFlexDirection(this.track) === 'column') {
+      this.type = 'vertical'
+    }
     if (this.settings.autoplay > 0 && this.duration && this.settings.autoplay < this.duration) {
       this.settings.autoplay = this.duration
     }
@@ -156,8 +155,8 @@ export default class XSlider {
       this.flexBasis = 'auto'
     }
     this.itemSize = 100
-    let size = 0;
-    [].forEach.call(this.items, item => {
+    let size = 0
+    this.items.forEach(item => {
       item.style.flexBasis = ''
     })
     if (this.flexBasis === 'auto') {
@@ -183,7 +182,7 @@ export default class XSlider {
       this.itemSize = size
     }
     if (this.flexBasis === 'auto') {
-      [].forEach.call(this.items, item => {
+      this.items.forEach(item => {
         item.style.flexBasis = this.itemSize + '%'
       })
     }
@@ -231,10 +230,10 @@ export default class XSlider {
   }
 
   refreshCounter () {
-    [].forEach.call(this.counterCurrents, current => {
+    this.counterCurrents.forEach(current => {
       current.innerText = this.current + 1
-    });
-    [].forEach.call(this.counterCounts, count => {
+    })
+    this.counterCounts.forEach(count => {
       count.innerText = this.items.length
     })
   }
@@ -254,7 +253,7 @@ export default class XSlider {
       }
     }
 
-    [].forEach.call(this.items, item => {
+    this.items.forEach(item => {
       item.classList.remove(this.settings.currentClass)
       item.classList.remove(this.settings.activeClass)
     })
@@ -276,20 +275,20 @@ export default class XSlider {
       this.thumbs = this.thumbsContainer.children
     }
 
-    [].forEach.call(this.bullets, bullet => {
+    this.bullets.forEach(bullet => {
       const btn = bullet.querySelector('button')
       btn.addEventListener('click', () => {
-        const idx = [].indexOf.call(this.bullets, bullet)
+        const idx = Array.from(this.bullets).indexOf(bullet)
         this.goTo(idx)
       })
     })
 
-    const lazyLoadItems = [].slice.call(this.items, first, first + this.perView * (this.settings.lazyLoad + 1))
+    const lazyLoadItems = Array.from(this.items).slice(first, first + this.perView * (this.settings.lazyLoad + 1))
     let lazyLoadAdd = []
     if (first < this.perView) {
-      lazyLoadAdd = [].slice.call(this.items, -1 * this.perView * (this.settings.lazyLoad + 1))
+      lazyLoadAdd = Array.from(this.items).slice(-1 * this.perView * (this.settings.lazyLoad + 1))
     } else {
-      lazyLoadAdd = [].slice.call(this.items, first - this.perView * (this.settings.lazyLoad + 1), first)
+      lazyLoadAdd = Array.from(this.items).slice(first - this.perView * (this.settings.lazyLoad + 1), first)
     }
     lazyLoadAdd.forEach(item => {
       if (lazyLoadItems.indexOf(item) === -1) {
@@ -306,11 +305,13 @@ export default class XSlider {
     let maxHeight = 0
     let maxWidth = 0
     if (this.type === 'horizontal') {
+      this.track.style.width = ''
       this.track.style.height = 'auto'
     } else if (this.type === 'vertical') {
+      this.track.style.height = ''
       this.track.style.width = 'auto'
     }
-    this.activeItems = [].slice.call(this.items, first, first + this.perView)
+    this.activeItems = Array.from(this.items).slice(first, first + this.perView)
     this.activeItems.forEach(item => {
       item.classList.add(this.settings.activeClass)
       if (item.offsetHeight > maxHeight) {
@@ -345,7 +346,7 @@ export default class XSlider {
     }
 
     if (this.thumbsContainer) {
-      [].forEach.call(this.thumbs, thumb => {
+      this.thumbs.forEach(thumb => {
         thumb.classList.remove(this.settings.activeClass)
       })
       this.thumbs[this.current].classList.add(this.settings.activeClass)
@@ -412,7 +413,7 @@ export default class XSlider {
   }
 
   pauseVideos (reset) {
-    [].forEach.call(this.videos, video => {
+    this.videos.forEach(video => {
       video.pause()
       if (reset === true) {
         video.currentTime = 0
@@ -435,8 +436,8 @@ export default class XSlider {
   }
 
   updateAutoplayPosition (position) {
-    this.autoplayPosition = position;
-    [].forEach.call(this.progressBars, (progress) => {
+    this.autoplayPosition = position
+    this.progressBars.forEach((progress) => {
       if (progress.dataset.progress === 'width') {
         progress.style.width = this.getAutoplayProgress(position) + '%'
       } else {
@@ -478,19 +479,34 @@ export default class XSlider {
   _getMoveTo () {
     const vRect = this.viewport.getBoundingClientRect()
     const tRect = this.track.getBoundingClientRect()
-    const left = tRect.left - vRect.left
-    let moveTo = -1;
-    [].forEach.call(this.items, item => {
-      const index = [].indexOf.call(this.items, item)
-      if (item.offsetLeft < (left * -1)) {
-        const nextItem = this.items[index + 1]
-        if (nextItem && nextItem.offsetLeft > (left * -1)) {
-          moveTo = this.moveDirection === 'prev' ? index : index + 1
-        } else if (!nextItem) {
-          moveTo = index
+    let moveTo = -1
+    if (this.type === 'horizontal') {
+      const left = tRect.left - vRect.left
+      this.items.forEach(item => {
+        const index = Array.from(this.items).indexOf(item)
+        if (item.offsetLeft < (left * -1)) {
+          const nextItem = this.items[index + 1]
+          if (nextItem && nextItem.offsetLeft > (left * -1)) {
+            moveTo = this.moveDirection === 'prev' ? index : index + 1
+          } else if (!nextItem) {
+            moveTo = index
+          }
         }
-      }
-    })
+      })
+    } else if (this.type === 'vertical') {
+      const top = tRect.top - vRect.top
+      this.items.forEach(item => {
+        const index = Array.from(this.items).indexOf(item)
+        if (item.offsetTop < (top * -1)) {
+          const nextItem = this.items[index + 1]
+          if (nextItem && nextItem.offsetTop > (top * -1)) {
+            moveTo = this.moveDirection === 'prev' ? index : index + 1
+          } else if (!nextItem) {
+            moveTo = index
+          }
+        }
+      })
+    }
     return moveTo
   }
 
@@ -700,9 +716,9 @@ export default class XSlider {
       })
     }
 
-    this.videos = this.track.querySelectorAll('video');
+    this.videos = this.track.querySelectorAll('video')
 
-    [].forEach.call(this.videos, video => {
+    this.videos.forEach(video => {
       video.playsinline = true
       video.loop = true
       if (this.settings.muteVideos) {
@@ -746,10 +762,10 @@ export default class XSlider {
       this.autoplayObserver.observe(this.viewport)
     }
 
-    [].forEach.call(this.thumbs, thumb => {
+    this.thumbs.forEach(thumb => {
       const btn = thumb.querySelector('button')
       btn.addEventListener('click', () => {
-        const idx = [].indexOf.call(this.thumbs, thumb)
+        const idx = Array.from(this.thumbs).indexOf(thumb)
         this.goTo(idx)
       })
     })
