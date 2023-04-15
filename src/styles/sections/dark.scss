@@ -1,0 +1,6 @@
+.section--dark {
+  @include section-paddings;
+  @include dark;
+
+  background-color: var(--dark-color);
+}

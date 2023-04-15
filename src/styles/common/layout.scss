@@ -121,33 +121,22 @@ body {
   }
 }
 
-.section--fill {
+.section--no-spacing {
   padding-top: 0;
   padding-bottom: 0;
+}
 
+.section--no-inner-spacing {
   .section__inner {
     padding-left: 0;
     padding-right: 0;
   }
 }
 
-.section--no-spacing {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .section--spacing-lg {
   @include media(">=laptop") {
     --section-spacing: var(--section-spacing-lg);
   }
-}
-
-.section--dark {
-  @include dark;
-}
-
-.section--light {
-  @include light;
 }
 
 // Blocks
