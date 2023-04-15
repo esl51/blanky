@@ -6,7 +6,6 @@
   @include dark;
   @include transition;
 
-  background-color: var(--main-color);
   padding-top: var(--spacing);
   padding-bottom: var(--spacing);
   position: fixed;
@@ -17,6 +16,7 @@
   z-index: 1000;
   overflow: visible;
 
+  html.has-light-top &,
   &.is-scrolled {
     background-color: var(--dark-color);
   }

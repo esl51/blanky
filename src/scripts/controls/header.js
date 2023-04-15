@@ -47,6 +47,15 @@ export default class Header {
     window.addEventListener('scroll', this._windowScrollHandler)
     window.addEventListener('DOMContentLoaded', this._windowScrollHandler)
     window.addEventListener('resize', this._windowScrollHandler)
+
+    const sections = document.querySelectorAll('.sections .section:not(.visually-hidden)')
+    if (
+      !document.documentElement.classList.contains('has-light-top') &&
+      sections.length &&
+      !sections[0].classList.contains('section--dark')
+    ) {
+      document.documentElement.classList.add('has-light-top')
+    }
   }
 
   unmount () {
