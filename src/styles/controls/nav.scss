@@ -34,6 +34,8 @@
 }
 
 .nav__item {
+  display: flex;
+
   @include media("<laptop") {
     .nav__list > & {
       @for $i from 1 through 10 {
