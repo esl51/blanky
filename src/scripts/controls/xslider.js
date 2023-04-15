@@ -263,16 +263,12 @@ export default class XSlider {
       for (let i = 0; i < bulletsCount; i++) {
         this.bulletsContainer.insertAdjacentHTML('beforeend', '<' + this.settings.bulletTag + ' class="xslider__bullet"><button></button></' + this.settings.bulletTag + '>')
       }
-      this.bullets = this.bulletsContainer.children
+      this.bullets = Array.from(this.bulletsContainer.children)
       if (this.settings.hideBullets && bulletsCount === 1) {
         this.bulletsContainer.classList.add(this.settings.hiddenClass)
       } else {
         this.bulletsContainer.classList.remove(this.settings.hiddenClass)
       }
-    }
-
-    if (this.thumbsContainer) {
-      this.thumbs = this.thumbsContainer.children
     }
 
     this.bullets.forEach(bullet => {
@@ -762,6 +758,15 @@ export default class XSlider {
       this.autoplayObserver.observe(this.viewport)
     }
 
+    this._dragHandler = this._drag.bind(this)
+    this._dragEndHandler = this._dragEnd.bind(this)
+    this._dragLeaveHandler = this._dragLeave.bind(this)
+    this._wheelHandler = this._wheel.bind(this)
+
+    if (this.thumbsContainer) {
+      this.thumbs = Array.from(this.thumbsContainer.children)
+    }
+
     this.thumbs.forEach(thumb => {
       const btn = thumb.querySelector('button')
       btn.addEventListener('click', () => {
@@ -769,11 +774,6 @@ export default class XSlider {
         this.goTo(idx)
       })
     })
-
-    this._dragHandler = this._drag.bind(this)
-    this._dragEndHandler = this._dragEnd.bind(this)
-    this._dragLeaveHandler = this._dragLeave.bind(this)
-    this._wheelHandler = this._wheel.bind(this)
 
     this.viewport.addEventListener('mousedown', e => {
       e.preventDefault()
