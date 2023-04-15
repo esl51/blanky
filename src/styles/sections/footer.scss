@@ -1,9 +1,6 @@
-/* Footer */
 .section--footer {
   @include dark;
 
-  background-color: $dark-color;
-  padding-top: $spacing;
-  padding-bottom: $spacing;
+  background-color: var(--dark-color);
   flex-shrink: 0;
 }

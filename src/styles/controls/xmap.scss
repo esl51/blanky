@@ -1,5 +1,39 @@
-/* xMap */
 .xmap {
   width: 100%;
   height: 450px;
+
+  [class*="balloon"] {
+    @include t2;
+  }
+
+  [class*="balloon "],
+  [class*="balloon__layout"] {
+    border-radius: var(--border-radius);
+  }
+
+  [class*="balloon__close"] {
+    width: 40px;
+  }
+
+  [class*="balloon__content"] {
+    padding: var(--spacing-sm) var(--spacing);
+
+    .text {
+      h1, h2, h3, h4, h5, h6 {
+        @include t1;
+
+        font-weight: var(--strong-weight);
+        color: var(--heading-color);
+      }
+    }
+
+    [class*="balloon__close"] + & {
+      margin-right: 40px;
+    }
+  }
+
+  [class*="balloon-content__header"] {
+    @include t1;
+    @include heading;
+  }
 }

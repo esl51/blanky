@@ -1,7 +1,5 @@
 .section--basic {
-  background-color: #fff;
+  @include section-paddings;
 
-  & + & {
-    --section-padding-top: 0;
-  }
+  background-color: #fff;
 }

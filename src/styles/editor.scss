@@ -10,7 +10,7 @@ body {
 
   margin: 0;
   padding: 15px;
-  max-width: $max-width - 30px;
+  max-width: calc(var(--max-width) - 30px);
   height: auto;
   min-height: 0;
   display: block;

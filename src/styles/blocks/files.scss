@@ -1,51 +1,52 @@
-/* Files */
+.files {
+  @include light;
+}
+
 .files__list {
   overflow: hidden;
-  border-radius: $border-radius;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
 }
 
 .files__item {
-  @include vmargin(1px);
+  flex: 0 0 100%;
 }
 
 .files__link {
+  width: 100%;
   display: flex;
   align-content: stretch;
-  background-color: $light-gray-color;
+  background-color: #fff;
+  padding: var(--spacing-sm) var(--spacing-lg);
 }
 
 .files__title {
   @include transition;
 
   flex-grow: 1;
-  padding: $spacing-sm $spacing-lg;
 
   a.files__link:hover &,
   a.files__link:focus & {
     outline: none;
-    color: $main-color;
+    color: var(--main-color);
   }
 }
 
 .files__download {
   @include transition;
 
-  padding: $spacing-sm $spacing-lg;
+  order: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-right: 1px solid rgba(#000, 0.05);
 
   a.files__link:hover &,
   a.files__link:focus & {
-    background-color: $main-color;
-    color: #fff;
-  }
-
-  @include media("<tablet") {
-    flex-basis: 60px;
+    color: var(--main-color);
   }
 }
 
@@ -53,7 +54,6 @@ a.files__download {
   &:hover,
   &:focus {
     outline: none;
-    background-color: $main-color;
-    color: #fff;
+    color: var(--main-color);
   }
 }

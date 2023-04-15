@@ -1,31 +1,25 @@
-/* Grid */
-@use "sass:math";
-
 .row {
-  margin: calc($row-gutter * -0.5) calc($col-gutter * -0.5);
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: var(--grid-row-gap) var(--grid-col-gap);
 }
 
 .col {
-  padding: calc($row-gutter * 0.5) calc($col-gutter * 0.5);
-  flex: 0 0 100%;
-  max-width: 100%;
+  grid-column-end: span var(--grid-columns);
 }
 
 @each $bp-name, $bp-size in $breakpoints {
-  @for $column from 1 through $columns-count {
+  @for $column from 1 through $grid-columns {
     @include media(">=" + $bp-name) {
       .col--#{str-slice($bp-name, 0, 1)}-#{$column} {
-        flex-basis: math.percentage(math.div($column, $columns-count));
-        max-width: math.percentage(math.div($column, $columns-count));
+        grid-column-end: span #{$column};
       }
     }
   }
 }
 
 .grid-demo__item {
-  background-color: $light-gray-color;
-  padding: $spacing-sm $spacing;
-  border-radius: $border-radius;
+  background-color: var(--light-gray-color);
+  padding: var(--spacing-sm) var(--spacing);
+  border-radius: var(--border-radius);
 }

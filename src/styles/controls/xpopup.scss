@@ -1,6 +1,5 @@
-/* xPopup */
 .xpopup {
-  @include transition(opacity 0.3s $easing);
+  @include transition(opacity 0.3s var(--easing));
 
   position: fixed;
   z-index: 9999;
@@ -12,7 +11,7 @@
   overflow: hidden scroll;
   display: flex;
   align-items: center;
-  padding: $spacing-lg;
+  padding: var(--spacing-lg);
 
   &:not(.is-active) {
     opacity: 0;
@@ -30,16 +29,16 @@
 }
 
 .xpopup__dialog {
-  @include transition(all 0.3s $easing);
+  @include transition(all 0.3s var(--easing));
 
-  padding: $spacing-xl;
+  padding: var(--spacing-xl);
   width: 100%;
   background-color: #fff;
   max-width: 900px;
   margin: auto;
   position: relative;
   box-shadow: 0 2px 4px -1px rgba(#000, 0.14), 0 4px 5px 0 rgba(#000, 0.098), 0 1px 10px 0 rgba(#000, 0.084);
-  border-radius: $border-radius-lg;
+  border-radius: var(--border-radius-lg);
 
   .xpopup--form & {
     max-width: 500px;
@@ -66,7 +65,7 @@
 .xpopup__header {
   @include h1;
 
-  margin-bottom: $spacing-lg;
+  margin-bottom: var(--spacing-lg);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -81,7 +80,7 @@
 .xpopup__close {
   @include vmargin(0);
 
-  color: $text-color;
+  color: var(--text-color);
   position: relative;
   align-self: flex-start;
   line-height: 1;
@@ -90,7 +89,7 @@
   &:hover,
   &:focus {
     outline: none;
-    color: $main-color;
+    color: var(--main-color);
   }
 }
 

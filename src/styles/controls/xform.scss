@@ -1,30 +1,3 @@
-/* xForm */
-@use "sass:math";
-
-$xform-margin: $spacing !default;
-$xform-input-margin: $spacing-xs !default;
-$xform-input-background-color: $light-gray-color !default;
-$xform-input-border-radius: $border-radius !default;
-$xform-input-border-radius-sm: $border-radius-sm !default;
-$xform-input-border-width: 1px !default;
-$xform-input-border-color: $gray-color !default;
-$xform-input-border-color-active: $main-color !default;
-$xform-input-placeholder-color: $dark-gray-color !default;
-$xform-input-color: $text-color !default;
-$xform-input-font-size: $text-size !default;
-$xform-input-line-height: $text-height !default;
-$xform-input-padding-vertical: $spacing-sm !default;
-$xform-input-padding-horizontal: $spacing !default;
-$xform-label-color: $text-color !default;
-$xform-label-font-size: $xform-input-font-size !default;
-$xform-label-line-height: $xform-input-line-height !default;
-$xform-section-margin: $spacing-lg !default;
-$xform-hint-color: $muted-color !default;
-$xform-hint-font-size: $text-size-sm !default;
-$xform-hint-line-height: $text-height-sm !default;
-$xform-hint-margin: $spacing-xs !default;
-$xform-error-color: $danger-color !default;
-
 @keyframes xform-preloader {
   from {
     transform: rotate(0deg);
@@ -36,6 +9,30 @@ $xform-error-color: $danger-color !default;
 }
 
 .xform {
+  --xform-margin: var(--spacing);
+  --xform-input-margin: var(--spacing-xs);
+  --xform-input-background-color: var(--light-gray-color);
+  --xform-input-border-radius: var(--border-radius);
+  --xform-input-border-radius-sm: var(--border-radius-sm);
+  --xform-input-border-width: 1px;
+  --xform-input-border-color: var(--gray-color);
+  --xform-input-border-color-active: var(--main-color);
+  --xform-input-placeholder-color: var(--dark-gray-color);
+  --xform-input-color: var(--text-color);
+  --xform-input-font-size: var(--text-size);
+  --xform-input-line-height: var(--text-height);
+  --xform-input-padding-vertical: var(--spacing-sm);
+  --xform-input-padding-horizontal: var(--spacing);
+  --xform-label-color: var(--text-color);
+  --xform-label-font-size: var(--xform-input-font-size);
+  --xform-label-line-height: var(--xform-input-line-height);
+  --xform-section-margin: var(--spacing-lg);
+  --xform-hint-color: var(--muted-color);
+  --xform-hint-font-size: var(--text-size-sm);
+  --xform-hint-line-height: var(--text-height-sm);
+  --xform-hint-margin: var(--spacing-xs);
+  --xform-error-color: var(--danger-color);
+
   position: relative;
   width: 100%;
 
@@ -58,18 +55,18 @@ $xform-error-color: $danger-color !default;
     margin: 0 auto;
     z-index: 2;
     border: 2px solid rgba(#000, 0.2);
-    border-bottom-color: $dark-color;
+    border-bottom-color: var(--dark-color);
     border-radius: 50%;
     display: none;
   }
 }
 
 .xform__section {
-  @include vmargin($xform-section-margin);
+  @include vmargin(var(--xform-section-margin));
 }
 
 .xform__section-header {
-  @include vmargin($heading-spacing);
+  @include vmargin(var(--heading-spacing));
 }
 
 .xform__section-title {
@@ -78,12 +75,10 @@ $xform-error-color: $danger-color !default;
 }
 
 .xform__row {
-  margin: calc(#{$xform-margin} * -0.5);
+  gap: var(--xform-margin);
 }
 
 .xform__col {
-  padding: calc(#{$xform-margin} * 0.5);
-
   .xform__button:first-child:last-child {
     display: block;
     width: 100%;
@@ -91,53 +86,53 @@ $xform-error-color: $danger-color !default;
 }
 
 .xform__field {
-  @include vmargin($xform-margin);
+  @include vmargin(var(--xform-margin));
 
   position: relative;
 }
 
 .xform__label,
 .xform__legend {
-  @include vmargin($xform-input-margin);
+  @include vmargin(var(--xform-input-margin));
 
   appearance: none;
   display: block;
-  color: $xform-label-color;
-  font-size: $xform-label-font-size;
-  line-height: $xform-label-line-height;
+  color: var(--xform-label-color);
+  font-size: var(--xform-label-font-size);
+  line-height: var(--xform-label-line-height);
 
   .xform__field--required & {
     &::after {
       content: " *";
-      color: $main-color;
+      color: var(--main-color);
     }
   }
 }
 
 .xform__input,
 %xform__input {
-  @include vmargin($xform-input-margin);
+  @include vmargin(var(--xform-input-margin));
   @include transition;
 
   appearance: none;
   display: block;
   width: 100%;
-  padding: $xform-input-padding-vertical $xform-input-padding-horizontal;
-  background-color: $xform-input-background-color;
-  border: $xform-input-border-width solid $xform-input-border-color;
-  border-radius: $xform-input-border-radius;
-  color: $xform-input-color;
-  font-size: $xform-input-font-size;
-  line-height: $xform-input-line-height;
+  padding: var(--xform-input-padding-vertical) var(--xform-input-padding-horizontal);
+  background-color: var(--xform-input-background-color);
+  border: var(--xform-input-border-width) solid var(--xform-input-border-color);
+  border-radius: var(--xform-input-border-radius);
+  color: var(--xform-input-color);
+  font-size: var(--xform-input-font-size);
+  line-height: var(--xform-input-line-height);
 
   &:hover,
   &:focus {
     outline: none;
-    border-color: $xform-input-border-color-active;
+    border-color: var(--xform-input-border-color-active);
   }
 
   &::placeholder {
-    color: $xform-input-placeholder-color;
+    color: var(--xform-input-placeholder-color);
   }
 }
 
@@ -145,27 +140,28 @@ $xform-error-color: $danger-color !default;
   resize: vertical;
   min-height: 130px;
 
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
+  @include scrollbar(5px);
 }
 
 .xform__input--select {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" width="10" height="10"><path fill="' + str-replace("#{$gray-color-hex}", "#", "%23") + '" d="M74.123 56.571L42.694 88 11.266 56.571zM11.266 31.429L42.694 0l31.429 31.429z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right #{$xform-input-padding-horizontal} top 50%;
-  padding-right: calc(#{$xform-input-padding-horizontal} * 2 + 10px);
+  --corner-size: 6px;
+  --corner-color: var(--xform-input-placeholder-color);
 
-  .ie & {
-    padding-right: $xform-input-padding-horizontal;
-    background-image: none;
-  }
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--corner-color) 50%, var(--corner-color) calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(-45deg, transparent 50%, var(--corner-color) 50%, var(--corner-color) calc(50% + 1px), transparent calc(50% + 1px));
+  background-position:
+    right calc(var(--xform-input-padding-horizontal) + var(--corner-size) * 0.5) top 50%,
+    right calc(var(--xform-input-padding-horizontal) - var(--corner-size) * 0.5) top 50%;
+  background-size: var(--corner-size);
+  background-repeat: no-repeat;
+  padding-right: calc(var(--xform-input-padding-horizontal) * 2 + 10px);
 }
 
 .xform__fieldset {
   margin: 0;
 
-  @include vmargin($xform-margin);
+  @include vmargin(var(--xform-margin));
 
   padding: 0;
   border: none;
@@ -182,7 +178,7 @@ $xform-error-color: $danger-color !default;
 
       left: 0.45em;
       top: 0.45em;
-      background-color: $main-color;
+      background-color: var(--main-color);
       border-radius: 50%;
     }
   }
@@ -191,7 +187,7 @@ $xform-error-color: $danger-color !default;
 .xform__checkbox {
   label {
     &::before {
-      border-radius: $xform-input-border-radius-sm;
+      border-radius: var(--xform-input-border-radius-sm);
     }
 
     &::after {
@@ -200,7 +196,7 @@ $xform-error-color: $danger-color !default;
       left: 0.5em;
       top: 0.2em;
       transform: rotate(40deg);
-      border: 1px solid $main-color;
+      border: 1px solid var(--main-color);
       border-left: none;
       border-top: none;
     }
@@ -209,7 +205,7 @@ $xform-error-color: $danger-color !default;
 
 .xform__radio,
 .xform__checkbox {
-  @include vmargin($xform-input-margin);
+  @include vmargin(var(--xform-input-margin));
 
   position: relative;
 
@@ -217,8 +213,8 @@ $xform-error-color: $danger-color !default;
     position: relative;
     display: block;
     padding-left: 2em;
-    padding-bottom: $xform-input-border-width;
-    font-size: $xform-input-font-size;
+    padding-bottom: var(--xform-input-border-width);
+    font-size: var(--xform-input-font-size);
 
     &::before {
       @include absolute-block(1.5em, 1.5em);
@@ -226,8 +222,8 @@ $xform-error-color: $danger-color !default;
 
       left: 0;
       top: 0;
-      border: $xform-input-border-width solid $xform-input-border-color;
-      background-color: $xform-input-background-color;
+      border: var(--xform-input-border-width) solid var(--xform-input-border-color);
+      background-color: var(--xform-input-background-color);
     }
 
     &::after {
@@ -238,12 +234,12 @@ $xform-error-color: $danger-color !default;
 
     &:hover {
       &::before {
-        border-color: $xform-input-border-color-active;
+        border-color: var(--xform-input-border-color-active);
       }
     }
 
     a {
-      color: $main-color;
+      color: var(--main-color);
 
       &:hover,
       &:focus {
@@ -266,7 +262,7 @@ $xform-error-color: $danger-color !default;
 
       & + label {
         &::before {
-          border-color: $xform-input-border-color-active;
+          border-color: var(--xform-input-border-color-active);
         }
       }
     }
@@ -292,12 +288,12 @@ $xform-error-color: $danger-color !default;
     width: 100%;
     height: 100%;
     opacity: 0;
-    border-radius: $xform-input-border-radius;
+    border-radius: var(--xform-input-border-radius);
   }
 
   &:hover,
   &:focus-within {
-    border-color: $xform-input-border-color-active;
+    border-color: var(--xform-input-border-color-active);
   }
 }
 
@@ -317,46 +313,46 @@ $xform-error-color: $danger-color !default;
   @include t1;
   @include transition;
 
-  border-radius: $xform-input-border-radius;
+  border-radius: var(--xform-input-border-radius);
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  padding: $xform-input-padding-vertical $xform-input-padding-horizontal;
+  padding: var(--xform-input-padding-vertical) var(--xform-input-padding-horizontal);
   margin-left: 0;
-  margin-right: calc(-1 * (#{$xform-input-padding-horizontal}));
-  margin-top: calc(-1 * (#{$xform-input-padding-vertical}));
-  margin-bottom: calc(-1 * (#{$xform-input-padding-vertical}));
-  background-color: $xform-input-background-color;
-  color: $xform-input-border-color;
+  margin-right: calc(-1 * (var(--xform-input-padding-horizontal)));
+  margin-top: calc(-1 * (var(--xform-input-padding-vertical)));
+  margin-bottom: calc(-1 * (var(--xform-input-padding-vertical)));
+  background-color: var(--xform-input-background-color);
+  color: var(--xform-input-placeholder-color);
   text-align: center;
 
   .xform__file:hover &,
   .xform__file:focus-within & {
-    color: $text-color;
+    color: var(--text-color);
   }
 }
 
 .xform__hint,
 .xform__error {
-  margin-top: calc($xform-input-margin * -1 + $xform-hint-margin);
-  font-size: $xform-hint-font-size;
-  line-height: $xform-hint-line-height;
+  margin-top: calc(var(--xform-input-margin) * -1 + var(--xform-hint-margin));
+  font-size: var(--xform-hint-font-size);
+  line-height: var(--xform-hint-line-height);
 }
 
 .xform__hint {
-  color: $xform-hint-color;
+  color: var(--xform-hint-color);
 }
 
 .xform__error {
-  color: $xform-error-color;
+  color: var(--xform-error-color);
 }
 
 .xform__footer {
-  @include vmargin($xform-section-margin);
+  @include vmargin(var(--xform-section-margin));
 }
 
 .xform__comment {
   @include t2;
-  @include vmargin($xform-margin);
+  @include vmargin(var(--xform-margin));
 }
 
 .xform__footer--center {
@@ -384,16 +380,16 @@ $xform-error-color: $danger-color !default;
   .xform__label {
     @include transition;
 
-    padding: $xform-input-padding-vertical $xform-input-padding-horizontal;
+    padding: var(--xform-input-padding-vertical) var(--xform-input-padding-horizontal);
     position: absolute;
-    top: $xform-input-border-width;
-    left: $xform-input-border-width;
-    width: calc(100% - 2 * #{$xform-input-border-width} - 20px);
+    top: var(--xform-input-border-width);
+    left: var(--xform-input-border-width);
+    width: calc(100% - 2 * var(--xform-input-border-width) - 20px);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-radius: $xform-input-border-radius;
-    color: $xform-input-placeholder-color;
+    border-radius: var(--xform-input-border-radius);
+    color: var(--xform-input-placeholder-color);
     pointer-events: none;
     margin-bottom: 0;
   }
@@ -409,31 +405,31 @@ $xform-error-color: $danger-color !default;
     color: transparent;
 
     option {
-      color: $xform-input-color;
+      color: var(--xform-input-color);
     }
   }
 
   .xform__field--activated {
     .xform__label {
-      font-size: calc(#{$xform-label-font-size} * 0.75);
-      line-height: calc(#{$xform-label-line-height} * 0.75);
-      padding-top: calc(#{$xform-input-padding-vertical} * 0.35);
+      font-size: calc(var(--xform-label-font-size) * 0.75);
+      line-height: calc(var(--xform-label-line-height) * 0.75);
+      padding-top: calc(var(--xform-input-padding-vertical) * 0.35);
       padding-bottom: 0;
     }
 
     .xform__input,
     .xform__file {
-      padding-top: calc(#{$xform-input-padding-vertical} * 1.75);
-      padding-bottom: calc(#{$xform-input-padding-vertical} * 0.25);
+      padding-top: calc(var(--xform-input-padding-vertical) * 1.75);
+      padding-bottom: calc(var(--xform-input-padding-vertical) * 0.25);
     }
 
     .xform__input--select {
-      color: $xform-input-color;
+      color: var(--xform-input-color);
     }
 
     .xform__file-button {
-      margin-top: calc(-1 * (#{$xform-input-padding-vertical} * 1.75));
-      margin-bottom: calc(-1 * (#{$xform-input-padding-vertical} * 0.25));
+      margin-top: calc(-1 * (var(--xform-input-padding-vertical) * 1.75));
+      margin-bottom: calc(-1 * (var(--xform-input-padding-vertical) * 0.25));
     }
   }
 }

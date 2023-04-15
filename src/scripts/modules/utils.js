@@ -1,6 +1,7 @@
 import animateScrollTo from 'animated-scroll-to'
 
-/* Scroll to target */
+// Scroll to target
+
 export function scrollTo (target, duration, callback) {
   const headerElem = document.querySelector('.section--header')
   let offset = 0
@@ -33,7 +34,8 @@ export function scrollTo (target, duration, callback) {
   })
 }
 
-/* Show preloader */
+// Show preloader
+
 export function showPreloader (duration, callback) {
   if (typeof duration === 'function') {
     callback = duration
@@ -54,7 +56,8 @@ export function showPreloader (duration, callback) {
   }
 }
 
-/* Hide preloader */
+// Hide preloader
+
 export function hidePreloader (duration, callback) {
   if (typeof duration === 'function') {
     callback = duration
@@ -75,34 +78,8 @@ export function hidePreloader (duration, callback) {
   }
 }
 
-/* Detect IE */
-export function detectIE () {
-  const ua = window.navigator.userAgent
+// Generate ID
 
-  const msie = ua.indexOf('MSIE ')
-  if (msie > 0) {
-    // IE 10 or older => return version number
-    return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10)
-  }
-
-  const trident = ua.indexOf('Trident/')
-  if (trident > 0) {
-    // IE 11 => return version number
-    const rv = ua.indexOf('rv:')
-    return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10)
-  }
-
-  const edge = ua.indexOf('Edge/')
-  if (edge > 0) {
-    // Edge (IE 12+) => return version number
-    return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10)
-  }
-
-  // other browser
-  return false
-}
-
-/* Generate ID */
 export function makeId (length) {
   length = length === undefined ? 8 : length
   let text = ''
@@ -115,7 +92,8 @@ export function makeId (length) {
   return text
 }
 
-/* Set cookie */
+// Set cookie
+
 export function setCookie (name, value, days) {
   let expires = ''
   if (days) {
@@ -126,7 +104,8 @@ export function setCookie (name, value, days) {
   document.cookie = name + '=' + (value || '') + expires + '; path=/'
 }
 
-/* Get cookie */
+// Get cookie
+
 export function getCookie (name) {
   const nameEQ = name + '='
   const ca = document.cookie.split(';')
@@ -142,7 +121,8 @@ export function getCookie (name) {
   return null
 }
 
-/* Erase cookie */
+// Erase cookie
+
 export function eraseCookie (name) {
   document.cookie = name + '=; Max-Age=-99999999;'
 }

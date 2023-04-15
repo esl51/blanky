@@ -1,13 +1,13 @@
-@use "sass:color";
-
 .social {
+  --size: 48px;
+
   display: flex;
   flex-wrap: wrap;
-  margin: calc($spacing * -0.5);
-}
+  gap: var(--spacing);
 
-.social__item {
-  margin: calc($spacing * 0.5);
+  @include media("<tablet") {
+    --size: 36px;
+  }
 }
 
 .social__link {
@@ -17,14 +17,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: $border-radius;
-  background-color: $main-color;
+  width: var(--size);
+  height: var(--size);
+  border-radius: var(--border-radius);
+  background-color: var(--main-color);
 
   &:hover,
   &:focus {
     outline: none;
-    background-color: color.adjust($main-color-hex, $lightness: 10%);
+    opacity: 0.85;
   }
 }

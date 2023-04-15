@@ -1,6 +1,6 @@
 {
   "name": "blanky",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "blank frontend gulp bootstrap",
   "repository": {
     "type": "git",
@@ -21,17 +21,11 @@
   "author": "Maxim Zhgulev",
   "license": "MIT",
   "dependencies": {
-    "animate.css": "^4.1.1",
     "animated-scroll-to": "^2.0.12",
-    "custom-event-polyfill": "^1.0.7",
-    "element-closest-polyfill": "^1.0.2",
-    "element-qsa-scope": "^1.1.0",
     "glightbox": "^3.2.0",
     "include-media": "^2.0.0",
     "normalize.css": "^8.0.1",
     "notyf": "^3.10.0",
-    "object-fit-images": "^3.2.4",
-    "sharer.js": "^0.5.1",
     "ymaps": "^0.2.1"
   },
   "devDependencies": {

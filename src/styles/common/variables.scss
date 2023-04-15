@@ -1,17 +1,8 @@
 @use "sass:color";
 @use "sass:map";
 
-// Colors
-$main-color-hex: #4581ab;
-$light-gray-color-hex: #f7f7f7;
-$gray-color-hex: #d5d5d5;
-$dark-gray-color-hex: #5a5a5a;
-$dark-color-hex: #2a2a2a;
-$red-color-hex: #ed4337;
-$muted-color-hex: color.adjust($dark-color-hex, $lightness: 35%);
-$default-fonts: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-
 // Breakpoints
+
 $breakpoints: (
   phone: 320px,
   tablet: 768px,
@@ -21,6 +12,7 @@ $breakpoints: (
 );
 
 // Media expressions
+
 $media-expressions: (
   'screen': 'screen',
   'print': 'print',
@@ -34,32 +26,69 @@ $media-expressions: (
 );
 
 // Grid
-$columns-count: 12;
+
+$grid-columns: 12;
+
+// Colors
+
+$colors: (
+  'main': #4581ab,
+  'light-main': color.adjust(#4581ab, $lightness: 45%),
+  'dark-main': color.adjust(#4581ab, $lightness: -5%),
+  'gray': #d5d5d5,
+  'light-gray': #f7f7f7,
+  'dark-gray': #5a5a5a,
+  'dark': #2a2a2a,
+  'red': #d63939,
+  'green': #2fb344
+);
 
 :root {
   // Colors
-  --main-color: #{$main-color-hex};
-  --light-gray-color: #{$light-gray-color-hex};
-  --gray-color: #{$gray-color-hex};
-  --dark-gray-color: #{$dark-gray-color-hex};
-  --dark-color: #{$dark-color-hex};
-  --red-color: #{$red-color-hex};
+
+  --main-color: #{map.get($colors, "main")};
+  --light-main-color: #{map.get($colors, "light-main")};
+  --dark-main-color: #{map.get($colors, "dark-main")};
+  --gray-color: #{map.get($colors, "gray")};
+  --light-gray-color: #{map.get($colors, "light-gray")};
+  --dark-gray-color: #{map.get($colors, "dark-gray")};
+  --dark-color: #{map.get($colors, "dark")};
+  --red-color: #{map.get($colors, "red")};
+  --green-color: #{map.get($colors, "green")};
   --danger-color: var(--red-color);
-  --muted-color: #{$muted-color-hex};
+  --success-color: var(--green-color);
 
   // Spacing
+
   --spacing: 16px;
   --spacing-xs: 3px;
   --spacing-sm: 12px;
   --spacing-lg: 24px;
   --spacing-xl: 36px;
 
+  @include media("<laptop") {
+    --spacing: 12px;
+    --spacing-xs: 2px;
+    --spacing-sm: 8px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+  }
+
+  // Grid
+
+  --grid-columns: #{$grid-columns};
+  --grid-row-gap: var(--spacing);
+  --grid-col-gap: var(--spacing);
+
   // Border
+
   --border-radius: 4px;
   --border-radius-sm: 2px;
   --border-radius-lg: 8px;
 
   // Text
+
+  --default-fonts: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --text-size: 16px;
   --text-height: 24px;
   --text-size-sm: 12px;
@@ -68,11 +97,21 @@ $columns-count: 12;
   --text-height-lg: 28px;
   --text-color: var(--dark-color);
   --text-weight: 400;
-  --text-family: "Open Sans", #{$default-fonts};
+  --text-family: "Open Sans", var(--default-fonts);
   --text-spacing: var(--spacing);
   --strong-weight: 600;
 
+  @include media("<laptop") {
+    --text-size: 14px;
+    --text-height: 22px;
+    --text-size-sm: 12px;
+    --text-height-sm: 20px;
+    --text-size-lg: 16px;
+    --text-height-lg: 24px;
+  }
+
   // Headings
+
   --h1-size: 32px;
   --h1-height: 42px;
   --h2-size: 30px;
@@ -87,125 +126,10 @@ $columns-count: 12;
   --h6-height: 22px;
   --heading-color: var(--main-color);
   --heading-weight: var(--strong-weight);
-  --heading-family: "Open Sans", #{$default-fonts};
+  --heading-family: "Open Sans", var(--default-fonts);
   --heading-spacing: var(--spacing-lg);
 
-  // Sizes
-  --section-spacing: 100px;
-  --section-spacing-lg: 200px;
-  --inner-spacing: 40px;
-  --block-spacing: var(--spacing-lg);
-  --min-width: 320px;
-  --max-width: #{map.get($breakpoints, "desktop")};
-  --max-body-width: 2560px;
-
-  // Easing
-  --easing: cubic-bezier(0.23, 1, 0.32, 1);
-
-  // Grid
-  --columns: #{$columns-count};
-  --row-gutter: var(--spacing);
-  --col-gutter: var(--spacing);
-}
-
-// Colors
-$main-color: var(--main-color);
-$light-gray-color: var(--light-gray-color);
-$gray-color: var(--gray-color);
-$dark-gray-color: var(--dark-gray-color);
-$dark-color: var(--dark-gray-color);
-$red-color: var(--red-color);
-$danger-color: var(--danger-color);
-$muted-color: var(--muted-color);
-
-// Spacing
-$spacing: var(--spacing);
-$spacing-xs: var(--spacing-xs);
-$spacing-sm: var(--spacing-sm);
-$spacing-lg: var(--spacing-lg);
-$spacing-xl: var(--spacing-xl);
-
-// Border radius
-$border-radius: var(--border-radius);
-$border-radius-sm: var(--border-radius-sm);
-$border-radius-lg: var(--border-radius-lg);
-
-// Text
-$text-color: var(--text-color);
-$text-weight: var(--text-weight);
-$text-size: var(--text-size);
-$text-height: var(--text-height);
-$text-size-sm: var(--text-size-sm);
-$text-height-sm: var(--text-height-sm);
-$text-size-lg: var(--text-size-lg);
-$text-height-lg: var(--text-height-lg);
-$text-family: var(--text-family);
-$text-spacing: var(--text-spacing);
-$strong-weight: var(--strong-weight);
-
-// Headings
-$h1-size: var(--h1-size);
-$h1-height: var(--h1-height);
-$h2-size: var(--h2-size);
-$h2-height: var(--h2-height);
-$h3-size: var(--h3-size);
-$h3-height: var(--h3-height);
-$h4-size: var(--h4-size);
-$h4-height: var(--h4-height);
-$h5-size: var(--h5-size);
-$h5-height: var(--h5-height);
-$h6-size: var(--h6-size);
-$h6-height: var(--h6-height);
-$heading-color: var(--heading-color);
-$heading-weight: var(--heading-weight);
-$heading-size: var(--heading-size);
-$heading-height: var(--heading-height);
-$heading-family: var(--heading-family);
-$heading-spacing: var(--heading-spacing);
-
-// Sizes
-$section-spacing: var(--section-spacing);
-$section-spacing-lg: var(--section-spacing-lg);
-$inner-spacing: var(--inner-spacing);
-$block-spacing: var(--block-spacing);
-$min-width: var(--min-width);
-$max-width: var(--max-width);
-$max-body-width: var(--max-body-width);
-
-// Easing
-$easing: var(--easing);
-
-// Grid
-$columns: var(--columns);
-$row-gutter: var(--row-gutter);
-$col-gutter: var(--col-gutter);
-
-@include media(">=desktop") {
-  :root {
-    --max-width: #{map.get($breakpoints, "desktop")};
-    --inner-spacing: 80px;
-  }
-}
-
-// Responsive
-@include media("<laptop") {
-  :root {
-    // Spacing
-    --spacing: 12px;
-    --spacing-xs: 2px;
-    --spacing-sm: 8px;
-    --spacing-lg: 16px;
-    --spacing-xl: 24px;
-
-    // Text
-    --text-size: 14px;
-    --text-height: 22px;
-    --text-size-sm: 12px;
-    --text-height-sm: 20px;
-    --text-size-lg: 16px;
-    --text-height-lg: 24px;
-
-    // Headings
+  @include media("<laptop") {
     --h1-size: 24px;
     --h1-height: 32px;
     --h2-size: 20px;
@@ -219,18 +143,30 @@ $col-gutter: var(--col-gutter);
     --h6-size: 10px;
     --h6-height: 18px;
   }
-}
 
-@include media("<tablet") {
-  :root {
-    // Sizes
+  // Sizes
+
+  --section-spacing: 100px;
+  --section-spacing-lg: 200px;
+  --inner-spacing: 40px;
+  --block-spacing: var(--spacing-lg);
+  --min-width: 320px;
+  --max-width: #{map.get($breakpoints, "desktop")};
+  --max-body-width: 2560px;
+
+  @include media("<tablet") {
     --section-spacing: 60px;
     --section-spacing-lg: 120px;
     --inner-spacing: 16px;
     --block-spacing: 16px;
-
-    // Grid
-    --row-gutter: 12px;
-    --col-gutter: 12px;
   }
+
+  @include media(">=desktop") {
+    --inner-spacing: 80px;
+    --max-width: #{map.get($breakpoints, "desktop")};
+  }
+
+  // Easing
+
+  --easing: cubic-bezier(0.23, 1, 0.32, 1);
 }

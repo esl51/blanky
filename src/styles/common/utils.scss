@@ -1,5 +1,3 @@
-/* Utils */
-@use "sass:math";
 @use "sass:string";
 
 @mixin scrollbar($width: 10px, $radius: 5px, $color: rgba(#000, 0.3), $background: rgba(#000, 0.1)) {
@@ -29,7 +27,7 @@
   height: $height;
 }
 
-@mixin transition($arguments: all 0.3s $easing) {
+@mixin transition($arguments: all 0.3s var(--easing)) {
   transition: $arguments;
 }
 
@@ -47,20 +45,41 @@
 }
 
 @mixin section {
-  --section-padding-top: calc(#{$section-spacing} * 0.5);
-  --section-padding-bottom: calc(#{$section-spacing} * 0.5);
+  --section-padding-top: calc(var(--section-spacing) * 0.5);
+  --section-padding-bottom: calc(var(--section-spacing) * 0.5);
 
   max-width: 100%;
   padding-top: var(--section-padding-top);
   padding-bottom: var(--section-padding-bottom);
+
+  .sections &:first-child,
+  .sections .visually-hidden:first-child + & {
+    --section-padding-top: calc(var(--section-spacing) * 0.5 + var(--header-offset, 0px));
+  }
+}
+
+@mixin section-paddings {
+  &:not(.section--no-spacing,.visually-hidden) + & {
+    &:not(.section--spacing-lg) {
+      --section-padding-top: 0;
+    }
+
+    &.section--spacing-lg {
+      --section-padding-top: calc(var(--section-spacing) * 0.25);
+
+      .section__image + .section__inner {
+        padding-top: calc(var(--section-spacing) * 0.25);
+      }
+    }
+  }
 }
 
 @mixin inner {
-  --inner-padding-left: #{$inner-spacing};
-  --inner-padding-right: #{$inner-spacing};
+  --inner-padding-left: var(--inner-spacing);
+  --inner-padding-right: var(--inner-spacing);
 
   width: 100%;
-  max-width: $max-width;
+  max-width: var(--max-width);
   margin-left: auto;
   margin-right: auto;
   padding-left: var(--inner-padding-left);
@@ -68,36 +87,36 @@
 }
 
 @mixin block {
-  @include vmargin($block-spacing);
+  @include vmargin(var(--block-spacing));
 
   width: 100%;
 }
 
 @mixin text {
-  font-family: $text-family;
-  font-weight: $text-weight;
-  color: $text-color;
+  font-family: var(--text-family);
+  font-weight: var(--text-weight);
+  color: var(--text-color);
 }
 
 @mixin t1 {
   @include text;
 
-  font-size: $text-size;
-  line-height: $text-height;
+  font-size: var(--text-size);
+  line-height: var(--text-height);
 }
 
 @mixin t2 {
   @include text;
 
-  font-size: $text-size-sm;
-  line-height: $text-height-sm;
+  font-size: var(--text-size-sm);
+  line-height: var(--text-height-sm);
 }
 
 @mixin t3 {
   @include text;
 
-  font-size: $text-size-lg;
-  line-height: $text-height-lg;
+  font-size: var(--text-size-lg);
+  line-height: var(--text-height-lg);
 }
 
 @mixin dark {
@@ -108,60 +127,60 @@
 }
 
 @mixin light {
-  --text-color: #{$dark-color-hex};
-  --heading-color: #{$dark-color-hex};
+  --text-color: var(--dark-color);
+  --heading-color: var(--dark-color);
 
   color: var(--text-color);
 }
 
 @mixin heading {
-  @include vmargin($heading-spacing);
+  @include vmargin(var(--heading-spacing));
 
-  font-family: $heading-family;
-  font-weight: $heading-weight;
-  color: $heading-color;
+  font-family: var(--heading-family);
+  font-weight: var(--heading-weight);
+  color: var(--heading-color);
 }
 
 @mixin h1 {
   @include heading;
 
-  font-size: $h1-size;
-  line-height: $h1-height;
+  font-size: var(--h1-size);
+  line-height: var(--h1-height);
 }
 
 @mixin h2 {
   @include heading;
 
-  font-size: $h2-size;
-  line-height: $h2-height;
+  font-size: var(--h2-size);
+  line-height: var(--h2-height);
 }
 
 @mixin h3 {
   @include heading;
 
-  font-size: $h3-size;
-  line-height: $h3-height;
+  font-size: var(--h3-size);
+  line-height: var(--h3-height);
 }
 
 @mixin h4 {
   @include heading;
 
-  font-size: $h4-size;
-  line-height: $h4-height;
+  font-size: var(--h4-size);
+  line-height: var(--h4-height);
 }
 
 @mixin h5 {
   @include heading;
 
-  font-size: $h5-size;
-  line-height: $h5-height;
+  font-size: var(--h5-size);
+  line-height: var(--h5-height);
 }
 
 @mixin h6 {
   @include heading;
 
-  font-size: $h6-size;
-  line-height: $h6-height;
+  font-size: var(--h6-size);
+  line-height: var(--h6-height);
 }
 
 @function str-replace($string, $search, $replace: "") {
@@ -174,12 +193,12 @@
   @return $string;
 }
 
-@function grid-cols($col-count, $base-count: $columns, $add: 0) {
-  @return calc((((100% - (#{$base-count} - 1) * #{$col-gutter}) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * #{$col-gutter}) + #{$add});
+@function grid-cols($col-count, $base-count: var(--grid-columns), $add: 0) {
+  @return calc((((100% - (#{$base-count} - 1) * var(--grid-col-gap)) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * var(--grid-col-gap)) + #{$add});
 }
 
-@function grid-offset($col-count, $base-count: $columns, $add: $col-gutter) {
-  @return calc((((100% - (#{$base-count} - 1) * #{$col-gutter}) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * #{$col-gutter}) + #{$add});
+@function grid-offset($col-count, $base-count: var(--grid-columns), $add: var(--grid-col-gap)) {
+  @return calc((((100% - (#{$base-count} - 1) * var(--grid-col-gap)) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * var(--grid-col-gap)) + #{$add});
 }
 
 .visually-hidden {

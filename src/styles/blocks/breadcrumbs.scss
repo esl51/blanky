@@ -1,4 +1,3 @@
-/* Breadcrumbs */
 .breadcrumbs__item {
   display: inline;
   margin-right: 0.5em;
@@ -15,21 +14,21 @@
 a.breadcrumbs__link {
   @include transition;
 
-  color: $main-color;
+  color: var(--main-color);
 
   &:hover,
   &:focus {
     outline: none;
-    color: $main-color;
+    color: var(--main-color);
     text-decoration: underline;
   }
 
   .breadcrumbs__item:last-child & {
-    color: $text-color;
+    color: var(--text-color);
 
     &:hover,
     &:focus {
-      color: $main-color;
+      color: var(--main-color);
     }
   }
 }

@@ -6,7 +6,7 @@
 }
 
 .notyf__toast {
-  border-radius: $border-radius;
+  border-radius: var(--border-radius);
 }
 
 .notyf__icon i {

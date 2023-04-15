@@ -1,4 +1,3 @@
-/* xSlider */
 .xslider {
   position: relative;
 }
@@ -20,7 +19,7 @@
 }
 
 .xslider__track {
-  @include transition(all 0.7s $easing);
+  @include transition(all 0.7s var(--easing));
 
   position: relative;
   display: flex;
@@ -127,7 +126,7 @@
 .xslider__title {
   @include h1;
 
-  transition: all 1s 0.5s $easing;
+  transition: all 1s 0.5s var(--easing);
 
   .xslider__item:not(.is-active) & {
     opacity: 0;
@@ -136,7 +135,7 @@
 }
 
 .xslider__summary {
-  transition: all 1s 1s $easing;
+  transition: all 1s 1s var(--easing);
 
   .xslider__item:not(.is-active) & {
     opacity: 0;
@@ -171,13 +170,13 @@
   justify-content: center;
   color: #fff;
   pointer-events: auto;
-  border-radius: $border-radius;
-  padding: $spacing;
+  border-radius: var(--border-radius);
+  padding: var(--spacing);
 
   &:hover,
   &:focus {
     outline: none;
-    background-color: $main-color;
+    background-color: var(--main-color);
   }
 
   &.is-disabled,
@@ -229,7 +228,7 @@
       display: block;
       width: 10px;
       height: 10px;
-      background-color: $gray-color;
+      background-color: var(--gray-color);
       border-radius: 50%;
     }
 
@@ -238,7 +237,7 @@
       outline: none;
 
       &::before {
-        background-color: $main-color;
+        background-color: var(--main-color);
       }
     }
   }
@@ -246,7 +245,7 @@
   &.is-active {
     button {
       &::before {
-        background-color: $main-color;
+        background-color: var(--main-color);
       }
     }
   }
@@ -258,7 +257,7 @@
   --value: 0;
 
   height: 5px;
-  background-color: $main-color;
+  background-color: var(--main-color);
   width: calc(var(--value) * 1%);
 }
 
@@ -319,13 +318,13 @@ a.xslider__thumbs-link {
   align-items: center;
   justify-content: flex-end;
   pointer-events: none;
-  padding-top: $spacing-lg;
-  padding-left: $spacing-lg;
-  padding-right: $spacing-lg;
+  padding-top: var(--spacing-lg);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
 }
 
 .xslider__counter-current {
-  color: $main-color;
+  color: var(--main-color);
 }
 
 .xslider__counter-all {

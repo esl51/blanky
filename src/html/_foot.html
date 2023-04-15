@@ -1,25 +1,69 @@
   </article><!-- /sections -->
 
-  <footer class="section section--footer">
+  <div class="section section--footer">
     <div class="section__inner">
-      <div class="block">
-        <div class="footer">
-          <div class="footer__copyright">&copy; me</div>
-          <div class="footer__author">made by me</div>
+      <footer class="footer">
+        <div class="footer__contacts text">
+          <p><a href="tel:+79001234567">+7 (900) 123-45-67</a></p>
+          <p>г. Москва, ул. Пушкина, 12</p>
+          <p><a href="mailto:info@example.com">info@example.com</a></p>
+        </div>
+        <ul class="footer__nav nav-list">
+          <li class="nav-list__item">
+            <a class="nav-list__link" href="/">Главная</a>
+          </li>
+          <li class="nav-list__item">
+            <a class="nav-list__link" href="/basic-page.html">Базовая страница</a>
+          </li>
+          <li class="nav-list__item">
+            <a class="nav-list__link" href="/search.html">Поиск</a>
+          </li>
+        </ul>
+        <ul class="footer__social social">
+          <li class="social__item">
+            <a class="social__link" href="" target="_blank" rel="nofollow">
+              @@icon('vk', 'social__icon')
+            </a>
+          </li>
+          <li class="social__item">
+            <a class="social__link" href="" target="_blank" rel="nofollow">
+              @@icon('telegram', 'social__icon')
+            </a>
+          </li>
+        </ul>
+        <div class="footer__tools">
+          <button class="footer__scroll-top" data-scroll="body">
+            @@icon('arrow-top')
+          </button>
+        </div>
+        <div class="footer__copyright text">
+          <p>© me, 2023</p>
+        </div>
+        <ul class="footer__links nav-list">
+          <li class="nav-list__item">
+            <a class="nav-list__link" href="/terms.html">Политика конфиденциальности</a>
+          </li>
+        </ul>
+        <div class="footer__author">
+          <a class="footer__author-link" href="https://8max.ru" target="_blank" rel="nofollow">made by me</a>
+        </div>
+      </footer>
+    </div>
+  </div><!-- /footer -->
+
+  <section class="section section--cookie js-cookie" style="display: none;">
+    <div class="section__inner">
+      <div class="block block--cookie">
+        <div class="cookie">
+          <div class="cookie__text">
+            Просматривая этот сайт, вы соглашаетесь с нашей политикой конфиденциальности.
+            <a href="" target="_blank">Подробнее</a>
+          </div>
+          <button class="cookie__submit button">Согласен</button>
         </div>
       </div>
     </div>
-  </footer><!-- /footer -->
-
-  <div class="cookie js-cookie" style="display: none;">
-    <div class="cookie__inner">
-      <div class="cookie__text">
-        Просматривая этот сайт, вы соглашаетесь с нашей политикой конфиденциальности.
-        <a href="" target="_blank">Подробнее</a>
-      </div>
-      <button class="cookie__submit button js-cookie-close">Согласен</button>
-    </div>
-  </div><!-- /cookie -->
+  </section><!-- /footer -->
 
   <script src="js/main.js?#TS#"></script>
 </body>

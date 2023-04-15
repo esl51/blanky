@@ -1,18 +1,23 @@
-/* Header */
+:root {
+  --header-height: 0px !important;
+}
+
 .section--header {
   @include dark;
   @include transition;
 
-  background-color: $main-color;
-  padding-top: $spacing;
-  padding-bottom: $spacing;
-  position: sticky;
+  background-color: var(--main-color);
+  padding-top: var(--spacing);
+  padding-bottom: var(--spacing);
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   flex-shrink: 0;
   z-index: 1000;
   overflow: visible;
 
   &.is-scrolled {
-    background-color: $dark-color;
+    background-color: var(--dark-color);
   }
 }

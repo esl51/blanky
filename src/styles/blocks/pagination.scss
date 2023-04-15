@@ -1,10 +1,9 @@
-/* Pagination */
 .pagination__list {
   display: flex;
   flex-wrap: wrap;
+  gap: var(--spacing-xs);
   justify-content: center;
   list-style: none;
-  margin: calc($spacing-xs * -1);
   padding: 0;
 }
 
@@ -12,15 +11,14 @@
   display: flex;
   white-space: nowrap;
   text-align: center;
-  margin: $spacing-xs;
 }
 
 .pagination__item--prev {
-  margin-right: $spacing-sm;
+  margin-right: var(--spacing-xs);
 }
 
 .pagination__item--next {
-  margin-left: $spacing-sm;
+  margin-left: var(--spacing-xs);
 }
 
 .pagination__link {
@@ -30,13 +28,13 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-width: calc($text-height + $spacing-xs * 2);
-  padding: $spacing-xs;
-  border-radius: $border-radius;
-  color: $main-color;
+  min-width: calc(var(--text-height) + var(--spacing-xs) * 2);
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius);
+  color: var(--main-color);
 
   .pagination__item--current & {
-    background-color: $main-color;
+    background-color: var(--main-color);
     color: #fff;
   }
 }
@@ -45,7 +43,7 @@ a.pagination__link {
   &:hover,
   &:focus {
     outline: none;
-    background-color: $main-color;
+    background-color: var(--main-color);
     color: #fff;
   }
 }

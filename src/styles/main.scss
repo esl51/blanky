@@ -1,45 +1,56 @@
-/* Vendor utils */
+// Vendor utils
+
 @import "../../node_modules/normalize.css/normalize";
 @import "../../node_modules/include-media/dist/include-media";
 
-/* Common */
+// Common
+
 @import "common/variables";
-@import "common/grid";
 @import "common/utils";
+@import "common/reset";
+@import "common/animations";
+@import "common/grid";
 @import "common/fonts";
 @import "common/layout";
 
-/* Content */
+// Content
+
 @import "content/text";
 
-/* Controls */
-@import "controls/basic";
-@import "controls/breadcrumbs";
+// Controls
+
 @import "controls/buttons";
-@import "controls/cookie";
-@import "controls/files";
-@import "controls/logo";
+@import "controls/icons";
 @import "controls/media";
-@import "controls/nav";
-@import "controls/nav-toggle";
-@import "controls/pagination";
 @import "controls/social";
+
+// XControls
+
 @import "controls/xform";
 @import "controls/xmap";
 @import "controls/xnotify";
 @import "controls/xpopup";
 @import "controls/xslider";
 
-/* Vendor */
-@import "../../node_modules/animate.css/animate";
+// Vendor
+
 @import "../../node_modules/glightbox/dist/css/glightbox";
 
-/* Sections */
+// Sections
+
 @import "sections/header";
+@import "sections/cookie";
 @import "sections/page-header";
 @import "sections/basic";
 @import "sections/footer";
 
-/* Blocks */
+// Blocks
+
 @import "blocks/header";
+@import "blocks/breadcrumbs";
+@import "blocks/cookie";
+@import "blocks/files";
+@import "blocks/pagination";
+@import "blocks/search-form";
+@import "blocks/search-results";
 @import "blocks/footer";

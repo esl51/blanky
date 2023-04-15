@@ -1,0 +1,25 @@
+.search-results__summary {
+  @include t3;
+  @include vmargin(var(--spacing));
+}
+
+.search-results__list-item {
+  &:not(:first-child) {
+    padding-top: var(--spacing);
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--light-gray-color);
+    padding-bottom: var(--spacing);
+  }
+}
+
+.search-result__link {
+  @include h3;
+
+  color: var(--main-color);
+}
+
+.search-result__desc {
+  @include t1;
+}

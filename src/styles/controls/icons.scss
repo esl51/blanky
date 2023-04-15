@@ -1,0 +1,31 @@
+.icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    stroke-width: 1;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.icons-demo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing);
+}
+
+.icons-demo__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: var(--spacing);
+  text-align: center;
+  font-size: 24px;
+  background-color: var(--light-gray-color);
+  border-radius: var(--border-radius);
+}

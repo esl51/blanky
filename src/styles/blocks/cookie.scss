@@ -1,0 +1,29 @@
+.cookie {
+  @include media(">=tablet") {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.cookie__text {
+  @include t2;
+
+  a {
+    color: var(--main-color);
+  }
+}
+
+.cookie__submit {
+  @include t2;
+
+  padding: var(--spacing-xs) var(--spacing);
+
+  @include media("<tablet") {
+    margin-top: var(--spacing);
+  }
+
+  @include media(">=tablet") {
+    margin-left: var(--spacing);
+  }
+}

@@ -1,4 +1,5 @@
-/* Box sizing */
+// Box sizing
+
 * {
   box-sizing: border-box;
 }
@@ -8,14 +9,16 @@
   box-sizing: border-box;
 }
 
-/* Selection */
+// Selection
+
 ::selection {
-  background: $main-color;
+  background: var(--main-color);
   color: #fff;
   text-shadow: none;
 }
 
-/* Scrollbar */
+// Scrollbar
+
 @include media("hover") {
   ::-webkit-scrollbar-track {
     background-color: rgba(#000, 0.1);
@@ -24,6 +27,7 @@
 
   ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -32,22 +36,24 @@
   }
 }
 
-/* Html */
+// Html
+
 html {
-  background: $light-gray-color;
+  background: var(--light-gray-color);
   height: 100%;
   -webkit-tap-highlight-color: rgba(#000, 0);
   margin: 0;
   padding: 0;
 }
 
-/* Body */
+// Body
+
 body {
   @include t1;
 
   min-height: 100%;
-  min-width: $min-width;
-  max-width: $max-body-width;
+  min-width: var(--min-width);
+  max-width: var(--max-body-width);
   margin: 0 auto;
   padding: 0;
   overflow-x: hidden;
@@ -56,7 +62,8 @@ body {
   flex-direction: column;
 }
 
-/* Sections */
+// Sections
+
 .sections {
   flex: 1 0 auto;
   display: flex;
@@ -129,11 +136,13 @@ body {
   padding-bottom: 0;
 }
 
-.section--large-spacing {
+.section--spacing-lg {
   @include media(">=laptop") {
-    --section-spacing: $section-spacing-lg;
+    --section-spacing: var(--section-spacing-lg);
   }
 }
+
+// Blocks
 
 .block {
   @include block;
@@ -148,7 +157,7 @@ body {
 }
 
 .block__header {
-  @include vmargin($heading-spacing);
+  @include vmargin(var(--heading-spacing));
 
   display: flex;
 }
@@ -166,13 +175,13 @@ body {
     @include vmargin(0);
 
     &:not(:last-child) {
-      margin-right: $heading-spacing;
+      margin-right: var(--heading-spacing);
     }
   }
 }
 
 .block__footer {
-  @include vmargin($heading-spacing);
+  @include vmargin(var(--heading-spacing));
 
   display: flex;
 }

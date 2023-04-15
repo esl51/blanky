@@ -1,23 +1,20 @@
-@use "sass:color";
-
-/* Button */
 .button {
   @include t1;
   @include transition;
 
-  display: inline-block;
-  background: $main-color;
-  padding: $spacing-sm $spacing-lg;
+  display: inline-flex;
+  background: var(--main-color);
+  padding: var(--spacing-sm) var(--spacing-lg);
   color: #fff;
   text-align: center;
   cursor: pointer;
   text-decoration: none;
   border: 1px solid transparent;
-  border-radius: $border-radius;
+  border-radius: var(--border-radius);
 
   &:hover,
   &:focus {
-    background: color.adjust($main-color-hex, $lightness: 10%);
+    opacity: 0.85;
     outline: none;
     text-decoration: none;
   }
@@ -34,8 +31,8 @@
   }
 
   &.is-loading {
-    animation: fadeOut 1s linear infinite;
-    background: $main-color;
+    animation: fade-out 1s linear infinite;
+    background: var(--main-color);
     color: #fff;
   }
 }

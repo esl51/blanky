@@ -5,14 +5,17 @@ import XSlider from './../controls/xslider'
 import GLightbox from 'glightbox'
 import Header from './../controls/header'
 import Nav from './../controls/nav'
+import CookieConsent from '../controls/cookie-consent'
 
-/* Init content */
+// Init content
+
 export function initContent (container) {
   if (!container) {
     container = document
   }
 
-  /* Blocks */
+  // Blocks
+
   if (window.IntersectionObserver) {
     const visibleClass = 'is-visible'
     const blocks = container.querySelectorAll('.block')
@@ -32,13 +35,15 @@ export function initContent (container) {
     })
   }
 
-  /* Popups */
+  // Popups
+
   const xPopups = container.querySelectorAll('.js-xpopup')
   xPopups.forEach(xpopup => {
     new XPopup(xpopup).mount()
   })
 
-  /* Popup Forms */
+  // Popup Forms
+
   const xPopupForms = container.querySelectorAll('.js-xpopup-form')
   xPopupForms.forEach(xpopup => {
     xpopup.addEventListener('show', function () {
@@ -52,7 +57,8 @@ export function initContent (container) {
     new XPopup(xpopup).mount()
   })
 
-  /* Popup Iframes */
+  // Popup Iframes
+
   const xPopupIframes = container.querySelectorAll('.js-xpopup-iframe')
   xPopupIframes.forEach(xpopup => {
     const iframe = xpopup.querySelector('[data-iframe]')
@@ -71,7 +77,8 @@ export function initContent (container) {
     new XPopup(xpopup).mount()
   })
 
-  /* Popup Ajaxes */
+  // Popup Ajaxes
+
   const xPopupAjaxes = container.querySelectorAll('.js-xpopup-ajax')
   xPopupAjaxes.forEach(xpopup => {
     const ajax = xpopup.querySelector('[data-ajax]')
@@ -83,7 +90,8 @@ export function initContent (container) {
     new XPopup(xpopup).mount()
   })
 
-  /* Inline iframe */
+  // Inline iframe
+
   const inlineIframes = container.querySelectorAll('[data-iframe]')
   inlineIframes.forEach(iframe => {
     iframe.addEventListener('click', e => {
@@ -95,7 +103,8 @@ export function initContent (container) {
     })
   })
 
-  /* Tables */
+  // Tables
+
   const contentTables = container.querySelectorAll('.text table')
   contentTables.forEach(table => {
     const tableContainer = document.createElement('div')
@@ -104,7 +113,8 @@ export function initContent (container) {
     tableContainer.appendChild(table)
   })
 
-  /* xForm */
+  // xForms
+
   const xForms = container.querySelectorAll('.js-xform')
   xForms.forEach(xform => {
     xform.addEventListener('success', () => {
@@ -116,13 +126,15 @@ export function initContent (container) {
     new XForm(xform).mount()
   })
 
-  /* xMap */
+  // xMaps
+
   const xMaps = container.querySelectorAll('.js-xmap')
   xMaps.forEach(xmap => {
     new XMap(xmap).mount()
   })
 
-  /* xSlider */
+  // xSliders
+
   const xSliders = container.querySelectorAll('.js-xslider')
   xSliders.forEach(xslider => {
     new XSlider(xslider, {
@@ -130,7 +142,8 @@ export function initContent (container) {
     }).mount()
   })
 
-  /* Gallery */
+  // Galleries
+
   GLightbox({
     selector: '.text a[href$=".jpg"], .text a[href$=".jpeg"], .text a[href$=".png"], .text a[href$=".gif"]',
     loop: true,
@@ -142,16 +155,25 @@ export function initContent (container) {
     autoplayVideos: true
   })
 
-  /* Header */
+  // Header
+
   const header = container.querySelector('.js-header')
   if (header) {
     new Header(header).mount()
   }
 
-  /* Nav */
+  // Nav
+
   const nav = container.querySelector('.js-nav')
   const navToggle = container.querySelector('.js-nav-toggle')
   if (nav && navToggle) {
     new Nav(nav, navToggle).mount()
+  }
+
+  // Cookie consent
+
+  const cookieConsent = container.querySelector('.js-cookie')
+  if (cookieConsent) {
+    new CookieConsent(cookieConsent).mount()
   }
 }
