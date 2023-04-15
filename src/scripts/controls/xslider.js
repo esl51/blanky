@@ -12,6 +12,7 @@ export default class XSlider {
       lazyLoad: 2,
       pauseOnHover: false,
       disableButtons: true,
+      disableButtonsPerSlide: true,
       threshold: 50,
       moveToFirst: false,
       movingClass: 'is-moving',
@@ -205,7 +206,7 @@ export default class XSlider {
         buttons.push(...this.lastButtons)
         disabledButtons.push(...this.prevButtons)
         disabledButtons.push(...this.firstButtons)
-      } else if (this.current >= this.maxCurrent) {
+      } else if ((this.disableButtonsPerSlide && this.current >= this.maxCurrent) || (this.current >= this.items.length - 1)) {
         buttons.push(...this.prevButtons)
         buttons.push(...this.firstButtons)
         disabledButtons.push(...this.nextButtons)
