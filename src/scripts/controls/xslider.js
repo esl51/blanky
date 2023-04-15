@@ -201,20 +201,20 @@ export default class XSlider {
       const buttons = []
       const disabledButtons = []
       if (this.current === 0) {
-        buttons.push.apply(buttons, this.nextButtons)
-        buttons.push.apply(buttons, this.lastButtons)
-        disabledButtons.push.apply(disabledButtons, this.prevButtons)
-        disabledButtons.push.apply(disabledButtons, this.firstButtons)
+        buttons.push(...this.nextButtons)
+        buttons.push(...this.lastButtons)
+        disabledButtons.push(...this.prevButtons)
+        disabledButtons.push(...this.firstButtons)
       } else if (this.current >= this.maxCurrent) {
-        buttons.push.apply(buttons, this.prevButtons)
-        buttons.push.apply(buttons, this.firstButtons)
-        disabledButtons.push.apply(disabledButtons, this.nextButtons)
-        disabledButtons.push.apply(disabledButtons, this.lastButtons)
+        buttons.push(...this.prevButtons)
+        buttons.push(...this.firstButtons)
+        disabledButtons.push(...this.nextButtons)
+        disabledButtons.push(...this.lastButtons)
       } else {
-        buttons.push.apply(buttons, this.prevButtons)
-        buttons.push.apply(buttons, this.firstButtons)
-        buttons.push.apply(buttons, this.nextButtons)
-        buttons.push.apply(buttons, this.lastButtons)
+        buttons.push(...this.prevButtons)
+        buttons.push(...this.firstButtons)
+        buttons.push(...this.nextButtons)
+        buttons.push(...this.lastButtons)
       }
       disabledButtons.forEach(item => {
         item.disabled = true
