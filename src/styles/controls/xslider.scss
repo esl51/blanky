@@ -126,7 +126,7 @@
 .xslider__title {
   @include h1;
 
-  transition: all 1s 0.5s var(--easing);
+  transition: opacity 1s 0.5s var(--easing), transform 1s 0.5s var(--easing);
 
   .xslider__item:not(.is-active) & {
     opacity: 0;
@@ -135,7 +135,7 @@
 }
 
 .xslider__summary {
-  transition: all 1s 1s var(--easing);
+  transition: opacity 1s 1s var(--easing);
 
   .xslider__item:not(.is-active) & {
     opacity: 0;
