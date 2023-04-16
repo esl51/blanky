@@ -1,8 +1,8 @@
 import XForm from './../controls/xform'
+import XLightbox from './../controls/xlightbox'
 import XMap from './../controls/xmap'
 import XPopup from './../controls/xpopup'
 import XSlider from './../controls/xslider'
-import GLightbox from 'glightbox'
 import Header from './../controls/header'
 import Nav from './../controls/nav'
 import CookieConsent from '../controls/cookie-consent'
@@ -142,18 +142,14 @@ export function initContent (container) {
     }).mount()
   })
 
-  // Galleries
+  // xLightboxes
 
-  GLightbox({
-    selector: '.text a[href$=".jpg"], .text a[href$=".jpeg"], .text a[href$=".png"], .text a[href$=".gif"]',
-    loop: true,
-    autoplayVideos: true
-  })
-  GLightbox({
-    selector: '.js-gallery-link',
-    loop: true,
-    autoplayVideos: true
-  })
+  new XLightbox({
+    selector: '.text a[href$=".jpg"], .text a[href$=".jpeg"], .text a[href$=".png"], .text a[href$=".gif"], .text a[href*="youtu"], .text a[href*=".mp4"]'
+  }).mount()
+  new XLightbox({
+    selector: '.js-gallery-link'
+  }).mount()
 
   // Header
 
