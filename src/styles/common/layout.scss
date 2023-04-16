@@ -71,6 +71,30 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+
+  &::after {
+    @include transition;
+
+    content: "";
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-gray-color);
+  }
+
+  html:not(.is-loaded) & {
+    overflow: hidden;
+  }
+
+  html.is-loaded & {
+    &::after {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
 }
 
 // Sections
