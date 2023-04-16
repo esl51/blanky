@@ -239,11 +239,14 @@
     }
 
     a {
+      @include underline;
+
       color: var(--main-color);
 
       &:hover,
       &:focus {
-        text-decoration: underline;
+        outline: none;
+        text-decoration: none;
       }
     }
   }

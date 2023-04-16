@@ -42,10 +42,6 @@ $colors: map.merge($colors, (
   "success": map.get($colors, "green"),
   "info": map.get($colors, "cyan")
 ));
-$colors: map.merge($colors, (
-  "light-main": color.adjust(map.get($colors, "main"), $lightness: 45%),
-  "dark-main": color.adjust(map.get($colors, "main"), $lightness: -5%),
-));
 
 
 :root {

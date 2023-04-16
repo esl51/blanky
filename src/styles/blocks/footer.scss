@@ -103,8 +103,8 @@
 
   &:hover,
   &:focus {
+    background-color: rgba(var(--main-color-rgb) / 85%);
     outline: none;
-    opacity: 0.85;
   }
 
   @include media("<tablet") {
@@ -119,7 +119,7 @@
     grid-column: 1;
 
     &:not(:last-child) {
-      padding-bottom: 15px;
+      padding-bottom: var(--spacing);
     }
   }
 

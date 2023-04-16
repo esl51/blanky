@@ -30,13 +30,15 @@
     text-decoration: none;
 
     &:not(.button) {
-      text-decoration: underline;
+      @include underline;
+
+      color: var(--main-color);
     }
 
     &:not(.button):hover,
     &:not(.button):focus {
       outline: none;
-      color: var(--main-color);
+      text-decoration: none;
     }
   }
 
@@ -269,7 +271,7 @@
   // Marker
 
   .marker {
-    background-color: var(--light-main-color);
+    background-color: rgb(var(--main-color-rgb) / 15%);
     padding-left: 0.5em;
     padding-right: 0.5em;
     border-radius: var(--border-radius-sm);

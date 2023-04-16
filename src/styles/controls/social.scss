@@ -25,6 +25,6 @@
   &:hover,
   &:focus {
     outline: none;
-    opacity: 0.85;
+    background-color: rgba(var(--main-color-rgb) / 85%);
   }
 }

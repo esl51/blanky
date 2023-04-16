@@ -14,7 +14,7 @@
 
   &:hover,
   &:focus {
-    opacity: 0.85;
+    background-color: rgba(var(--main-color-rgb) / 85%);
     outline: none;
     text-decoration: none;
   }
@@ -25,7 +25,7 @@
 
   &.is-disabled,
   &:disabled {
-    opacity: 0.7;
+    opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
   }

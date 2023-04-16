@@ -183,6 +183,12 @@
   line-height: var(--h6-height);
 }
 
+@mixin underline($style: underline, $thickness: 1px, $offset: 0.25em) {
+  text-decoration: $style;
+  text-decoration-thickness: $thickness;
+  text-underline-offset: $offset;
+}
+
 @function str-replace($string, $search, $replace: "") {
   $index: string.index($string, $search);
 
