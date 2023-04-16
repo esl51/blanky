@@ -20,6 +20,11 @@
   align-content: stretch;
   background-color: #fff;
   padding: var(--spacing-sm) var(--spacing-lg);
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
 }
 
 .files__title {
@@ -29,7 +34,6 @@
 
   a.files__link:hover &,
   a.files__link:focus & {
-    outline: none;
     color: var(--main-color);
   }
 }
