@@ -11,18 +11,34 @@ export default class XNotify {
       },
       types: [
         {
-          type: 'info',
-          background: 'lightskyblue',
+          type: 'success',
+          background: 'var(--success-color)',
           icon: {
-            className: 'notyf__icon--info',
+            className: 'notyf__icon--success',
+            tagName: 'i'
+          }
+        },
+        {
+          type: 'error',
+          background: 'var(--danger-color)',
+          icon: {
+            className: 'notyf__icon--error',
             tagName: 'i'
           }
         },
         {
           type: 'warning',
-          background: 'orange',
+          background: 'var(--orange-color)',
           icon: {
             className: 'notyf__icon--warning',
+            tagName: 'i'
+          }
+        },
+        {
+          type: 'info',
+          background: 'var(--info-color)',
+          icon: {
+            className: 'notyf__icon--info',
             tagName: 'i'
           }
         }
@@ -30,25 +46,35 @@ export default class XNotify {
     })
   }
 
-  success (message) {
-    this.notyf.success(message)
-  }
-
-  error (message) {
-    this.notyf.error(message)
-  }
-
-  warning (message) {
+  success (message, duration) {
     this.notyf.open({
-      type: 'warning',
-      message
+      type: 'success',
+      message,
+      duration
     })
   }
 
-  info (message) {
+  error (message, duration) {
+    this.notyf.open({
+      type: 'error',
+      message,
+      duration
+    })
+  }
+
+  warning (message, duration) {
+    this.notyf.open({
+      type: 'warning',
+      message,
+      duration
+    })
+  }
+
+  info (message, duration) {
     this.notyf.open({
       type: 'info',
-      message
+      message,
+      duration
     })
   }
 
@@ -56,3 +82,5 @@ export default class XNotify {
     this.notyf.dismissAll()
   }
 }
+
+export const xnotify = new XNotify()

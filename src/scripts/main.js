@@ -27,4 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
   xLoaders.forEach(xloader => {
     new XLoader(xloader).mount()
   })
+
+  // Add loaded class
+
+  document.documentElement.classList.add('is-loaded')
 })

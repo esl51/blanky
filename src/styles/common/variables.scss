@@ -13,17 +13,10 @@ $breakpoints: (
 
 // Media expressions
 
-$media-expressions: (
-  'screen': 'screen',
-  'print': 'print',
-  'handheld': 'handheld',
-  'landscape': '(orientation: landscape)',
-  'portrait': '(orientation: portrait)',
-  'retina2x': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)',
-  'retina3x': '(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi)',
-  'touch': '(hover: none)',
-  'hover': '(hover: hover)'
-);
+$media-expressions: map.merge($media-expressions, (
+  "touch": "(hover: none)",
+  "hover": "(hover: hover)"
+));
 
 // Grid
 
@@ -32,18 +25,28 @@ $grid-columns: 12;
 // Colors
 
 $colors: (
-  'main': #4581ab,
-  'light-main': color.adjust(#4581ab, $lightness: 45%),
-  'dark-main': color.adjust(#4581ab, $lightness: -5%),
-  'gray': #d5d5d5,
-  'light-gray': #f7f7f7,
-  'dark-gray': #5a5a5a,
-  'dark': #2a2a2a,
-  'red': #d63939,
-  'green': #2fb344,
-  'danger': #d63939,
-  'success': #2fb344,
+  "gray": #d5d5d5,
+  "light-gray": #f7f7f7,
+  "dark-gray": #5a5a5a,
+  "dark": #2a2a2a,
+  "blue": #146c94,
+  "red": #d63939,
+  "orange": #f59f00,
+  "green": #2fb344,
+  "cyan": #17a2b8
 );
+$colors: map.merge($colors, (
+  "main": map.get($colors, "blue"),
+  "danger": map.get($colors, "red"),
+  "warning": map.get($colors, "orange"),
+  "success": map.get($colors, "green"),
+  "info": map.get($colors, "cyan")
+));
+$colors: map.merge($colors, (
+  "light-main": color.adjust(map.get($colors, "main"), $lightness: 45%),
+  "dark-main": color.adjust(map.get($colors, "main"), $lightness: -5%),
+));
+
 
 :root {
   // Colors
@@ -61,7 +64,7 @@ $colors: (
   --spacing-lg: 24px;
   --spacing-xl: 36px;
 
-  @include media("<laptop") {
+  @include media("<tablet") {
     --spacing: 12px;
     --spacing-xs: 2px;
     --spacing-sm: 8px;
@@ -84,8 +87,8 @@ $colors: (
   // Shadow
 
   --shadow: 0 8px 16px rgb(0 0 0 / 15%);
-  --shadow-sm: 0 2px 4px rgb(0 0 0 / 7%);
-  --shadow-lg: 0 16px 48px rgb(0 0 0 / 16%);
+  --shadow-sm: 0 2px 4px rgb(0 0 0 / 8%);
+  --shadow-lg: 0 16px 48px rgb(0 0 0 / 17%);
 
   // Text
 
@@ -99,7 +102,7 @@ $colors: (
   --text-color: var(--dark-color);
   --text-weight: 400;
   --text-family: "Open Sans", var(--default-fonts);
-  --text-spacing: var(--spacing);
+  --text-spacing: var(--text-size);
   --strong-weight: 600;
 
   @include media("<laptop") {

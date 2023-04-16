@@ -1,7 +1,5 @@
-import XNotify from './xnotify'
+import { xnotify } from './xnotify'
 import animateScrollTo from 'animated-scroll-to'
-
-const xnotify = new XNotify()
 
 export default class XForm {
   constructor (elem, options) {

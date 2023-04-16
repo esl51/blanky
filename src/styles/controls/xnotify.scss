@@ -2,25 +2,55 @@
 @import "../../node_modules/notyf/notyf.min";
 
 .notyf {
+  @include dark;
+
   z-index: 99999;
+  padding: var(--spacing-xl);
 }
 
 .notyf__toast {
   border-radius: var(--border-radius);
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+  box-shadow: var(--shadow);
 }
 
-.notyf__icon i {
-  display: block;
-  width: 22px;
-  height: 22px;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-color: transparent;
-  border-radius: 0;
+.notyf__toast--upper {
+  margin-bottom: var(--spacing);
+}
 
-  &::before,
-  &::after {
-    display: none;
+.notyf__toast--lower {
+  margin-top: var(--spacing);
+}
+
+.notyf__wrapper {
+  padding-top: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+
+  @include media("<=480px") {
+    .notyf__toast--dismissible & {
+      padding-right: 50px;
+    }
+  }
+}
+
+.notyf__icon {
+  margin-right: var(--spacing-sm);
+  font-size: 14px;
+
+  i {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: transparent;
+    border-radius: 0;
+
+    &::before,
+    &::after {
+      display: none;
+    }
   }
 }
 
@@ -38,4 +68,19 @@
 
 .notyf__icon--info {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" stroke-width="2" stroke="%23fff" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12.01" y2="8"/><polyline points="11 12 12 12 12 16 13 16"/></svg>');
+}
+
+.notyf__message {
+  @include t1;
+}
+
+.notyf__dismiss {
+  margin-right: calc(var(--spacing-sm) * -1);
+}
+
+.notyf__dismiss-btn {
+  &::before,
+  &::after {
+    width: 1px;
+  }
 }
