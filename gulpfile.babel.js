@@ -24,7 +24,7 @@ import sharpIco from 'sharp-ico'
 const isDev = process.env.NODE_ENV === 'development'
 const sass = gulpSass(sassCompiler)
 
-/* Config */
+// Config
 
 const config = {
   html: 'src/html/',
@@ -35,18 +35,18 @@ const config = {
   pw: '../site/templates/'
 }
 
-/* Errors handler */
+// Errors handler
 
 function error (error) {
   console.error(error.toString())
   this.emit('end')
 }
 
-/* Clean */
+// Clean
 
 export const clean = () => deleteAsync(config.dest)
 
-/* Root */
+// Root
 
 export const root = () => {
   return gulp.src([
@@ -57,7 +57,7 @@ export const root = () => {
     .pipe(sync.stream())
 }
 
-/* Favicon */
+// Favicon
 
 export const favicon = () => {
   return gulp.src(config.assets + 'root/icon.svg')
@@ -97,7 +97,7 @@ export const favicon = () => {
     .pipe(sync.stream())
 }
 
-/* Fonts */
+// Fonts
 
 export const fonts = () => {
   return gulp.src(config.assets + 'fonts/**/*.*')
@@ -105,7 +105,7 @@ export const fonts = () => {
     .pipe(sync.stream())
 }
 
-/* Icons */
+// Icons
 
 export const icons = () => {
   return gulp.src(config.assets + 'icons/**/*.svg')
@@ -127,7 +127,7 @@ export const icons = () => {
     .pipe(sync.stream())
 }
 
-/* Images */
+// Images
 
 export const images = () => {
   return gulp.src(config.assets + 'images/**/*.{png,jpg,gif,svg}')
@@ -146,7 +146,7 @@ export const images = () => {
     .pipe(sync.stream())
 }
 
-/* Webp */
+// Webp
 
 export const webp = () => {
   return gulp.src(config.assets + 'images/**/*.{png,jpg,gif}')
@@ -160,7 +160,7 @@ export const webp = () => {
     .pipe(sync.stream())
 }
 
-/* HTML */
+// HTML
 
 export const html = () => {
   return gulp.src(config.html + '[!_]*.html')
@@ -171,7 +171,7 @@ export const html = () => {
     .pipe(sync.stream())
 }
 
-/* Scripts */
+// Scripts
 
 export const scripts = () => {
   return browserify('./' + config.scripts + 'main.js', { debug: true }).transform(babelify)
@@ -185,7 +185,7 @@ export const scripts = () => {
     .pipe(sync.stream())
 }
 
-/* Styles */
+// Styles
 
 export const styles = () => {
   return gulp.src(config.styles + '*.scss')
@@ -198,7 +198,7 @@ export const styles = () => {
     .pipe(sync.stream())
 }
 
-/* Timestamps */
+// Timestamps
 
 export const timestamps = () => {
   const ts = +new Date()
@@ -208,13 +208,13 @@ export const timestamps = () => {
     .pipe(gulp.dest(config.dest))
 }
 
-/* Flush cache */
+// Flush cache
 
 export const flush = () => {
   return cache.clearAll()
 }
 
-/* Build */
+// Build
 
 export const build = gulp.series(
   clean,
@@ -232,7 +232,7 @@ export const build = gulp.series(
   timestamps
 )
 
-/* PW */
+// PW
 
 export const pw = gulp.series(build, function () {
   return gulp.src([
@@ -250,7 +250,7 @@ export const pw = gulp.series(build, function () {
     .pipe(gulp.dest(config.pw))
 })
 
-/* Server */
+// Server
 
 export const server = () => {
   sync.init({
@@ -270,7 +270,7 @@ export const server = () => {
   })
 }
 
-/* Watch */
+// Watch
 
 export const watch = () => {
   gulp.watch([
@@ -286,7 +286,7 @@ export const watch = () => {
   gulp.watch(config.styles + '**/*.scss', styles)
 }
 
-/* Default */
+// Default
 
 export default gulp.series(
   build,
