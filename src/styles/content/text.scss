@@ -27,8 +27,6 @@
   // Links
 
   a {
-    text-decoration: none;
-
     &:not(.button) {
       @include underline;
 
