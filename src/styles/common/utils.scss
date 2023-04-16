@@ -207,11 +207,15 @@
   @return calc((((100% - (#{$base-count} - 1) * var(--grid-col-gap)) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * var(--grid-col-gap)) + #{$add});
 }
 
-.visually-hidden {
-  position: absolute !important;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
+@function svg-data-url($svg, $color: #fff) {
+  $color-value: $color;
+  $escaped-color: $color-value;
+
+  @if type-of($color) == string {
+    $color-value: map.get($colors, $color);
+  }
+
+  $escaped-color: str-replace(#{$color-value}, '#', '%23');
+
+  @return url('data:image/svg+xml;utf8,' + str-replace($svg, 'currentColor', $escaped-color));
 }

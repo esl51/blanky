@@ -1,1 +1,68 @@
 @import "../../node_modules/glightbox/dist/css/glightbox";
+
+.gprev {
+  &::before {
+    background-image: icon-prev();
+  }
+}
+
+.gnext {
+  &::before {
+    background-image: icon-next();
+  }
+}
+
+.gclose {
+  &::before {
+    background-image: icon-close();
+  }
+}
+
+.gvideo {
+  --plyr-color-main: var(--main-color);
+
+  .plyr__control--overlaid {
+    border-radius: var(--border-radius);
+  }
+}
+
+.glightbox-clean {
+  .gprev,
+  .gnext,
+  .gclose {
+    width: auto;
+    height: auto;
+    padding: var(--spacing);
+
+    svg {
+      display: none;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      background-size: 100%;
+    }
+  }
+
+  .gprev {
+    left: var(--spacing);
+  }
+
+  .gnext {
+    right: var(--spacing);
+  }
+
+  .gclose {
+    top: var(--spacing);
+    right: var(--spacing);
+  }
+
+  @include media(">=992px") {
+    .gclose {
+      right: var(--spacing);
+    }
+  }
+}
