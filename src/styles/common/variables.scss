@@ -40,23 +40,18 @@ $colors: (
   'dark-gray': #5a5a5a,
   'dark': #2a2a2a,
   'red': #d63939,
-  'green': #2fb344
+  'green': #2fb344,
+  'danger': #d63939,
+  'success': #2fb344,
 );
 
 :root {
   // Colors
 
-  --main-color: #{map.get($colors, "main")};
-  --light-main-color: #{map.get($colors, "light-main")};
-  --dark-main-color: #{map.get($colors, "dark-main")};
-  --gray-color: #{map.get($colors, "gray")};
-  --light-gray-color: #{map.get($colors, "light-gray")};
-  --dark-gray-color: #{map.get($colors, "dark-gray")};
-  --dark-color: #{map.get($colors, "dark")};
-  --red-color: #{map.get($colors, "red")};
-  --green-color: #{map.get($colors, "green")};
-  --danger-color: var(--red-color);
-  --success-color: var(--green-color);
+  @each $name, $color in $colors {
+    --#{$name}-color: #{$color};
+    --#{$name}-color-rgb: #{color.red($color) color.green($color) color.blue($color)};
+  }
 
   // Spacing
 
@@ -86,13 +81,19 @@ $colors: (
   --border-radius-sm: 2px;
   --border-radius-lg: 8px;
 
+  // Shadow
+
+  --shadow: 0 8px 16px rgb(0 0 0 / 15%);
+  --shadow-sm: 0 2px 4px rgb(0 0 0 / 7%);
+  --shadow-lg: 0 16px 48px rgb(0 0 0 / 16%);
+
   // Text
 
   --default-fonts: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --text-size: 16px;
   --text-height: 24px;
-  --text-size-sm: 12px;
-  --text-height-sm: 20px;
+  --text-size-sm: 14px;
+  --text-height-sm: 22px;
   --text-size-lg: 20px;
   --text-height-lg: 28px;
   --text-color: var(--dark-color);

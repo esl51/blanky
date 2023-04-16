@@ -1,12 +1,20 @@
 .cookie {
+  @include dark;
+
+  background-color: var(--dark-color);
+  padding: var(--spacing);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+
   @include media(">=tablet") {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-left: var(--spacing-lg);
   }
 }
 
-.cookie__text {
+.cookie__body {
   @include t2;
 
   a {
@@ -17,7 +25,7 @@
 .cookie__submit {
   @include t2;
 
-  padding: var(--spacing-xs) var(--spacing);
+  padding: var(--spacing-xs) var(--spacing-lg);
 
   @include media("<tablet") {
     margin-top: var(--spacing);
