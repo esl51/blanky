@@ -164,7 +164,8 @@ export const webp = () => {
 
 export const html = () => {
   return gulp.src(config.html + '[!_]*.html')
-    .pipe(replace(/@@icon\('([^']+)'?(,?\s*'?([^']*)'?\)|\))/g, '<span class="$3 icon">@@include(\'../../public/icons/$1.svg\')</span>'))
+    .pipe(include())
+    .pipe(replace(/@@icon\('([^']+)'(?:,\s*'([^']*)')?\)/g, '<span class="$2 icon">@@include(\'../../public/icons/$1.svg\')</span>'))
     .pipe(include())
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
