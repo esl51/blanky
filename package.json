@@ -60,7 +60,6 @@
     "gulp-terser": "^2.0.1",
     "gulp-webp": "^4.0.1",
     "postcss": "^8.2.4",
-    "postcss-object-fit-images": "^1.1.2",
     "sass": "^1.41.0",
     "sharp": "^0.31.3",
     "sharp-ico": "^0.1.5",
