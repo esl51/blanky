@@ -7,7 +7,7 @@
     "url": "git+ssh://git@github.com:esl51/blank.git"
   },
   "browserslist": [
-    "default"
+    "defaults"
   ],
   "type": "module",
   "scripts": {
