@@ -126,7 +126,7 @@ $colors: map.merge($colors, (
   --h6-height: 22px;
   --heading-color: var(--main-color);
   --heading-weight: var(--strong-weight);
-  --heading-family: "Open Sans", var(--default-fonts);
+  --heading-family: var(--text-family);
   --heading-spacing: var(--spacing-lg);
 
   @include media("<laptop") {
