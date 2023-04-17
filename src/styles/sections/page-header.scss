@@ -3,7 +3,7 @@
 
   .section__image {
     & + .section__inner {
-      transition: opacity 1.5s 0.25s $easing, transform 1.5s 0.25s $easing;
+      transition: opacity 1.5s 0.25s var(--easing), transform 1.5s 0.25s var(--easing);
       min-height: calc(100vh - var(--section-padding-top) - var(--section-padding-bottom));
     }
   }
