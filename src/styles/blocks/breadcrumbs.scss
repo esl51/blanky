@@ -18,9 +18,10 @@ a.breadcrumbs__link {
 
   &:hover,
   &:focus {
+    @include underline;
+
     outline: none;
     color: var(--main-color);
-    text-decoration: underline;
   }
 
   .breadcrumbs__item:last-child & {
