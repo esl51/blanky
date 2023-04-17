@@ -73,8 +73,7 @@ body {
   flex-direction: column;
 
   &::after {
-    @include transition;
-
+    transition: all 1s 0.3s var(--easing);
     content: "";
     position: fixed;
     z-index: 99999;
@@ -85,11 +84,13 @@ body {
     background-color: var(--light-gray-color);
   }
 
-  html:not(.is-loaded) & {
-    overflow: hidden;
+  &:not(.light-page)::after {
+    background-color: var(--dark-gray-color);
   }
 
   html.is-loaded & {
+    transition: all 1s var(--easing);
+
     &::after {
       opacity: 0;
       visibility: hidden;

@@ -27,6 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
   xLoaders.forEach(xloader => {
     new XLoader(xloader).mount()
   })
+
+  // Preloader links
+
+  const preloaderLinks = document.querySelectorAll('a[href^="/"], a[href$=".html"]')
+  preloaderLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      document.documentElement.classList.remove('is-loaded')
+    })
+  })
 })
 
 window.addEventListener('load', () => {
