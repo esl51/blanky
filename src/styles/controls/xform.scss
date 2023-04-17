@@ -11,19 +11,19 @@
 .xform {
   --xform-margin: var(--spacing);
   --xform-input-margin: var(--spacing-xs);
-  --xform-input-background-color: var(--light-gray-color);
+  --xform-input-background-color: var(--surface-secondary-color);
   --xform-input-border-radius: var(--border-radius);
   --xform-input-border-radius-sm: var(--border-radius-sm);
   --xform-input-border-width: 1px;
-  --xform-input-border-color: var(--gray-color);
+  --xform-input-border-color: var(--border-color);
   --xform-input-border-color-active: var(--main-color);
-  --xform-input-placeholder-color: var(--dark-gray-color);
-  --xform-input-color: var(--text-color);
+  --xform-input-placeholder-color: var(--surface-tertiary-color);
+  --xform-input-color: inherit;
   --xform-input-font-size: var(--text-size);
   --xform-input-line-height: var(--text-height);
-  --xform-input-padding-vertical: var(--spacing-sm);
-  --xform-input-padding-horizontal: var(--spacing);
-  --xform-label-color: var(--text-color);
+  --xform-input-padding-y: var(--spacing-sm);
+  --xform-input-padding-x: var(--spacing);
+  --xform-label-color: inherit;
   --xform-label-font-size: var(--xform-input-font-size);
   --xform-label-line-height: var(--xform-input-line-height);
   --xform-section-margin: var(--spacing-lg);
@@ -117,7 +117,7 @@
   appearance: none;
   display: block;
   width: 100%;
-  padding: var(--xform-input-padding-vertical) var(--xform-input-padding-horizontal);
+  padding: var(--xform-input-padding-y) var(--xform-input-padding-x);
   background-color: var(--xform-input-background-color);
   border: var(--xform-input-border-width) solid var(--xform-input-border-color);
   border-radius: var(--xform-input-border-radius);
@@ -151,11 +151,11 @@
     linear-gradient(45deg, transparent 50%, var(--corner-color) 50%, var(--corner-color) calc(50% + 1px), transparent calc(50% + 1px)),
     linear-gradient(-45deg, transparent 50%, var(--corner-color) 50%, var(--corner-color) calc(50% + 1px), transparent calc(50% + 1px));
   background-position:
-    right calc(var(--xform-input-padding-horizontal) + var(--corner-size) * 0.5) top 50%,
-    right calc(var(--xform-input-padding-horizontal) - var(--corner-size) * 0.5) top 50%;
+    right calc(var(--xform-input-padding-x) + var(--corner-size) * 0.5) top 50%,
+    right calc(var(--xform-input-padding-x) - var(--corner-size) * 0.5) top 50%;
   background-size: var(--corner-size);
   background-repeat: no-repeat;
-  padding-right: calc(var(--xform-input-padding-horizontal) * 2 + 10px);
+  padding-right: calc(var(--xform-input-padding-x) * 2 + 10px);
 }
 
 .xform__fieldset {
@@ -194,9 +194,9 @@
       @include absolute-block(0.5em,0.8em);
 
       left: 0.5em;
-      top: 0.2em;
-      transform: rotate(40deg);
-      border: 1px solid var(--main-color);
+      top: 0.25em;
+      transform: rotate(35deg);
+      border: 2px solid var(--main-color);
       border-left: none;
       border-top: none;
     }
@@ -319,18 +319,18 @@
   border-radius: var(--xform-input-border-radius);
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  padding: var(--xform-input-padding-vertical) var(--xform-input-padding-horizontal);
+  padding: var(--xform-input-padding-y) var(--xform-input-padding-x);
   margin-left: 0;
-  margin-right: calc(-1 * (var(--xform-input-padding-horizontal)));
-  margin-top: calc(-1 * (var(--xform-input-padding-vertical)));
-  margin-bottom: calc(-1 * (var(--xform-input-padding-vertical)));
+  margin-right: calc(-1 * (var(--xform-input-padding-x)));
+  margin-top: calc(-1 * (var(--xform-input-padding-y)));
+  margin-bottom: calc(-1 * (var(--xform-input-padding-y)));
   background-color: var(--xform-input-background-color);
   color: var(--xform-input-placeholder-color);
   text-align: center;
 
   .xform__file:hover &,
   .xform__file:focus-within & {
-    color: var(--text-color);
+    color: var(--xform-input-color);
   }
 }
 
@@ -383,7 +383,7 @@
   .xform__label {
     @include transition;
 
-    padding: var(--xform-input-padding-vertical) var(--xform-input-padding-horizontal);
+    padding: var(--xform-input-padding-y) var(--xform-input-padding-x);
     position: absolute;
     top: var(--xform-input-border-width);
     left: var(--xform-input-border-width);
@@ -416,14 +416,14 @@
     .xform__label {
       font-size: calc(var(--xform-label-font-size) * 0.75);
       line-height: calc(var(--xform-label-line-height) * 0.75);
-      padding-top: calc(var(--xform-input-padding-vertical) * 0.35);
+      padding-top: calc(var(--xform-input-padding-y) * 0.35);
       padding-bottom: 0;
     }
 
     .xform__input,
     .xform__file {
-      padding-top: calc(var(--xform-input-padding-vertical) * 1.75);
-      padding-bottom: calc(var(--xform-input-padding-vertical) * 0.25);
+      padding-top: calc(var(--xform-input-padding-y) * 1.75);
+      padding-bottom: calc(var(--xform-input-padding-y) * 0.25);
     }
 
     .xform__input--select {
@@ -431,8 +431,8 @@
     }
 
     .xform__file-button {
-      margin-top: calc(-1 * (var(--xform-input-padding-vertical) * 1.75));
-      margin-bottom: calc(-1 * (var(--xform-input-padding-vertical) * 0.25));
+      margin-top: calc(-1 * (var(--xform-input-padding-y) * 1.75));
+      margin-bottom: calc(-1 * (var(--xform-input-padding-y) * 0.25));
     }
   }
 }

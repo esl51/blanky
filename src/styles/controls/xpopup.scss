@@ -80,7 +80,6 @@
 .xpopup__close {
   @include vmargin(0);
 
-  color: var(--text-color);
   position: relative;
   align-self: flex-start;
   line-height: 1;

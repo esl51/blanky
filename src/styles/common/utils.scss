@@ -1,4 +1,6 @@
 @use "sass:string";
+@use "sass:map";
+@use "sass:color";
 
 @mixin scrollbar($width: 10px, $radius: 5px, $color: rgba(#000, 0.3), $background: rgba(#000, 0.1)) {
   @include media("hover") {
@@ -59,12 +61,12 @@
 }
 
 @mixin section-paddings {
-  &:not(.section--no-spacing,.visually-hidden) + & {
-    &:not(.section--spacing-lg) {
+  &:not(.section--no-spacing,.section--image,.visually-hidden) + & {
+    &:not(.section--large-spacing) {
       --section-padding-top: 0;
     }
 
-    &.section--spacing-lg {
+    &.section--large-spacing {
       --section-padding-top: calc(var(--section-spacing) * 0.25);
 
       .section__image + .section__inner {
@@ -95,7 +97,6 @@
 @mixin text {
   font-family: var(--text-family);
   font-weight: var(--text-weight);
-  color: var(--text-color);
 }
 
 @mixin t1 {
@@ -122,13 +123,11 @@
 @mixin dark {
   --text-color: #fff;
   --heading-color: #fff;
-
-  color: var(--text-color);
-}
-
-@mixin light {
-  --text-color: var(--dark-color);
-  --heading-color: var(--dark-color);
+  --surface-color: var(--dark-color);
+  --surface-secondary-color: #{color.mix(#fff, map.get($colors, "dark"), 3%)};
+  --surface-tertiary-color: #{color.mix(#fff, map.get($colors, "dark"), 50%)};
+  --border-color: #{color.mix(#fff, map.get($colors, "dark"), 15%)};
+  --marker-color: var(--dark-main-color);
 
   color: var(--text-color);
 }

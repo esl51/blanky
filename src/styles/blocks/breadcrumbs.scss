@@ -1,20 +1,24 @@
+.breadcrumbs {
+  --gap: var(--text-size);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--gap);
+}
+
 .breadcrumbs__item {
-  display: inline;
-  margin-right: 0.5em;
+  display: flex;
 
   &:not(:last-child) {
     &::after {
-      display: inline-block;
+      margin-left: var(--gap);
       content: "/";
-      margin-left: 0.5em;
     }
   }
 }
 
 a.breadcrumbs__link {
   @include transition;
-
-  color: var(--main-color);
 
   &:hover,
   &:focus {
@@ -24,12 +28,7 @@ a.breadcrumbs__link {
     color: var(--main-color);
   }
 
-  .breadcrumbs__item:last-child & {
-    color: var(--text-color);
-
-    &:hover,
-    &:focus {
-      color: var(--main-color);
-    }
+  .breadcrumbs__item:not(:last-child) & {
+    color: var(--main-color);
   }
 }

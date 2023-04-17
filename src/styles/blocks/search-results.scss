@@ -9,7 +9,7 @@
   }
 
   &:not(:last-child) {
-    border-bottom: 1px solid var(--light-gray-color);
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: var(--spacing);
   }
 }

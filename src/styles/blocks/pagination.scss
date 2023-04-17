@@ -1,7 +1,11 @@
+.pagination {
+  --gap: var(--spacing-xs);
+}
+
 .pagination__list {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xs);
+  gap: var(--gap);
   justify-content: center;
   list-style: none;
   padding: 0;
@@ -14,11 +18,11 @@
 }
 
 .pagination__item--prev {
-  margin-right: var(--spacing-xs);
+  margin-right: var(--gap);
 }
 
 .pagination__item--next {
-  margin-left: var(--spacing-xs);
+  margin-left: var(--gap);
 }
 
 .pagination__link {

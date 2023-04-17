@@ -1,13 +1,12 @@
 .files {
-  @include light;
+  --gap: var(--spacing-sm);
 }
 
 .files__list {
   overflow: hidden;
-  border-radius: var(--border-radius);
   display: flex;
   flex-wrap: wrap;
-  gap: 1px;
+  gap: var(--gap);
 }
 
 .files__item {
@@ -15,15 +14,20 @@
 }
 
 .files__link {
+  @include transition;
+
   width: 100%;
   display: flex;
   align-content: stretch;
-  background-color: #fff;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
   padding: var(--spacing-sm) var(--spacing-lg);
 
   &:hover,
   &:focus {
     outline: none;
+    border-color: var(--main-color);
   }
 }
 
@@ -31,11 +35,6 @@
   @include transition;
 
   flex-grow: 1;
-
-  a.files__link:hover &,
-  a.files__link:focus & {
-    color: var(--main-color);
-  }
 }
 
 .files__download {
@@ -47,6 +46,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin-left: var(--spacing-sm);
 
   a.files__link:hover &,
   a.files__link:focus & {

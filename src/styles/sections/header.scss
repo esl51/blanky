@@ -19,5 +19,6 @@
   html.has-light-top &,
   &.is-scrolled {
     background-color: var(--dark-color);
+    box-shadow: var(--shadow-sm);
   }
 }

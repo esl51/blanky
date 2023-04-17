@@ -27,20 +27,25 @@ $grid-columns: 12;
 $colors: (
   "gray": #d5d5d5,
   "light-gray": #f7f7f7,
-  "dark-gray": #5a5a5a,
-  "dark": #1d273b,
-  "blue": #146c94,
+  "dark-gray": #333,
+  "blue": #3782a4,
   "red": #d63939,
   "orange": #f59f00,
   "green": #2fb344,
   "cyan": #17a2b8
 );
 $colors: map.merge($colors, (
+  "light": map.get($colors, "light-gray"),
+  "dark": map.get($colors, "dark-gray"),
   "main": map.get($colors, "blue"),
   "danger": map.get($colors, "red"),
   "warning": map.get($colors, "orange"),
   "success": map.get($colors, "green"),
   "info": map.get($colors, "cyan")
+));
+$colors: map.merge($colors, (
+  "light-main": color.mix(#fff, map.get($colors, "main"), 75%),
+  "dark-main": color.mix(#000, map.get($colors, "main"), 25%),
 ));
 
 
@@ -51,6 +56,12 @@ $colors: map.merge($colors, (
     --#{$name}-color: #{$color};
     --#{$name}-color-rgb: #{color.red($color) color.green($color) color.blue($color)};
   }
+
+  // Surface colors
+
+  --surface-color: #fff;
+  --surface-secondary-color: var(--light-gray-color);
+  --surface-tertiary-color: var(--dark-gray-color);
 
   // Spacing
 
@@ -76,6 +87,7 @@ $colors: map.merge($colors, (
 
   // Border
 
+  --border-color: var(--gray-color);
   --border-radius: 4px;
   --border-radius-sm: 2px;
   --border-radius-lg: 8px;
@@ -95,11 +107,12 @@ $colors: map.merge($colors, (
   --text-height-sm: 22px;
   --text-size-lg: 20px;
   --text-height-lg: 28px;
-  --text-color: var(--dark-color);
+  --text-color: var(--dark-gray-color);
   --text-weight: 400;
   --text-family: "Open Sans", var(--default-fonts);
   --text-spacing: var(--text-size);
   --strong-weight: 600;
+  --marker-color: var(--light-main-color);
 
   @include media("<laptop") {
     --text-size: 14px;

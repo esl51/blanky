@@ -1,3 +1,6 @@
+@use "sass:color";
+@use "sass:map";
+
 .text,
 %text {
   // Clearfix
@@ -20,8 +23,10 @@
     padding: var(--spacing-sm) var(--spacing-lg);
     margin-left: 0;
     margin-right: 0;
-    background: var(--light-gray-color);
+    background: var(--surface-secondary-color);
     border-left: 3px solid var(--main-color);
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
   }
 
   // Links
@@ -45,6 +50,7 @@
   img {
     max-width: 100%;
     display: inline-block;
+    border-radius: var(--border-radius);
   }
 
   figure {
@@ -55,7 +61,7 @@
 
       display: table-caption;
       caption-side: bottom;
-      color: var(--gray-color);
+      color: var(--surface-secondary-color);
     }
   }
 
@@ -127,7 +133,7 @@
 
   hr {
     border: 0;
-    border-top: 1px solid var(--light-gray-color);
+    border-top: 1px solid var(--border-color);
   }
 
   // Tables
@@ -154,17 +160,16 @@
     color: #fff;
     font-weight: var(--text-weight);
     text-align: left;
-    border-bottom: 1px solid #fff;
   }
 
   tbody {
     td {
-      background: #fff;
+      background: var(--surface-color);
     }
 
     tr:nth-child(even) {
       td {
-        background-color: var(--light-gray-color);
+        background-color: var(--surface-secondary-color);
       }
     }
   }
@@ -269,7 +274,7 @@
   // Marker
 
   .marker {
-    background-color: rgb(var(--main-color-rgb) / 15%);
+    background-color: var(--marker-color);
     padding-left: 0.5em;
     padding-right: 0.5em;
     border-radius: var(--border-radius-sm);
