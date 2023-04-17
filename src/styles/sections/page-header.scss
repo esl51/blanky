@@ -9,10 +9,6 @@
   }
 
   &.section--dark {
-    @include dark;
-
-    background-color: $dark-gray-color;
-
     .section__image {
       &::after {
         background: linear-gradient(180deg, rgba(#000, 0) 0%, rgba(#000, 0.5) 58%);
