@@ -16,23 +16,23 @@ export default class Header {
     } else if (scrollTop <= 100 && this.headerElem.classList.contains(this.scrolledClass)) {
       this.headerElem.classList.remove(this.scrolledClass)
     }
-    if (scrollTop === 0) {
-      this.headerElem.classList.remove(this.backwardClass)
-      this.headerElem.classList.remove(this.forwardClass)
-    } else if (scrollTop > this.scrollTop) {
-      this.headerElem.classList.remove(this.backwardClass)
-      this.headerElem.classList.add(this.forwardClass)
-    } else {
-      this.headerElem.classList.remove(this.backwardClass)
-      this.headerElem.classList.add(this.forwardClass)
-      if (!document.documentElement.classList.contains('is-scrolling')) {
-        this.headerElem.classList.remove(this.forwardClass)
-        this.headerElem.classList.add(this.backwardClass)
-      }
-    }
-    this.scrollTop = scrollTop
     clearTimeout(this.resizeTimeout)
     this.resizeTimeout = setTimeout(() => {
+      if (scrollTop === 0) {
+        this.headerElem.classList.remove(this.backwardClass)
+        this.headerElem.classList.remove(this.forwardClass)
+      } else if (scrollTop > this.scrollTop) {
+        this.headerElem.classList.remove(this.backwardClass)
+        this.headerElem.classList.add(this.forwardClass)
+      } else {
+        this.headerElem.classList.remove(this.backwardClass)
+        this.headerElem.classList.add(this.forwardClass)
+        if (!document.documentElement.classList.contains('is-scrolling')) {
+          this.headerElem.classList.remove(this.forwardClass)
+          this.headerElem.classList.add(this.backwardClass)
+        }
+      }
+      this.scrollTop = scrollTop
       this.setHeight()
     }, 100)
   }
