@@ -54,8 +54,8 @@
   padding-top: var(--section-padding-top);
   padding-bottom: var(--section-padding-bottom);
 
-  .sections &:first-child,
-  .sections .visually-hidden:first-child + & {
+  .sections > &:first-child,
+  .sections > .visually-hidden:first-child + & {
     --section-padding-top: calc(var(--section-spacing) * 0.5 + var(--header-offset, 0px));
   }
 }
