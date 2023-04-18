@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Preloader links
 
-  const preloaderLinks = document.querySelectorAll('a[href^="/"], a[href$=".html"]')
+  const preloaderLinks = document.querySelectorAll('a[href^="/"]:not([href$=".jpg"],[href$=".jpeg"], [href$=".png"], [href$=".gif"]), a[href$=".html"]')
   preloaderLinks.forEach(link => {
     link.addEventListener('click', () => {
       document.documentElement.classList.remove('is-loaded')
