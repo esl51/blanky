@@ -37,7 +37,7 @@
   max-width: 900px;
   margin: auto;
   position: relative;
-  box-shadow: 0 2px 4px -1px rgba(#000, 0.14), 0 4px 5px 0 rgba(#000, 0.098), 0 1px 10px 0 rgba(#000, 0.084);
+  box-shadow: var(--shadow-lg);
   border-radius: var(--border-radius-lg);
 
   .xpopup--form & {
