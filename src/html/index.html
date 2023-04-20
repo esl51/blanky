@@ -304,33 +304,36 @@
     <div class="block">
       <h2 class="block__title">xSlider: carousel</h2>
       <div class="xslider xslider--carousel-3 js-xslider">
-        <div class="xslider__viewport" data-viewport>
-          <ul class="xslider__track" data-track>
-            <li class="xslider__item" style="height: 300px;">
-              <img src="img/temp/tmp1s.jpg" alt>
-            </li>
-            <li class="xslider__item" style="height: 300px;">
-              <img src="img/temp/tmp2s.jpg" alt>
-            </li>
-            <li class="xslider__item" style="height: 300px;">
-              <img src="img/temp/tmp3s.jpg" alt>
-            </li>
-            <li class="xslider__item" style="height: 300px;">
-              <img src="img/temp/tmp4s.jpg" alt>
-            </li>
-            <li class="xslider__item" style="height: 300px;">
-              <img src="img/temp/tmp5s.jpg" alt>
-            </li>
-          </ul>
+        <div class="xslider__inner">
+          <div class="xslider__viewport" data-viewport>
+            <ul class="xslider__track" data-track>
+              <li class="xslider__item" style="height: 300px;">
+                <img src="img/temp/tmp1s.jpg" alt>
+              </li>
+              <li class="xslider__item" style="height: 300px;">
+                <img src="img/temp/tmp2s.jpg" alt>
+              </li>
+              <li class="xslider__item" style="height: 300px;">
+                <img src="img/temp/tmp3s.jpg" alt>
+              </li>
+              <li class="xslider__item" style="height: 300px;">
+                <img src="img/temp/tmp4s.jpg" alt>
+              </li>
+              <li class="xslider__item" style="height: 300px;">
+                <img src="img/temp/tmp5s.jpg" alt>
+              </li>
+            </ul>
+          </div>
+          <div class="xslider__arrows">
+            <button class="xslider__arrow" data-prev>
+              @@icon('prev')
+            </button>
+            <button class="xslider__arrow" data-next>
+              @@icon('next')
+            </button>
+          </div>
         </div>
-        <div class="xslider__arrows">
-          <button class="xslider__arrow" data-prev>
-            @@icon('prev')
-          </button>
-          <button class="xslider__arrow" data-next>
-            @@icon('next')
-          </button>
-        </div>
+        <ul class="xslider__bullets" data-bullets></ul>
       </div>
     </div>
     <div class="block">
