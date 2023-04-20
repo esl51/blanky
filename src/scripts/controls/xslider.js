@@ -2,7 +2,6 @@ export default class XSlider {
   constructor (elem, options) {
     this.settings = {
       loop: false,
-      loopActive: true,
       autoSize: false,
       startAt: 0,
       perSlide: 1,
@@ -23,10 +22,13 @@ export default class XSlider {
       hiddenClass: 'is-hidden',
       forwardClass: 'is-forward',
       backwardClass: 'is-backward',
+      cloneClass: 'is-clone',
       itemSelector: '*',
       bulletTag: 'li',
+      bulletsPerView: true,
       hideBullets: true,
       wheel: false,
+      wheelSensitivity: 25,
       muteVideos: true
     }
     for (const attrname in options) {
@@ -39,6 +41,8 @@ export default class XSlider {
           this.settings[attrname] = true
         } else if (this.slider.dataset[attrname] === 'false') {
           this.settings[attrname] = false
+        } else if (!isNaN(this.slider.dataset[attrname])) {
+          this.settings[attrname] = parseFloat(this.slider.dataset[attrname])
         } else {
           this.settings[attrname] = this.slider.dataset[attrname]
         }
@@ -60,10 +64,14 @@ export default class XSlider {
     this.counterCounts = this.slider.querySelectorAll('[data-count]')
 
     this.current = 0
+    this.loopCurrent = 0
     this.autoplayPosition = 0
     this.prev = null
     this.inTransition = false
     this.activeItems = []
+
+    this.prevClones = []
+    this.nextClones = []
 
     this.isMoving = false
 
@@ -97,48 +105,47 @@ export default class XSlider {
   }
 
   loadItems () {
-    this.items = this.track.querySelectorAll(':scope > ' + this.settings.itemSelector)
+    this.items = this.track.querySelectorAll(':scope > ' + this.settings.itemSelector + ':not(.' + this.settings.cloneClass + ')')
+  }
+
+  mod (index, total) {
+    return (index % total + total) % total
   }
 
   goTo (index) {
     if (this.items.length < 1) return
-    if (index < 0) {
-      if (!this.settings.loop) {
-        this.current = 0
-      } else {
-        if (this.current < this.settings.perSlide && this.current > 0) {
-          this.current = 0
-        } else {
-          if (this.settings.loopActive && (this.items.length + index) >= this.maxCurrent) {
-            this.current = this.maxCurrent
-          } else {
-            this.current = this.items.length - 1
-          }
-        }
-      }
-    } else if (index > this.items.length - 1) {
-      if (!this.settings.loop) {
-        this.current = this.items.length - 1
-      } else {
-        this.current = 0
-      }
-    } else {
-      if (!this.settings.loop) {
-        this.current = index
-      } else {
-        if (this.settings.loopActive && index >= this.maxCurrent) {
-          if (this.current < this.maxCurrent) {
-            this.current = this.maxCurrent
-          } else {
-            this.current = 0
-          }
-        } else {
-          this.current = index
-        }
-      }
+
+    // prevent fast click
+    if (this.settings.loop && this.inTransition && (index <= this.minLoopCurrent || index >= this.maxLoopCurrent)) {
+      return
     }
 
+    this.loopCurrent = index
+    this.current = this.mod(index, this.items.length)
+
     return this.reposition()
+  }
+
+  goToPrev () {
+    const index = this.settings.loop ? this.loopCurrent : this.current
+    return this.goTo(index - this.settings.perSlide)
+  }
+
+  goToNext () {
+    const index = this.settings.loop ? this.loopCurrent : this.current
+    return this.goTo(index + this.settings.perSlide)
+  }
+
+  goToFirst () {
+    return this.goTo(this.minCurrent)
+  }
+
+  goToLast () {
+    return this.goTo(this.items.length - 1)
+  }
+
+  goToLastView () {
+    return this.goTo(this.maxCurrent)
   }
 
   recalc () {
@@ -192,7 +199,173 @@ export default class XSlider {
       this.settings.perSlide = this.perView
     }
 
+    this.nextClonesCount = this.settings.loop ? this.settings.perSlide + this.perView : 0
+    this.prevClonesCount = this.settings.loop ? this.settings.perSlide + this.perView : 0
+    this.prevClones = []
+    this.nextClones = []
+    this.items.forEach(item => {
+      item.dataset.id = Array.from(this.items).indexOf(item)
+    })
+    if (this.settings.loop) {
+      this.items.forEach(item => {
+        item.dataset.loopId = Array.from(this.items).indexOf(item)
+      })
+      for (let i = 0; i < this.nextClonesCount; i++) {
+        const id = this.mod(i, this.items.length)
+        const clone = this.items[id].cloneNode(true)
+        clone.classList.add(this.settings.cloneClass)
+        clone.dataset.id = Array.from(this.items).indexOf(this.items[id])
+        clone.dataset.loopId = i + this.items.length
+        this.nextClones.push(clone)
+      }
+      this.nextClones.forEach(clone => {
+        this.track.appendChild(clone)
+      })
+
+      for (let i = this.items.length - this.prevClonesCount; i < this.items.length; i++) {
+        const id = this.mod(i, this.items.length)
+        const clone = this.items[id].cloneNode(true)
+        clone.classList.add(this.settings.cloneClass)
+        clone.dataset.id = Array.from(this.items).indexOf(this.items[id])
+        clone.dataset.loopId = i - this.items.length
+        this.prevClones.push(clone)
+      }
+      this.prevClones.forEach(clone => {
+        this.track.insertBefore(clone, this.items[0])
+      })
+    }
+
+    this.minCurrent = 0
+    this.minLoopCurrent = this.settings.loop ? this.minCurrent - this.prevClonesCount : this.minCurrent
     this.maxCurrent = this.items.length - this.perView
+    this.maxLoopCurrent = this.settings.loop ? this.maxCurrent + this.nextClonesCount : this.maxCurrent
+
+    this.initBullets()
+
+    return this
+  }
+
+  reposition () {
+    let first = this.settings.loop ? this.loopCurrent : this.current
+    if (first < this.minLoopCurrent) {
+      first = this.minLoopCurrent
+    }
+    if (first > this.maxLoopCurrent) {
+      first = this.maxLoopCurrent
+    }
+
+    this.refreshButtonsState()
+    this.refreshCounter()
+    this.handleBullets()
+    this.handleThumbs()
+    this.handleLazyLoad(first)
+
+    this.items.forEach(item => {
+      item.classList.remove(this.settings.currentClass)
+      item.classList.remove(this.settings.activeClass)
+    })
+    if (this.settings.loop) {
+      this.prevClones.forEach(item => {
+        item.classList.remove(this.settings.currentClass)
+        item.classList.remove(this.settings.activeClass)
+      })
+      this.nextClones.forEach(item => {
+        item.classList.remove(this.settings.currentClass)
+        item.classList.remove(this.settings.activeClass)
+      })
+    }
+
+    let maxHeight = 0
+    let maxWidth = 0
+    if (this.type === 'horizontal') {
+      this.track.style.width = ''
+      this.track.style.height = 'auto'
+    } else if (this.type === 'vertical') {
+      this.track.style.height = ''
+      this.track.style.width = 'auto'
+    }
+    this.activeItems = Array.from(this.items).slice(this.current, this.current + this.perView)
+    this.activeItems.forEach(item => {
+      item.classList.add(this.settings.activeClass)
+      if (this.settings.loop) {
+        const index = Array.from(this.items).indexOf(item)
+        const prevClones = this.prevClones.filter(c => parseInt(c.dataset.id) === index)
+        prevClones.forEach(clone => {
+          clone.classList.add(this.settings.activeClass)
+        })
+        const nextClones = this.nextClones.filter(c => parseInt(c.dataset.id) === index)
+        nextClones.forEach(clone => {
+          clone.classList.add(this.settings.activeClass)
+        })
+      }
+      if (item.offsetHeight > maxHeight) {
+        maxHeight = item.offsetHeight
+      }
+      if (item.offsetWidth > maxWidth) {
+        maxWidth = item.offsetWidth
+      }
+    })
+
+    this.distance = -1 * (first + this.prevClonesCount) * this.itemSize
+    this.inTransition = true
+    this.currentTransform = this._getTransform(this.distance, '%')
+    this.track.style.transition = ''
+    this.track.style.transform = this.currentTransform
+    if (this.settings.autoSize) {
+      if (this.type === 'horizontal') {
+        this.track.style.height = maxHeight + 'px'
+      } else if (this.type === 'vertical') {
+        this.track.style.width = maxWidth + 'px'
+      }
+    }
+
+    if (this.loopCurrent > this.prev) {
+      this.slider.classList.remove(this.settings.backwardClass)
+      this.slider.classList.add(this.settings.forwardClass)
+    } else {
+      this.slider.classList.remove(this.settings.forwardClass)
+      this.slider.classList.add(this.settings.backwardClass)
+    }
+    let change = false
+    if (this.current !== this.prev) {
+      change = true
+      this.toggleEvent('beforeChange')
+      this.prev = this.current
+    }
+    this.pauseAutoplay()
+    clearInterval(this.autoplayPositionInterval)
+    this.updateAutoplayPosition(0)
+    this.pauseVideos(true)
+    clearTimeout(this.durationTimeout)
+    this.durationTimeout = setTimeout(() => {
+      if (this.settings.loop) {
+        if (this.loopCurrent !== this.current) {
+          this.loopCurrent = this.current
+          this.distance = -1 * (this.loopCurrent + this.prevClonesCount) * this.itemSize
+          this.currentTransform = this._getTransform(this.distance, '%')
+          this.track.style.transition = 'none'
+          this.track.style.transform = this.currentTransform
+        }
+        const prevClones = this.prevClones.filter(c => parseInt(c.dataset.id) === this.current)
+        prevClones.forEach(clone => {
+          clone.classList.add(this.settings.currentClass)
+        })
+        const nextClones = this.nextClones.filter(c => parseInt(c.dataset.id) === this.current)
+        nextClones.forEach(clone => {
+          clone.classList.add(this.settings.currentClass)
+        })
+      }
+      this.items[this.current].classList.add(this.settings.currentClass)
+      this.inTransition = false
+      this.viewport.removeEventListener('click', this._click)
+      this.track.classList.remove(this.settings.movingClass)
+      if (change) {
+        this.toggleEvent('change')
+        this.prev = this.current
+      }
+      this.playCurrentVideo(true)
+      this.startAutoplay()
+    }, this.duration)
 
     return this
   }
@@ -206,7 +379,7 @@ export default class XSlider {
         buttons.push(...this.lastButtons)
         disabledButtons.push(...this.prevButtons)
         disabledButtons.push(...this.firstButtons)
-      } else if ((this.disableButtonsPerView && this.current >= this.maxCurrent) || (this.current >= this.items.length - 1)) {
+      } else if ((this.settings.disableButtonsPerView && this.current >= this.maxCurrent) || (this.current >= this.items.length - 1)) {
         buttons.push(...this.prevButtons)
         buttons.push(...this.firstButtons)
         disabledButtons.push(...this.nextButtons)
@@ -239,30 +412,31 @@ export default class XSlider {
     })
   }
 
-  reposition () {
-    let first = this.current
-    if (first > this.maxCurrent) {
-      first = this.maxCurrent
-    }
-
-    this.refreshButtonsState()
-    this.refreshCounter()
-
+  initBullets () {
     if (this.bulletsContainer) {
       while (this.bulletsContainer.firstChild) {
         this.bulletsContainer.removeChild(this.bulletsContainer.firstChild)
       }
-    }
-
-    this.items.forEach(item => {
-      item.classList.remove(this.settings.currentClass)
-      item.classList.remove(this.settings.activeClass)
-    })
-
-    if (this.bulletsContainer) {
-      const bulletsCount = this.items.length - this.perView + 1
+      let bulletsCount = this.items.length
+      if (this.settings.bulletsPerView && this.settings.loop) {
+        this.settings.bulletsPerView = false
+      }
+      if (this.settings.bulletsPerView) {
+        bulletsCount = this.items.length - this.perView + 1
+      }
       for (let i = 0; i < bulletsCount; i++) {
-        this.bulletsContainer.insertAdjacentHTML('beforeend', '<' + this.settings.bulletTag + ' class="xslider__bullet"><button></button></' + this.settings.bulletTag + '>')
+        const bulletBtn = Object.assign(document.createElement('button'), {
+          type: 'button'
+        })
+        bulletBtn.addEventListener('click', () => {
+          const idx = Array.from(this.bullets).indexOf(bullet)
+          this.goTo(idx)
+        })
+        const bullet = Object.assign(document.createElement(this.settings.bulletTag), {
+          className: 'xslider__bullet'
+        })
+        bullet.appendChild(bulletBtn)
+        this.bulletsContainer.appendChild(bullet)
       }
       this.bullets = Array.from(this.bulletsContainer.children)
       if (this.settings.hideBullets && bulletsCount === 1) {
@@ -271,132 +445,69 @@ export default class XSlider {
         this.bulletsContainer.classList.remove(this.settings.hiddenClass)
       }
     }
+  }
 
-    this.bullets.forEach(bullet => {
-      const btn = bullet.querySelector('button')
-      btn.addEventListener('click', () => {
-        const idx = Array.from(this.bullets).indexOf(bullet)
-        this.goTo(idx)
-      })
-    })
-
-    const lazyLoadItems = Array.from(this.items).slice(first, first + this.perView * (this.settings.lazyLoad + 1))
-    let lazyLoadAdd = []
-    if (first < this.perView) {
-      lazyLoadAdd = Array.from(this.items).slice(-1 * this.perView * (this.settings.lazyLoad + 1))
-    } else {
-      lazyLoadAdd = Array.from(this.items).slice(first - this.perView * (this.settings.lazyLoad + 1), first)
-    }
-    lazyLoadAdd.forEach(item => {
-      if (lazyLoadItems.indexOf(item) === -1) {
-        lazyLoadItems.push(item)
-      }
-    })
-    lazyLoadItems.forEach(item => {
-      const lazyLoadObjects = item.querySelectorAll('[data-src]')
-      lazyLoadObjects.forEach(obj => {
-        obj.src = obj.dataset.src
-        delete obj.dataset.src
-      })
-    })
-    let maxHeight = 0
-    let maxWidth = 0
-    if (this.type === 'horizontal') {
-      this.track.style.width = ''
-      this.track.style.height = 'auto'
-    } else if (this.type === 'vertical') {
-      this.track.style.height = ''
-      this.track.style.width = 'auto'
-    }
-    this.activeItems = Array.from(this.items).slice(first, first + this.perView)
-    this.activeItems.forEach(item => {
-      item.classList.add(this.settings.activeClass)
-      if (item.offsetHeight > maxHeight) {
-        maxHeight = item.offsetHeight
-      }
-      if (item.offsetWidth > maxWidth) {
-        maxWidth = item.offsetWidth
-      }
-    })
-
-    this.distance = -1 * first * this.itemSize
-    this.inTransition = true
-    this.currentTransform = this._getTransform(this.distance, '%')
-    this.track.style.transition = ''
-    this.track.style.transform = this.currentTransform
-    if (this.settings.autoSize) {
-      if (this.type === 'horizontal') {
-        this.track.style.height = maxHeight + 'px'
-      } else if (this.type === 'vertical') {
-        this.track.style.width = maxWidth + 'px'
-      }
-    }
-
+  handleBullets () {
     if (this.bulletsContainer) {
-      if (this.current < 0) {
+      this.bullets.forEach(bullet => {
+        bullet.classList.remove(this.settings.activeClass)
+      })
+      const maxCurrent = this.settings.bulletsPerView ? this.maxCurrent : this.items.length - 1
+      if (this.current < this.minCurrent) {
         this.bullets[0].classList.add(this.settings.activeClass)
-      } else if (this.current <= this.maxCurrent) {
+      } else if (this.current <= maxCurrent) {
         this.bullets[this.current].classList.add(this.settings.activeClass)
       } else {
-        this.bullets[this.maxCurrent].classList.add(this.settings.activeClass)
+        this.bullets[maxCurrent].classList.add(this.settings.activeClass)
       }
     }
+  }
 
+  lazyLoadItem (item) {
+    const lazyLoadObjects = item.querySelectorAll('[data-src]')
+    lazyLoadObjects.forEach(obj => {
+      obj.src = obj.dataset.src
+      delete obj.dataset.src
+    })
+  }
+
+  handleLazyLoad (first) {
+    const index = this.mod(first, this.items.length)
+    const count = this.settings.perSlide * this.settings.lazyLoad * 2
+    let minIndex = index - count
+    const maxIndex = index + count + 1
+    const lazyLoadItems = []
+    if (minIndex < this.minCurrent) {
+      minIndex = this.items.length + minIndex
+      lazyLoadItems.push(...Array.from(this.items).slice(minIndex))
+    }
+    lazyLoadItems.push(...Array.from(this.items).slice(index, maxIndex))
+
+    const ids = []
+    lazyLoadItems.forEach(item => {
+      if (!ids.includes(item.dataset.id)) {
+        ids.push(item.dataset.id)
+      }
+      this.lazyLoadItem(item)
+    })
+
+    if (this.settings.loop) {
+      const cloneItems = [...this.prevClones, ...this.nextClones]
+      cloneItems.forEach(clone => {
+        if (ids.includes(clone.dataset.id)) {
+          this.lazyLoadItem(clone)
+        }
+      })
+    }
+  }
+
+  handleThumbs () {
     if (this.thumbsContainer) {
       this.thumbs.forEach(thumb => {
         thumb.classList.remove(this.settings.activeClass)
       })
       this.thumbs[this.current].classList.add(this.settings.activeClass)
     }
-
-    clearTimeout(this.durationTimeout)
-    if (this.current > this.prev) {
-      this.slider.classList.remove(this.settings.backwardClass)
-      this.slider.classList.add(this.settings.forwardClass)
-    } else {
-      this.slider.classList.remove(this.settings.forwardClass)
-      this.slider.classList.add(this.settings.backwardClass)
-    }
-    let change = false
-    if (this.current !== this.prev) {
-      change = true
-      this.toggleEvent('beforeChange')
-      this.prev = this.current
-    }
-    this.pauseAutoplay()
-    clearInterval(this.autoplayPositionInterval)
-    this.updateAutoplayPosition(0)
-    this.pauseVideos(true)
-    this.durationTimeout = setTimeout(() => {
-      this.items[this.current].classList.add(this.settings.currentClass)
-      this.inTransition = false
-      this.viewport.removeEventListener('click', this._click)
-      this.track.classList.remove(this.settings.movingClass)
-      if (change) {
-        this.toggleEvent('change')
-        this.prev = this.current
-      }
-      this.playCurrentVideo(true)
-      this.startAutoplay()
-    }, this.duration)
-
-    return this
-  }
-
-  goToPrev () {
-    return this.goTo(this.current - this.settings.perSlide)
-  }
-
-  goToNext () {
-    return this.goTo(this.current + this.settings.perSlide)
-  }
-
-  goToFirst () {
-    return this.goTo(0)
-  }
-
-  goToLast () {
-    return this.goTo(this.items.length - 1)
   }
 
   playCurrentVideo (reset) {
@@ -477,33 +588,25 @@ export default class XSlider {
     const vRect = this.viewport.getBoundingClientRect()
     const tRect = this.track.getBoundingClientRect()
     let moveTo = -1
-    if (this.type === 'horizontal') {
-      const left = tRect.left - vRect.left
-      this.items.forEach(item => {
-        const index = Array.from(this.items).indexOf(item)
-        if (item.offsetLeft < (left * -1)) {
-          const nextItem = this.items[index + 1]
-          if (nextItem && nextItem.offsetLeft > (left * -1)) {
-            moveTo = this.moveDirection === 'prev' ? index : index + 1
-          } else if (!nextItem) {
-            moveTo = index
-          }
-        }
-      })
-    } else if (this.type === 'vertical') {
-      const top = tRect.top - vRect.top
-      this.items.forEach(item => {
-        const index = Array.from(this.items).indexOf(item)
-        if (item.offsetTop < (top * -1)) {
-          const nextItem = this.items[index + 1]
-          if (nextItem && nextItem.offsetTop > (top * -1)) {
-            moveTo = this.moveDirection === 'prev' ? index : index + 1
-          } else if (!nextItem) {
-            moveTo = index
-          }
-        }
-      })
+    const allItems = [...this.prevClones, ...this.items, ...this.nextClones]
+    let offset = tRect.left - vRect.left
+    let offsetProp = 'offsetLeft'
+    if (this.type === 'vertical') {
+      offset = tRect.top - vRect.top
+      offsetProp = 'offsetTop'
     }
+    allItems.forEach(item => {
+      if (item[offsetProp] < (offset * -1)) {
+        const index = Array.from(allItems).indexOf(item)
+        const id = parseInt(this.settings.loop ? item.dataset.loopId : item.dataset.id)
+        const nextItem = allItems[index + 1]
+        if (nextItem && nextItem[offsetProp] > (offset * -1)) {
+          moveTo = this.moveDirection === 'prev' ? id : id + 1
+        } else if (!nextItem) {
+          moveTo = id
+        }
+      }
+    })
     return moveTo
   }
 
@@ -655,7 +758,8 @@ export default class XSlider {
       if (e.cancelable) {
         e.preventDefault()
       }
-      const transform = this._getTransform(this.xDiff * -1)
+      const transform = this._getTransform(this.xDiff * -(this.settings.wheelSensitivity / 100))
+      this.track.style.transform = this.currentTransform + ' ' + transform
       let canMove = true
       if (!this.settings.loop && ((this.current === this.items.length - 1 && this.xDiff > 0) || (this.current === 0 && this.xDiff < 0))) {
         canMove = false
