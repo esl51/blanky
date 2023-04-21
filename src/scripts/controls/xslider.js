@@ -201,8 +201,14 @@ export default class XSlider {
 
     this.nextClonesCount = this.settings.loop ? this.settings.perSlide + this.perView : 0
     this.prevClonesCount = this.settings.loop ? this.settings.perSlide + this.perView : 0
-    this.prevClones = []
-    this.nextClones = []
+
+    Array.from(this.nextClones).forEach(clone => {
+      clone.remove()
+    })
+    Array.from(this.prevClones).forEach(clone => {
+      clone.remove()
+    })
+
     this.items.forEach(item => {
       item.dataset.id = Array.from(this.items).indexOf(item)
     })
@@ -217,10 +223,8 @@ export default class XSlider {
         clone.dataset.id = Array.from(this.items).indexOf(this.items[id])
         clone.dataset.loopId = i + this.items.length
         this.nextClones.push(clone)
-      }
-      this.nextClones.forEach(clone => {
         this.track.appendChild(clone)
-      })
+      }
 
       for (let i = this.items.length - this.prevClonesCount; i < this.items.length; i++) {
         const id = this.mod(i, this.items.length)
@@ -229,10 +233,8 @@ export default class XSlider {
         clone.dataset.id = Array.from(this.items).indexOf(this.items[id])
         clone.dataset.loopId = i - this.items.length
         this.prevClones.push(clone)
-      }
-      this.prevClones.forEach(clone => {
         this.track.insertBefore(clone, this.items[0])
-      })
+      }
     }
 
     this.minCurrent = 0
