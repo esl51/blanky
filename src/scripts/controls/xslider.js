@@ -26,7 +26,7 @@ export default class XSlider {
       itemSelector: '*',
       bulletTag: 'li',
       bulletsPerView: true,
-      hideBullets: true,
+      hideControls: true,
       wheel: false,
       wheelSensitivity: 25,
       muteVideos: true
@@ -376,7 +376,12 @@ export default class XSlider {
     if (!this.settings.loop && this.settings.disableButtons) {
       const buttons = []
       const disabledButtons = []
-      if (this.current === 0) {
+      if (this.items.length <= this.perView) {
+        disabledButtons.push(...this.prevButtons)
+        disabledButtons.push(...this.firstButtons)
+        disabledButtons.push(...this.nextButtons)
+        disabledButtons.push(...this.lastButtons)
+      } else if (this.current === 0) {
         buttons.push(...this.nextButtons)
         buttons.push(...this.lastButtons)
         disabledButtons.push(...this.prevButtons)
@@ -402,6 +407,11 @@ export default class XSlider {
         item.removeAttribute('tabindex')
         item.classList.remove(this.settings.disabledClass)
       })
+      if (this.settings.hideControls && buttons.length === 0) {
+        disabledButtons.forEach(button => {
+          button.classList.add(this.settings.hiddenClass)
+        })
+      }
     }
   }
 
@@ -441,7 +451,7 @@ export default class XSlider {
         this.bulletsContainer.appendChild(bullet)
       }
       this.bullets = Array.from(this.bulletsContainer.children)
-      if (this.settings.hideBullets && bulletsCount === 1) {
+      if (this.settings.hideControls && bulletsCount === 1) {
         this.bulletsContainer.classList.add(this.settings.hiddenClass)
       } else {
         this.bulletsContainer.classList.remove(this.settings.hiddenClass)
