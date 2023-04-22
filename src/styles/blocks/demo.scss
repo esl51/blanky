@@ -1,0 +1,27 @@
+.grid-demo__item {
+  @include animator-delay;
+
+  background-color: var(--light-gray-color);
+  padding: var(--spacing-sm) var(--spacing);
+  border-radius: var(--border-radius);
+}
+
+.icons-demo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing);
+}
+
+.icons-demo__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: var(--spacing);
+  text-align: center;
+  font-size: 24px;
+  background-color: var(--light-gray-color);
+  border-radius: var(--border-radius);
+}
