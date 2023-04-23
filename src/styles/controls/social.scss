@@ -10,6 +10,10 @@
   }
 }
 
+.social__item {
+  @include animator-delay(10, 100ms, 50ms);
+}
+
 .social__link {
   @include dark;
   @include transition;

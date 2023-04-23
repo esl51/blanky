@@ -9,6 +9,8 @@
 }
 
 .files__item {
+  @include animator-delay;
+
   flex: 0 0 100%;
 }
 

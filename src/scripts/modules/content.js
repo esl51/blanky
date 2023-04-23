@@ -6,33 +6,13 @@ import XSlider from './../controls/xslider'
 import Header from './../controls/header'
 import Nav from './../controls/nav'
 import CookieConsent from '../controls/cookie-consent'
+import Animator from '../controls/animator'
 
 // Init content
 
 export function initContent (container) {
   if (!container) {
     container = document
-  }
-
-  // Blocks
-
-  if (window.IntersectionObserver) {
-    const visibleClass = 'is-visible'
-    const blocks = container.querySelectorAll('.block')
-    blocks.forEach(block => {
-      block.visibleObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio < 0.5) {
-            block.classList.remove(visibleClass)
-          } else {
-            block.classList.add(visibleClass)
-          }
-        })
-      }, {
-        threshold: 0.5
-      })
-      block.visibleObserver.observe(block)
-    })
   }
 
   // Popups
@@ -171,5 +151,50 @@ export function initContent (container) {
   const cookieConsent = container.querySelector('.js-cookie')
   if (cookieConsent) {
     new CookieConsent(cookieConsent).mount()
+  }
+
+  // Animator
+
+  const animators = container.querySelectorAll('.js-animator')
+  animators.forEach(animator => {
+    new Animator(animator).mount()
+  })
+  const tableAnimators = container.querySelectorAll('.text tr')
+  tableAnimators.forEach(animator => {
+    new Animator(animator, {
+      animation: 'fade-in',
+      once: false
+    }).mount()
+  })
+  const listAnimators = container.querySelectorAll('.text li')
+  listAnimators.forEach(animator => {
+    new Animator(animator, {
+      animation: 'fade-in slide-left',
+      once: false
+    }).mount()
+  })
+  const textAnimators = container.querySelectorAll('.text > *:not(.table-container, table, ul, ol)')
+  textAnimators.forEach(animator => {
+    new Animator(animator, {
+      once: false
+    }).mount()
+  })
+  const fileAnimators = container.querySelectorAll('.files__item')
+  fileAnimators.forEach(animator => {
+    animator.animator = new Animator(animator, {
+      once: false
+    }).mount()
+  })
+  const blockAnimators = container.querySelectorAll('.block')
+  if (window.IntersectionObserver) {
+    blockAnimators.forEach(animator => {
+      new Animator(animator, {
+        animation: false,
+        baseClass: '',
+        finishedClass: 'is-visible',
+        ratio: 0.25,
+        once: false
+      }).mount()
+    })
   }
 }

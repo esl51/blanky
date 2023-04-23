@@ -1,0 +1,92 @@
+@mixin animator-delay($count: 10, $base: 0ms, $increment: 50ms) {
+  @for $i from 0 through $count {
+    $d: $base + $i * $increment;
+
+    &:nth-child(#{$i}) {
+      --animator-delay: #{$d};
+    }
+  }
+}
+
+@mixin animator() {
+  &:not(.animator--children,.animator--active),
+  &.animator--children:not(.animator--active) > * {
+    @content;
+  }
+}
+
+:root {
+  --animator-delay: 250ms;
+  --animator-duration: 1000ms;
+  --animator-easing: var(--easing);
+  --animator-slide-distance: 50px;
+  --animator-scale-ratio: 0.5;
+  --animator-tilt-radius: 15deg;
+  --animator-flip-radius: 180deg;
+}
+
+.animator {
+  &:not(.animator--children),
+  &.animator--children > * {
+    transition:
+      opacity var(--animator-duration) var(--animator-delay) var(--animator-easing),
+      transform var(--animator-duration) var(--animator-delay) var(--animator-easing);
+    transform:
+      var(--animator-slide-up-transform,)
+      var(--animator-slide-down-transform,)
+      var(--animator-slide-left-transform,)
+      var(--animator-slide-right-transform,)
+      var(--animator-tilt-transform,)
+      var(--animator-scale-transform,)
+      var(--animator-flip-transform,);
+  }
+}
+
+
+.animator--fade-in {
+  @include animator {
+    opacity: 0;
+  }
+}
+
+.animator--scale {
+  @include animator {
+    --animator-scale-transform: scale(var(--animator-scale-ratio));
+  }
+}
+
+.animator--slide-up {
+  @include animator {
+    --animator-slide-up-transform: translateY(var(--animator-slide-distance));
+  }
+}
+
+.animator--slide-down {
+  @include animator {
+    --animator-slide-down-transform: translateY(calc(-1 * var(--animator-slide-distance)));
+  }
+}
+
+.animator--slide-left {
+  @include animator {
+    --animator-slide-left-transform: translateX(var(--animator-slide-distance));
+  }
+}
+
+.animator--slide-right {
+  @include animator {
+    --animator-slide-right-transform: translateX(calc(-1 * var(--animator-slide-distance)));
+  }
+}
+
+.animator--tilt {
+  @include animator {
+    --animator-tilt-transform: rotate(var(--animator-tilt-radius));
+  }
+}
+
+.animator--flip {
+  @include animator {
+    --animator-tilt-transform: rotateY(var(--animator-flip-radius));
+  }
+}
