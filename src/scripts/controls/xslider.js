@@ -402,7 +402,7 @@ export default class XSlider {
         buttons.push(...this.lastButtons)
         disabledButtons.push(...this.prevButtons)
         disabledButtons.push(...this.firstButtons)
-      } else if ((this.settings.disableButtonsPerView && this.current >= this.maxActive) || (this.current >= this.maxCUrrent)) {
+      } else if ((this.settings.disableButtonsPerView && this.current >= this.maxActive) || (this.current >= this.maxCurrent)) {
         buttons.push(...this.prevButtons)
         buttons.push(...this.firstButtons)
         disabledButtons.push(...this.nextButtons)
