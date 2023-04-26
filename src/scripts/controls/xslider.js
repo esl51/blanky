@@ -116,7 +116,7 @@ export default class XSlider {
     if (this.items.length < 1) return
 
     // prevent fast click
-    if (this.settings.loop && this.inTransition && (index <= this.minLoopCurrent || index >= this.maxLoopCurrent)) {
+    if (this.settings.loop && this.inTransition && (index <= this.minLoopActive || index >= this.maxLoopActive)) {
       return
     }
 
@@ -148,11 +148,11 @@ export default class XSlider {
   }
 
   goToLast () {
-    return this.goTo(this.items.length - 1)
+    return this.goTo(this.maxCurrent)
   }
 
   goToLastView () {
-    return this.goTo(this.maxCurrent)
+    return this.goTo(this.maxActive)
   }
 
   recalc () {
@@ -245,9 +245,11 @@ export default class XSlider {
     }
 
     this.minCurrent = 0
-    this.minLoopCurrent = this.settings.loop ? this.minCurrent - this.prevClonesCount : this.minCurrent
-    this.maxCurrent = this.items.length - this.perView
-    this.maxLoopCurrent = this.settings.loop ? this.maxCurrent + this.nextClonesCount : this.maxCurrent
+    this.maxCurrent = this.items.length - 1
+    this.minActive = 0
+    this.minLoopActive = this.settings.loop ? this.minActive - this.prevClonesCount : this.minActive
+    this.maxActive = this.items.length - this.perView
+    this.maxLoopActive = this.settings.loop ? this.maxActive + this.nextClonesCount : this.maxActive
 
     this.initBullets()
 
@@ -256,11 +258,11 @@ export default class XSlider {
 
   reposition () {
     let first = this.settings.loop ? this.loopCurrent : this.current
-    if (first < this.minLoopCurrent) {
-      first = this.minLoopCurrent
+    if (first < this.minLoopActive) {
+      first = this.minLoopActive
     }
-    if (first > this.maxLoopCurrent) {
-      first = this.maxLoopCurrent
+    if (first > this.maxLoopActive) {
+      first = this.maxLoopActive
     }
 
     this.refreshButtonsState()
@@ -294,8 +296,11 @@ export default class XSlider {
       this.track.style.width = 'auto'
     }
     let activeStart = this.current
-    if (activeStart >= this.items.length - this.perView) {
-      activeStart = this.items.length - this.perView
+    if (activeStart < this.minActive) {
+      activeStart = this.minActive
+    }
+    if (activeStart > this.maxActive) {
+      activeStart = this.maxActive
     }
     this.activeItems = Array.from(this.items).slice(activeStart, activeStart + this.perView)
     this.activeItems.forEach(item => {
@@ -392,12 +397,12 @@ export default class XSlider {
         disabledButtons.push(...this.firstButtons)
         disabledButtons.push(...this.nextButtons)
         disabledButtons.push(...this.lastButtons)
-      } else if (this.current === 0) {
+      } else if (this.current === this.minCurrent) {
         buttons.push(...this.nextButtons)
         buttons.push(...this.lastButtons)
         disabledButtons.push(...this.prevButtons)
         disabledButtons.push(...this.firstButtons)
-      } else if ((this.settings.disableButtonsPerView && this.current >= this.maxCurrent) || (this.current >= this.items.length - 1)) {
+      } else if ((this.settings.disableButtonsPerView && this.current >= this.maxActive) || (this.current >= this.maxCUrrent)) {
         buttons.push(...this.prevButtons)
         buttons.push(...this.firstButtons)
         disabledButtons.push(...this.nextButtons)
@@ -475,13 +480,13 @@ export default class XSlider {
       this.bullets.forEach(bullet => {
         bullet.classList.remove(this.settings.activeClass)
       })
-      const maxCurrent = this.settings.bulletsPerView ? this.maxCurrent : this.items.length - 1
+      const maxActive = this.settings.bulletsPerView ? this.maxActive : this.maxCurrent
       if (this.current < this.minCurrent) {
         this.bullets[0].classList.add(this.settings.activeClass)
-      } else if (this.current <= maxCurrent) {
+      } else if (this.current <= maxActive) {
         this.bullets[this.current].classList.add(this.settings.activeClass)
       } else {
-        this.bullets[maxCurrent].classList.add(this.settings.activeClass)
+        this.bullets[maxActive].classList.add(this.settings.activeClass)
       }
     }
   }
@@ -500,7 +505,7 @@ export default class XSlider {
     let minIndex = index - count
     const maxIndex = index + count + 1
     const lazyLoadItems = []
-    if (minIndex < this.minCurrent) {
+    if (minIndex < this.minActive) {
       minIndex = this.items.length + minIndex
       lazyLoadItems.push(...Array.from(this.items).slice(minIndex))
     }
@@ -596,7 +601,7 @@ export default class XSlider {
         }, 100)
       }
       this.autoplayTimeout = setInterval(() => {
-        if (!this.settings.loop && this.current === this.items.length - 1) {
+        if (!this.settings.loop && this.current === this.maxCurrent) {
           this.pauseVideos()
           this.pauseAutoplay()
           return this
@@ -684,7 +689,7 @@ export default class XSlider {
       }
       const transform = this._getTransform(diff * -1)
       let canMove = true
-      if (!this.settings.loop && ((this.current === this.items.length - 1 && diff > 0) || (this.current === 0 && diff < 0))) {
+      if (!this.settings.loop && ((this.current === this.maxCurrent && diff > 0) || (this.current === this.minCurrent && diff < 0))) {
         canMove = false
       }
       if (canMove) {
@@ -784,7 +789,7 @@ export default class XSlider {
       const transform = this._getTransform(this.xDiff * -(this.settings.wheelSensitivity / 100))
       this.track.style.transform = this.currentTransform + ' ' + transform
       let canMove = true
-      if (!this.settings.loop && ((this.current === this.items.length - 1 && this.xDiff > 0) || (this.current === 0 && this.xDiff < 0))) {
+      if (!this.settings.loop && ((this.current === this.maxCurrent && this.xDiff > 0) || (this.current === this.minCurrent && this.xDiff < 0))) {
         canMove = false
       }
       if (canMove) {

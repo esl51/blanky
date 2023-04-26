@@ -188,12 +188,7 @@
   &:disabled {
     opacity: 0.5;
     cursor: default;
-
-    &:hover,
-    &:focus {
-      background-color: inherit;
-      color: inherit;
-    }
+    pointer-events: none;
   }
 
   @include media("<tablet") {
