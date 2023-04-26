@@ -120,6 +120,13 @@ export default class XSlider {
       return
     }
 
+    if (!this.settings.loop && index < this.minCurrent) {
+      index = this.minCurrent
+    }
+    if (!this.settings.loop && index > this.maxCurrent) {
+      index = this.maxCurrent
+    }
+
     this.loopCurrent = index
     this.current = this.mod(index, this.items.length)
 
