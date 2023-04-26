@@ -293,7 +293,11 @@ export default class XSlider {
       this.track.style.height = ''
       this.track.style.width = 'auto'
     }
-    this.activeItems = Array.from(this.items).slice(this.current, this.current + this.perView)
+    let activeStart = this.current
+    if (activeStart >= this.items.length - this.perView) {
+      activeStart = this.items.length - this.perView
+    }
+    this.activeItems = Array.from(this.items).slice(activeStart, activeStart + this.perView)
     this.activeItems.forEach(item => {
       item.classList.add(this.settings.activeClass)
       if (this.settings.loop) {
