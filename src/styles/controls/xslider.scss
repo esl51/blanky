@@ -91,6 +91,15 @@
   }
 }
 
+.xslider__thumb {
+  width: 100%;
+  transition: all 0.3s var(--easing);
+
+  .xslider__item:not(.is-pre-current,.is-current) & {
+    opacity: 0.5;
+  }
+}
+
 .xslider__image {
   display: flex;
   align-items: center;

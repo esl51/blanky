@@ -234,7 +234,7 @@
 	<div class="section__inner">
     <div class="block">
       <h2 class="block__title">xSlider: basic</h2>
-      <div class="xslider js-xslider" data-autoplay="3000" data-loop="true" data-pause-on-hover="true">
+      <div class="xslider js-xslider" data-autoplay="3000" data-pause-on-hover="true">
         <div class="xslider__inner">
           <div class="xslider__viewport" data-viewport>
             <ul class="xslider__track" data-track>
@@ -297,6 +297,73 @@
           </li>
         </ul>
         <ul class="xslider__bullets" data-bullets></ul>
+      </div>
+    </div>
+    <div class="block">
+      <h2 class="block__title">xSlider: sync</h2>
+      <div class="xslider xslider--sync js-xslider" data-sync=".xslider--thumbs" data-loop="false">
+        <div class="xslider__inner">
+          <div class="xslider__viewport" data-viewport>
+            <ul class="xslider__track" data-track>
+              <li class="xslider__item" style="height: 300px;">
+                <video src="video.mp4"></video>
+              </li>
+              <li class="xslider__item" style="height: 300px;">
+                <img src="img/temp/tmp2s.jpg" alt>
+              </li>
+              <li class="xslider__item" style="height: 300px;">
+                <video src="video.mp4"></video>
+              </li>
+              <li class="xslider__item" style="height: 300px;">
+                <img src="img/temp/tmp4s.jpg" alt>
+              </li>
+              <li class="xslider__item" style="height: 300px;">
+                <img src="img/temp/tmp5s.jpg" alt>
+              </li>
+            </ul>
+          </div>
+          <div class="xslider__arrows">
+            <button class="xslider__arrow" data-prev>
+              @@icon('prev')
+            </button>
+            <button class="xslider__arrow" data-next>
+              @@icon('next')
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="xslider xslider--carousel-3 xslider--thumbs js-xslider" data-sync=".xslider--sync" data-loop="false">
+        <div class="xslider__inner">
+          <div class="xslider__viewport" data-viewport>
+            <ul class="xslider__track" data-track>
+              <li class="xslider__item" style="height: 100px;">
+                <button class="xslider__thumb" data-goto="0">
+                  <img src="img/temp/tmp1s.jpg" alt>
+                </button>
+              </li>
+              <li class="xslider__item" style="height: 100px;">
+                <button class="xslider__thumb" data-goto="1">
+                  <img src="img/temp/tmp2s.jpg" alt>
+                </button>
+              </li>
+              <li class="xslider__item" style="height: 100px;">
+                <button class="xslider__thumb" data-goto="2">
+                  <img src="img/temp/tmp3s.jpg" alt>
+                </button>
+              </li>
+              <li class="xslider__item" style="height: 100px;">
+                <button class="xslider__thumb" data-goto="3">
+                  <img src="img/temp/tmp4s.jpg" alt>
+                </button>
+              </li>
+              <li class="xslider__item" style="height: 100px;">
+                <button class="xslider__thumb" data-goto="4">
+                  <img src="img/temp/tmp5s.jpg" alt>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     <div class="block">

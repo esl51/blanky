@@ -16,6 +16,7 @@ export default class XSlider {
       moveToFirst: false,
       movingClass: 'is-moving',
       disabledClass: 'is-disabled',
+      preCurrentClass: 'is-pre-current',
       currentClass: 'is-current',
       activeClass: 'is-active',
       mountedClass: 'is-mounted',
@@ -29,7 +30,8 @@ export default class XSlider {
       hideControls: true,
       wheel: false,
       wheelSensitivity: 25,
-      muteVideos: true
+      muteVideos: true,
+      sync: null
     }
     for (const attrname in options) {
       this.settings[attrname] = options[attrname]
@@ -62,6 +64,12 @@ export default class XSlider {
     this.progressBars = this.slider.querySelectorAll('[data-progress]')
     this.counterCurrents = this.slider.querySelectorAll('[data-current]')
     this.counterCounts = this.slider.querySelectorAll('[data-count]')
+    this.goTos = this.slider.querySelectorAll('[data-goto]')
+
+    this.syncSlider = null
+    if (this.settings.sync) {
+      this.syncSlider = document.querySelector(this.settings.sync)
+    }
 
     this.current = 0
     this.loopCurrent = 0
@@ -112,8 +120,12 @@ export default class XSlider {
     return (index % total + total) % total
   }
 
-  goTo (index) {
+  goTo (index, preventSync) {
     if (this.items.length < 1) return
+
+    if (preventSync === undefined) {
+      preventSync = false
+    }
 
     // prevent fast click
     if (this.settings.loop && this.inTransition && (index <= this.minLoopActive || index >= this.maxLoopActive)) {
@@ -129,6 +141,10 @@ export default class XSlider {
 
     this.loopCurrent = index
     this.current = this.mod(index, this.items.length)
+
+    if (!preventSync && this.syncSlider && this.syncSlider.xSlider) {
+      this.syncSlider.xSlider.goTo(index, true)
+    }
 
     return this.reposition()
   }
@@ -272,15 +288,18 @@ export default class XSlider {
     this.handleLazyLoad(first)
 
     this.items.forEach(item => {
+      item.classList.remove(this.settings.preCurrentClass)
       item.classList.remove(this.settings.currentClass)
       item.classList.remove(this.settings.activeClass)
     })
     if (this.settings.loop) {
       this.prevClones.forEach(item => {
+        item.classList.remove(this.settings.preCurrentClass)
         item.classList.remove(this.settings.currentClass)
         item.classList.remove(this.settings.activeClass)
       })
       this.nextClones.forEach(item => {
+        item.classList.remove(this.settings.preCurrentClass)
         item.classList.remove(this.settings.currentClass)
         item.classList.remove(this.settings.activeClass)
       })
@@ -303,6 +322,7 @@ export default class XSlider {
       activeStart = this.maxActive
     }
     this.activeItems = Array.from(this.items).slice(activeStart, activeStart + this.perView)
+    this.items[this.current].classList.add(this.settings.preCurrentClass)
     this.activeItems.forEach(item => {
       item.classList.add(this.settings.activeClass)
       if (this.settings.loop) {
@@ -366,13 +386,16 @@ export default class XSlider {
         }
         const prevClones = this.prevClones.filter(c => parseInt(c.dataset.id) === this.current)
         prevClones.forEach(clone => {
+          clone.classList.remove(this.settings.preCurrentClass)
           clone.classList.add(this.settings.currentClass)
         })
         const nextClones = this.nextClones.filter(c => parseInt(c.dataset.id) === this.current)
         nextClones.forEach(clone => {
+          clone.classList.remove(this.settings.preCurrentClass)
           clone.classList.add(this.settings.currentClass)
         })
       }
+      this.items[this.current].classList.remove(this.settings.preCurrentClass)
       this.items[this.current].classList.add(this.settings.currentClass)
       this.inTransition = false
       this.viewport.removeEventListener('click', this._click)
@@ -905,6 +928,15 @@ export default class XSlider {
       btn.addEventListener('click', () => {
         const idx = Array.from(this.thumbs).indexOf(thumb)
         this.goTo(idx)
+      })
+    })
+
+    this.goTos.forEach(goTo => {
+      goTo.addEventListener('click', () => {
+        const idx = goTo.dataset.goto
+        if (idx) {
+          this.goTo(idx)
+        }
       })
     })
 
