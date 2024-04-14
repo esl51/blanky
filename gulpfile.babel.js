@@ -5,7 +5,7 @@ import gulpif from 'gulp-if'
 import imagemin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin'
 import postcss from 'gulp-postcss'
 import sassCompiler from 'sass'
-import gulpSass from 'gulp-sass'
+import * as gulpSass from 'gulp-sass'
 import sourcemaps from 'gulp-sourcemaps'
 import terser from 'gulp-terser'
 import cwebp from 'gulp-webp'
@@ -220,6 +220,15 @@ export const html = () => {
         ],
       }),
     )
+    .pipe(gulp.dest(config.dest))
+    .pipe(sync.stream())
+}
+
+// Validate BEM
+
+export const validateBem = () => {
+  return gulp
+    .src(config.dest + '!(_|xform|xloader)*.html')
     .pipe(bemValidator())
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
@@ -298,6 +307,7 @@ export const build = gulp.series(
   clean,
   gulp.parallel(icons, images, webp, root, favicon, fonts, scripts, styles),
   html,
+  validateBem,
 )
 
 // PW
@@ -356,7 +366,7 @@ export const watch = () => {
     config.assets + 'images/**/*.{png,jpg,gif,svg}',
     gulp.parallel(images, webp),
   )
-  gulp.watch(config.html + '**/*.html.twig', html)
+  gulp.watch(config.html + '**/*.html.twig', gulp.series(html, validateBem))
   gulp.watch(config.scripts + '**/*.js', scripts)
   gulp.watch(config.styles + '**/*.scss', styles)
 }
