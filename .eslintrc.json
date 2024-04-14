@@ -34,7 +34,7 @@
     "@html-eslint/lowercase": "error",
     "@html-eslint/no-multiple-empty-lines": ["error", { "max": 1 }],
     "@html-eslint/no-trailing-spaces": "error",
-    "@html-eslint/sort-attrs": ["error", { "priority": ["class", "id", "type", "name", "content", "rel"] }]
+    "@html-eslint/sort-attrs": ["error", { "priority": ["class", "id", "type", "name", "content", "rel", "src", "alt"] }]
   },
   "overrides": [
     {
