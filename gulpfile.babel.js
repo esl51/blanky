@@ -1,11 +1,9 @@
 import gulp from 'gulp'
 import cache from 'gulp-cache'
 import cleancss from 'gulp-clean-css'
-import include from 'gulp-file-include'
 import gulpif from 'gulp-if'
 import imagemin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin'
 import postcss from 'gulp-postcss'
-import replace from 'gulp-replace'
 import sassCompiler from 'sass'
 import gulpSass from 'gulp-sass'
 import sourcemaps from 'gulp-sourcemaps'
@@ -21,6 +19,10 @@ import through from 'through2'
 import sharp from 'sharp'
 import sharpIco from 'sharp-ico'
 import penthouse from 'penthouse'
+import twig from 'gulp-twig'
+import fs from 'fs'
+import path from 'path'
+import bemValidator from 'gulp-html-bem-validator'
 
 const isDev = process.env.NODE_ENV === 'development'
 const sass = gulpSass(sassCompiler)
@@ -189,16 +191,36 @@ export const webp = () => {
 // HTML
 
 export const html = () => {
+  const dir = path.resolve(path.dirname(''))
+  const ts = +new Date()
   return gulp
-    .src(config.html + '!(_)*.html')
-    .pipe(include())
+    .src(config.html + '!(_)*.html.twig')
     .pipe(
-      replace(
-        /@@icon\('([^']+)'(?:,\s*'([^']*)')?\)/g,
-        '<span class="$2 icon">@@include(\'../../public/icons/$1.svg\')</span>',
-      ),
+      twig({
+        data: {
+          ts,
+        },
+        extname: false,
+        filters: [
+          {
+            name: 'icon',
+            func: function (name, className) {
+              return (
+                '<span class="' +
+                className +
+                ' icon">' +
+                fs.readFileSync(
+                  path.join(dir, config.assets + 'icons/' + name + '.svg'),
+                  'utf8',
+                ) +
+                '</span>'
+              )
+            },
+          },
+        ],
+      }),
     )
-    .pipe(include())
+    .pipe(bemValidator())
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
 }
@@ -237,7 +259,7 @@ export const styles = () => {
 
 export const criticalStyles = () => {
   return gulp
-    .src(config.dest + '!(_)*.html')
+    .src(config.dest + '!(_|xform|xloader)*.html.twig')
     .pipe(
       cache(
         through.obj(async function (src, enc, cb) {
@@ -264,17 +286,6 @@ export const criticalStyles = () => {
     .pipe(sync.stream())
 }
 
-// Timestamps
-
-export const timestamps = () => {
-  const ts = +new Date()
-  return gulp
-    .src(config.dest + '*.html')
-    .pipe(gulpif(!isDev, replace(/#TS#/g, ts)))
-    .pipe(gulpif(isDev, replace(/\?#TS#/g, '')))
-    .pipe(gulp.dest(config.dest))
-}
-
 // Flush cache
 
 export const flush = () => {
@@ -287,7 +298,6 @@ export const build = gulp.series(
   clean,
   gulp.parallel(icons, images, webp, root, favicon, fonts, scripts, styles),
   html,
-  timestamps,
 )
 
 // PW
@@ -346,7 +356,7 @@ export const watch = () => {
     config.assets + 'images/**/*.{png,jpg,gif,svg}',
     gulp.parallel(images, webp),
   )
-  gulp.watch(config.html + '*.html', gulp.series(html, timestamps))
+  gulp.watch(config.html + '**/*.html.twig', html)
   gulp.watch(config.scripts + '**/*.js', scripts)
   gulp.watch(config.styles + '**/*.scss', styles)
 }

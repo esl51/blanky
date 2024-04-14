@@ -3,10 +3,10 @@
     "browser": true,
     "node": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:sonarjs/recommended",
-    "plugin:prettier/recommended"
+  "plugins": [
+    "@html-eslint",
+    "sonarjs",
+    "prettier"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -17,6 +17,41 @@
     "sourceType": "module"
   },
   "rules": {
-    "sonarjs/cognitive-complexity": ["error", 50]
-  }
+    "sonarjs/cognitive-complexity": ["error", 50],
+    "@html-eslint/no-script-style-type": "error",
+    "@html-eslint/require-button-type": "error",
+    "@html-eslint/require-meta-charset": "error",
+    "@html-eslint/require-meta-description": "error",
+    "@html-eslint/no-abstract-roles": "error",
+    "@html-eslint/no-accesskey-attrs": "error",
+    "@html-eslint/no-aria-hidden-body": "error",
+    "@html-eslint/no-non-scalable-viewport": "error",
+    "@html-eslint/no-positive-tabindex": "error",
+    "@html-eslint/require-frame-title": "error",
+    "@html-eslint/require-meta-viewport": "error",
+    "@html-eslint/id-naming-convention": ["error", "kebab-case"],
+    "@html-eslint/indent": ["error", 2],
+    "@html-eslint/lowercase": "error",
+    "@html-eslint/no-multiple-empty-lines": ["error", { "max": 1 }],
+    "@html-eslint/no-trailing-spaces": "error",
+    "@html-eslint/sort-attrs": ["error", { "priority": ["class", "id", "type", "name", "content", "rel"] }]
+  },
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:sonarjs/recommended",
+        "plugin:prettier/recommended"
+      ]
+    },
+    {
+      "files": ["*.html", "*.html.twig"],
+      "parser": "@html-eslint/parser",
+      "extends": [
+        "plugin:@html-eslint/recommended"
+      ]
+    }
+  ]
 }
+

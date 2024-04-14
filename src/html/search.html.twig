@@ -1,0 +1,91 @@
+{% extends "layouts/default.html.twig" %}
+
+{% block content %}
+<header class="section section--page-header">
+  <div class="section__inner">
+    <div class="block block--page-header">
+      <h1 class="block__title">Поиск</h1>
+      <form class="search-form xform js-xform" action="/search/" data-ajax="false">
+        <div class="xform__row row">
+          <div class="xform__col col col--t-9">
+            <div class="xform__field xform__field--required">
+              <input class="xform__input" type="text" name="q" placeholder="Поиск" required value="запрос">
+            </div>
+          </div>
+          <div class="xform__col col col--t-3">
+            <button class="xform__button button" type="submit">Найти</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</header>
+<!-- /page-header -->
+
+<main class="section section--basic">
+  <div class="section__inner">
+    <div class="block block--search-results">
+      <div class="search-results">
+        <p class="search-results__summary">5 результатов для "запрос":</p>
+        <ul class="search-results__list">
+          <li class="search-results__list-item">
+            <div class="search-result">
+              <a class="search-result__link" href="">Заголовок страницы</a>
+              <div class="search-result__desc">
+                <p>
+                  <strong class="search-result__highlight">Lorem</strong>
+                  ... ipsum dolor sit amet consectetur adipisicing elit. Porro dignissimos esse, magni voluptatem vero quia! ... <strong class="search-result__highlight">Lorem</strong> ipsum dolor sit amet consectetur adipisicing elit. Maiores doloremque cum autem magni mollitia, sed, tenetur quam nisi, praesentium modi unde. Voluptas mollitia numquam dolor soluta ad atque nostrum vitae.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="search-results__list-item">
+            <div class="search-result">
+              <a class="search-result__link" href="">Заголовок страницы</a>
+              <div class="search-result__desc">
+                <p>
+                  <strong class="search-result__highlight">Lorem</strong>
+                  ... ipsum dolor sit amet consectetur adipisicing elit. Porro dignissimos esse, magni voluptatem vero quia! ... <strong class="search-result__highlight">Lorem</strong> ipsum dolor sit amet consectetur adipisicing elit. Maiores doloremque cum autem magni mollitia, sed, tenetur quam nisi, praesentium modi unde. Voluptas mollitia numquam dolor soluta ad atque nostrum vitae.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="search-results__list-item">
+            <div class="search-result">
+              <a class="search-result__link" href="">Заголовок страницы</a>
+              <div class="search-result__desc">
+                <p>
+                  <strong class="search-result__highlight">Lorem</strong>
+                  ... ipsum dolor sit amet consectetur adipisicing elit. Porro dignissimos esse, magni voluptatem vero quia! ... <strong class="search-result__highlight">Lorem</strong> ipsum dolor sit amet consectetur adipisicing elit. Maiores doloremque cum autem magni mollitia, sed, tenetur quam nisi, praesentium modi unde. Voluptas mollitia numquam dolor soluta ad atque nostrum vitae.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="search-results__list-item">
+            <div class="search-result">
+              <a class="search-result__link" href="">Заголовок страницы</a>
+              <div class="search-result__desc">
+                <p>
+                  <strong class="search-result__highlight">Lorem</strong>
+                  ... ipsum dolor sit amet consectetur adipisicing elit. Porro dignissimos esse, magni voluptatem vero quia! ... <strong class="search-result__highlight">Lorem</strong> ipsum dolor sit amet consectetur adipisicing elit. Maiores doloremque cum autem magni mollitia, sed, tenetur quam nisi, praesentium modi unde. Voluptas mollitia numquam dolor soluta ad atque nostrum vitae.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="search-results__list-item">
+            <div class="search-result">
+              <a class="search-result__link" href="">Заголовок страницы</a>
+              <div class="search-result__desc">
+                <p>
+                  <strong class="search-result__highlight">Lorem</strong>
+                  ... ipsum dolor sit amet consectetur adipisicing elit. Porro dignissimos esse, magni voluptatem vero quia! ... <strong class="search-result__highlight">Lorem</strong> ipsum dolor sit amet consectetur adipisicing elit. Maiores doloremque cum autem magni mollitia, sed, tenetur quam nisi, praesentium modi unde. Voluptas mollitia numquam dolor soluta ad atque nostrum vitae.
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

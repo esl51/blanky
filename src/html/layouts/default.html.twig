@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+  <head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>Blanky</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="Blanky">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link type="image/svg+xml" rel="icon" href="/icon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="css/main.css?{{ ts }}">
+  </head>
+
+  <body>
+
+    <header class="section section--header js-header">
+      <div class="section__inner">
+        <div class="block">
+          <div class="header">
+            <a class="header__logo logo" href="/">Blanky</a>
+            <nav class="header__nav nav js-nav">
+              <ul class="nav__list">
+                <li class="nav__item nav__item--current">
+                  <a class="nav__link" href="/">Главная</a>
+                </li>
+                <li class="nav__item">
+                  <a class="nav__link" href="basic-page.html">Базовая страница</a>
+                </li>
+                <li class="nav__item">
+                  <a class="nav__link" href="search.html">Поиск</a>
+                </li>
+              </ul>
+            </nav>
+            <button class="header__nav-toggle nav-toggle js-nav-toggle" type="button" aria-label="Меню">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- /header -->
+
+    <article class="sections">
+      {% block content %}
+      {% endblock %}
+    </article>
+    <!-- /sections -->
+
+    <footer class="section section--footer">
+      <div class="section__inner">
+        <div class="footer">
+          <div class="footer__contacts text">
+            <p>
+              <a href="tel:+79001234567">+7&nbsp;(900)&nbsp;123&#8209;45&#8209;67</a>
+            </p>
+            <p>г. Москва, ул. Пушкина, 12</p>
+            <p>
+              <a href="mailto:info@example.com">info@example.com</a>
+            </p>
+          </div>
+          <ul class="footer__nav nav-list">
+            <li class="nav-list__item">
+              <a class="nav-list__link" href="/">Главная</a>
+            </li>
+            <li class="nav-list__item">
+              <a class="nav-list__link" href="/basic-page.html">Базовая страница</a>
+            </li>
+            <li class="nav-list__item">
+              <a class="nav-list__link" href="/search.html">Поиск</a>
+            </li>
+          </ul>
+          <ul class="footer__social social">
+            <li class="social__item">
+              <a class="social__link" rel="nofollow" href="" target="_blank">
+                {{ 'vk' | icon('social__icon') }}
+              </a>
+            </li>
+            <li class="social__item">
+              <a class="social__link" rel="nofollow" href="" target="_blank">
+                {{ 'telegram' | icon('social__icon') }}
+              </a>
+            </li>
+          </ul>
+          <div class="footer__tools">
+            <button class="footer__scroll-top" type="button" data-scroll="body">
+              {{ 'arrow-top' | icon }}
+            </button>
+          </div>
+          <div class="footer__copyright text">
+            <p>© me, 2023</p>
+          </div>
+          <ul class="footer__links nav-list">
+            <li class="nav-list__item">
+              <a class="nav-list__link" href="/basic-page.html">Политика конфиденциальности</a>
+            </li>
+          </ul>
+          <div class="footer__author">
+            <a class="footer__author-link" rel="nofollow" href="https://8max.ru" target="_blank">made by me</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- /footer -->
+
+    <section class="section section--cookie js-cookie" style="display: none;">
+      <div class="section__inner">
+        <div class="block block--cookie">
+          <div class="cookie">
+            <div class="cookie__body text">
+              <p>Просматривая этот сайт, вы соглашаетесь с нашей политикой конфиденциальности</p>
+            </div>
+            <button class="cookie__submit button" type="button">Хорошо</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /cookie -->
+
+    <script src="js/main.js?{{ ts }}"></script>
+  </body>
+
+</html>

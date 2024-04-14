@@ -1,15 +1,17 @@
-@@include('./_head.html')
+{% extends "layouts/default.html.twig" %}
 
+{% block content %}
 <header class="section section--page-header">
   <div class="section__inner">
     <div class="block">
       <h1 class="block__title">Базовая страница</h1>
     </div>
     <div class="block">
-      @@include('./_breadcrumbs.html')
+      {% include 'parts/breadcrumbs.html.twig' %}
     </div>
   </div>
-</header><!-- /page-header -->
+</header>
+<!-- /page-header -->
 
 <main class="section section--basic">
   <div class="section__inner">
@@ -21,9 +23,9 @@
     </div>
     <div class="block">
       <h2 class="block__title">Прикреплённые файлы</h2>
-      @@include('./_files.html')
+      {% include 'parts/files.html.twig' %}
     </div>
   </div>
-</main><!-- /basic -->
-
-@@include('./_foot.html')
+</main>
+<!-- /basic -->
+{% endblock %}
