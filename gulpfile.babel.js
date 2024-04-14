@@ -22,7 +22,6 @@ import penthouse from 'penthouse'
 import twig from 'gulp-twig'
 import fs from 'fs'
 import path from 'path'
-import bemValidator from 'gulp-html-bem-validator'
 
 const isDev = process.env.NODE_ENV === 'development'
 const sass = gulpSass(sassCompiler)
@@ -224,12 +223,11 @@ export const html = () => {
     .pipe(sync.stream())
 }
 
-// Validate BEM
+// JSON
 
-export const validateBem = () => {
+export const json = () => {
   return gulp
-    .src(config.dest + '!(_|xform|xloader)*.html')
-    .pipe(bemValidator())
+    .src(config.html + '*.json')
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
 }
@@ -268,7 +266,7 @@ export const styles = () => {
 
 export const criticalStyles = () => {
   return gulp
-    .src(config.dest + '!(_|xform|xloader)*.html.twig')
+    .src(config.dest + '*.html.twig')
     .pipe(
       cache(
         through.obj(async function (src, enc, cb) {
@@ -305,9 +303,18 @@ export const flush = () => {
 
 export const build = gulp.series(
   clean,
-  gulp.parallel(icons, images, webp, root, favicon, fonts, scripts, styles),
+  gulp.parallel(
+    icons,
+    images,
+    webp,
+    root,
+    favicon,
+    fonts,
+    scripts,
+    styles,
+    json,
+  ),
   html,
-  validateBem,
 )
 
 // PW
@@ -366,7 +373,8 @@ export const watch = () => {
     config.assets + 'images/**/*.{png,jpg,gif,svg}',
     gulp.parallel(images, webp),
   )
-  gulp.watch(config.html + '**/*.html.twig', gulp.series(html, validateBem))
+  gulp.watch(config.html + '**/*.html.twig', html)
+  gulp.watch(config.html + '**/*.json', json)
   gulp.watch(config.scripts + '**/*.js', scripts)
   gulp.watch(config.styles + '**/*.scss', styles)
 }

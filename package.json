@@ -14,7 +14,7 @@
     "dev": "NODE_ENV=development gulp",
     "build": "NODE_ENV=production gulp build",
     "pw": "NODE_ENV=production gulp pw",
-    "lint": "eslint --fix --ext .js --ignore-path .gitignore ./src/scripts && eslint --fix --ext .html,.html.twig --ignore-path .gitignore --ignore-pattern='xform*.html.twig' --ignore-pattern='xloader*.html.twig' ./src/html && npx stylelint --fix ./src/styles"
+    "lint": "eslint --fix --ext .js --ignore-path .gitignore ./src/scripts && eslint --fix --ext .html,.html.twig --ignore-path .gitignore ./src/html && npx stylelint --fix ./src/styles && bemlint src/html/*.html.twig --mod='--' --errors"
   },
   "author": "Maxim Zhgulev",
   "license": "MIT",
@@ -35,6 +35,7 @@
     "@html-eslint/parser": "^0.24.1",
     "autoprefixer": "^10.4.14",
     "babelify": "^10.0.0",
+    "bemlint": "^1.7.0",
     "browser-sync": "^3.0.2",
     "browserify": "^17.0.0",
     "core-js": "^3.30.1",
@@ -46,7 +47,6 @@
     "gulp": "^5.0.0",
     "gulp-cache": "^1.1.3",
     "gulp-clean-css": "^4.3.0",
-    "gulp-html-bem-validator": "^1.0.5",
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^9.0.0",
     "gulp-postcss": "^10.0.0",
