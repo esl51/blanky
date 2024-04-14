@@ -14,7 +14,7 @@
     "dev": "NODE_ENV=development gulp",
     "build": "NODE_ENV=production gulp build",
     "pw": "NODE_ENV=production gulp pw",
-    "lint": "eslint --fix --ext .js,.html,.html.twig --ignore-path .gitignore ./src/scripts && npx stylelint --fix ./src/styles"
+    "lint": "eslint --fix --ext .js --ignore-path .gitignore ./src/scripts && eslint --fix --ext .html,.html.twig --ignore-path .gitignore --ignore-pattern='xform*.html.twig' --ignore-pattern='xloader*.html.twig' ./src/html && npx stylelint --fix ./src/styles"
   },
   "author": "Maxim Zhgulev",
   "license": "MIT",
