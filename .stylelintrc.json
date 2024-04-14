@@ -1,11 +1,17 @@
 {
-  "extends": "stylelint-config-standard-scss",
+  "extends": [
+    "stylelint-config-recommended-scss",
+    "stylelint-config-prettier-scss"
+  ],
   "rules": {
+    "prettier/prettier": true,
     "at-rule-no-unknown": null,
     "selector-class-pattern": null,
-    "max-line-length": null,
     "declaration-block-no-redundant-longhand-properties": null,
     "scss/percent-placeholder-pattern": null,
     "scss/at-import-partial-extension": null
-  }
+  },
+  "plugins": [
+    "stylelint-prettier"
+  ]
 }

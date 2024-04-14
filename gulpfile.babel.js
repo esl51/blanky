@@ -20,6 +20,7 @@ import source from 'vinyl-source-stream'
 import through from 'through2'
 import sharp from 'sharp'
 import sharpIco from 'sharp-ico'
+import penthouse from 'penthouse'
 
 const isDev = process.env.NODE_ENV === 'development'
 const sass = gulpSass(sassCompiler)
@@ -32,12 +33,12 @@ const config = {
   styles: 'src/styles/',
   assets: 'src/assets/',
   dest: 'public/',
-  pw: '../site/templates/'
+  pw: '../site/templates/',
 }
 
 // Errors handler
 
-function error (error) {
+function error(error) {
   console.error(error.toString())
   this.emit('end')
 }
@@ -49,10 +50,10 @@ export const clean = () => deleteAsync(config.dest)
 // Root
 
 export const root = () => {
-  return gulp.src([
-    config.assets + 'root/**/*.*',
-    config.assets + 'root/**/.*'
-  ])
+  return gulp
+    .src([config.assets + 'root/**/*.*', config.assets + 'root/**/.*'], {
+      encoding: false,
+    })
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
 }
@@ -60,39 +61,48 @@ export const root = () => {
 // Favicon
 
 export const favicon = () => {
-  return gulp.src(config.assets + 'root/icon.svg')
-    .pipe(cache(through.obj(async function (src, enc, cb) {
-      const items = {
-        'favicon.ico': [32, 32],
-        'apple-touch-icon.png': [180, 180],
-        'icon-192.png': [192, 192],
-        'icon-512.png': [512, 512]
-      }
-      for (const name in items) {
-        const size = items[name]
-        const buf = await sharp(src.path).resize(...size).toFormat('png').toBuffer()
-        const img = src.clone()
-        const ext = name.split('.')[1]
-        if (ext === 'ico') {
-          img.contents = sharpIco.encode([buf])
-        } else {
-          img.contents = buf
-        }
-        img.stem = name.split('.')[0]
-        img.extname = '.' + ext
-        this.push(img)
-      }
+  return gulp
+    .src(config.assets + 'root/icon.svg')
+    .pipe(
+      cache(
+        through.obj(async function (src, enc, cb) {
+          const items = {
+            'favicon.ico': [32, 32],
+            'apple-touch-icon.png': [180, 180],
+            'icon-192.png': [192, 192],
+            'icon-512.png': [512, 512],
+          }
+          for (const name in items) {
+            const size = items[name]
+            const buf = await sharp(src.path)
+              .resize(...size)
+              .toFormat('png')
+              .toBuffer()
+            const img = src.clone()
+            const ext = name.split('.')[1]
+            if (ext === 'ico') {
+              img.contents = sharpIco.encode([buf])
+            } else {
+              img.contents = buf
+            }
+            img.stem = name.split('.')[0]
+            img.extname = '.' + ext
+            this.push(img)
+          }
 
-      cb()
-    }), { name: 'favicon' }))
-    .pipe(cache(
-      imagemin([
-        optipng({ optimizationLevel: 7 })
-      ], {
-        verbose: true
-      }),
-      { name: 'favicon-optimize' }
-    ))
+          cb()
+        }),
+        { name: 'favicon' },
+      ),
+    )
+    .pipe(
+      cache(
+        imagemin([optipng({ optimizationLevel: 7 })], {
+          verbose: true,
+        }),
+        { name: 'favicon-optimize' },
+      ),
+    )
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
 }
@@ -100,7 +110,8 @@ export const favicon = () => {
 // Fonts
 
 export const fonts = () => {
-  return gulp.src(config.assets + 'fonts/**/*.*')
+  return gulp
+    .src(config.assets + 'fonts/**/*.*', { encoding: false })
     .pipe(gulp.dest(config.dest + 'fonts/'))
     .pipe(sync.stream())
 }
@@ -108,21 +119,27 @@ export const fonts = () => {
 // Icons
 
 export const icons = () => {
-  return gulp.src(config.assets + 'icons/**/*.svg')
-    .pipe(cache(
-      imagemin([
-        svgo({
-          plugins: [
-            { name: 'removeXMLNS', active: true },
-            { name: 'removeViewBox', active: false },
-            { name: 'removeDimensions', active: true }
-          ]
-        })
-      ], {
-        verbose: true
-      }),
-      { name: 'icons' }
-    ))
+  return gulp
+    .src(config.assets + 'icons/**/*.svg')
+    .pipe(
+      cache(
+        imagemin(
+          [
+            svgo({
+              plugins: [
+                { name: 'removeXMLNS', active: true },
+                { name: 'removeViewBox', active: false },
+                { name: 'removeDimensions', active: true },
+              ],
+            }),
+          ],
+          {
+            verbose: true,
+          },
+        ),
+        { name: 'icons' },
+      ),
+    )
     .pipe(gulp.dest(config.dest + 'icons/'))
     .pipe(sync.stream())
 }
@@ -130,18 +147,24 @@ export const icons = () => {
 // Images
 
 export const images = () => {
-  return gulp.src(config.assets + 'images/**/*.{png,jpg,gif,svg}')
-    .pipe(cache(
-      imagemin([
-        gifsicle({ interlaced: true }),
-        mozjpeg({ progressive: true, quality: 90 }),
-        optipng({ optimizationLevel: 7 }),
-        svgo()
-      ], {
-        verbose: true
-      }),
-      { name: 'images' }
-    ))
+  return gulp
+    .src(config.assets + 'images/**/*.{png,jpg,gif,svg}', { encoding: false })
+    .pipe(
+      cache(
+        imagemin(
+          [
+            gifsicle({ interlaced: true }),
+            mozjpeg({ progressive: true, quality: 90 }),
+            optipng({ optimizationLevel: 7 }),
+            svgo(),
+          ],
+          {
+            verbose: true,
+          },
+        ),
+        { name: 'images' },
+      ),
+    )
     .pipe(gulp.dest(config.dest + 'img/'))
     .pipe(sync.stream())
 }
@@ -149,13 +172,16 @@ export const images = () => {
 // Webp
 
 export const webp = () => {
-  return gulp.src(config.assets + 'images/**/*.{png,jpg,gif}')
-    .pipe(cache(
-      cwebp({
-        quality: 90
-      }),
-      { name: 'webp' }
-    ))
+  return gulp
+    .src(config.assets + 'images/**/*.{png,jpg,gif}', { encoding: false })
+    .pipe(
+      cache(
+        cwebp({
+          quality: 90,
+        }),
+        { name: 'webp' },
+      ),
+    )
     .pipe(gulp.dest(config.dest + 'img/'))
     .pipe(sync.stream())
 }
@@ -163,9 +189,15 @@ export const webp = () => {
 // HTML
 
 export const html = () => {
-  return gulp.src(config.html + '[!_]*.html')
+  return gulp
+    .src(config.html + '!(_)*.html')
     .pipe(include())
-    .pipe(replace(/@@icon\('([^']+)'(?:,\s*'([^']*)')?\)/g, '<span class="$2 icon">@@include(\'../../public/icons/$1.svg\')</span>'))
+    .pipe(
+      replace(
+        /@@icon\('([^']+)'(?:,\s*'([^']*)')?\)/g,
+        '<span class="$2 icon">@@include(\'../../public/icons/$1.svg\')</span>',
+      ),
+    )
     .pipe(include())
     .pipe(gulp.dest(config.dest))
     .pipe(sync.stream())
@@ -174,8 +206,10 @@ export const html = () => {
 // Scripts
 
 export const scripts = () => {
-  return browserify('./' + config.scripts + 'main.js', { debug: true }).transform(babelify)
-    .bundle().on('error', error)
+  return browserify('./' + config.scripts + 'main.js', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on('error', error)
     .pipe(source('main.js'))
     .pipe(buffer())
     .pipe(gulpif(isDev, sourcemaps.init({ loadMaps: true }).on('error', error)))
@@ -188,7 +222,8 @@ export const scripts = () => {
 // Styles
 
 export const styles = () => {
-  return gulp.src(config.styles + '*.scss')
+  return gulp
+    .src(config.styles + '*.scss')
     .pipe(gulpif(isDev, sourcemaps.init({ loadMaps: true }).on('error', error)))
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss().on('error', error))
@@ -198,11 +233,43 @@ export const styles = () => {
     .pipe(sync.stream())
 }
 
+// Critical styles
+
+export const criticalStyles = () => {
+  return gulp
+    .src(config.dest + '!(_)*.html')
+    .pipe(
+      cache(
+        through.obj(async function (src, enc, cb) {
+          let critical = await penthouse({
+            url: 'file://' + src.path,
+            css: config.dest + 'css/main.css',
+          })
+          critical = critical.replace(
+            /\.\.\/(img|fonts)/g,
+            '/site/templates/$1',
+          )
+          const css = src.clone()
+          css.extname = '.css'
+          css.contents = Buffer.from(critical)
+          css.stem =
+            src.path.split('/').slice(-1)[0].split('.')[0] + '-critical'
+          this.push(css)
+          cb()
+        }),
+        { name: 'critical' },
+      ),
+    )
+    .pipe(gulp.dest(config.dest + 'css/'))
+    .pipe(sync.stream())
+}
+
 // Timestamps
 
 export const timestamps = () => {
   const ts = +new Date()
-  return gulp.src(config.dest + '*.html')
+  return gulp
+    .src(config.dest + '*.html')
     .pipe(gulpif(!isDev, replace(/#TS#/g, ts)))
     .pipe(gulpif(isDev, replace(/\?#TS#/g, '')))
     .pipe(gulp.dest(config.dest))
@@ -218,35 +285,27 @@ export const flush = () => {
 
 export const build = gulp.series(
   clean,
-  gulp.parallel(
-    icons,
-    images,
-    webp,
-    root,
-    favicon,
-    fonts,
-    scripts,
-    styles
-  ),
+  gulp.parallel(icons, images, webp, root, favicon, fonts, scripts, styles),
   html,
-  timestamps
+  timestamps,
 )
 
 // PW
 
-export const pw = gulp.series(build, function () {
-  return gulp.src([
-    config.dest + 'icons/**/*',
-    config.dest + 'img/**/*',
-    config.dest + 'js/**/*',
-    config.dest + 'css/**/*'
-  ], {
-    base: config.dest,
-    ignore: [
-      config.dest + 'img/temp/**/*',
-      config.dest + 'img/temp'
-    ]
-  })
+export const pw = gulp.series(build, criticalStyles, function () {
+  return gulp
+    .src(
+      [
+        config.dest + 'icons/**/*',
+        config.dest + 'img/**/*',
+        config.dest + 'js/**/*',
+        config.dest + 'css/**/*',
+      ],
+      {
+        base: config.dest,
+        ignore: [config.dest + 'img/temp/**/*', config.dest + 'img/temp'],
+      },
+    )
     .pipe(gulp.dest(config.pw))
 })
 
@@ -260,27 +319,33 @@ export const server = () => {
       baseDir: config.dest,
       routes: {},
       middleware: function (req, res, next) {
-        if (/\.json|\.txt|\.html/.test(req.url) && req.method.toUpperCase() === 'POST') {
+        if (
+          /\.json|\.txt|\.html/.test(req.url) &&
+          req.method.toUpperCase() === 'POST'
+        ) {
           console.log('[POST => GET] : ' + req.url)
           req.method = 'GET'
         }
         next()
-      }
-    }
+      },
+    },
   })
 }
 
 // Watch
 
 export const watch = () => {
-  gulp.watch([
-    config.assets + 'root/**/*.*',
-    config.assets + 'root/**/.*'
-  ], root)
+  gulp.watch(
+    [config.assets + 'root/**/*.*', config.assets + 'root/**/.*'],
+    root,
+  )
   gulp.watch(config.assets + 'root/icon.svg', favicon)
   gulp.watch(config.assets + 'fonts/**/*.*', fonts)
   gulp.watch(config.assets + 'icons/**/*.svg', icons)
-  gulp.watch(config.assets + 'images/**/*.{png,jpg,gif,svg}', gulp.parallel(images, webp))
+  gulp.watch(
+    config.assets + 'images/**/*.{png,jpg,gif,svg}',
+    gulp.parallel(images, webp),
+  )
   gulp.watch(config.html + '*.html', gulp.series(html, timestamps))
   gulp.watch(config.scripts + '**/*.js', scripts)
   gulp.watch(config.styles + '**/*.scss', styles)
@@ -288,10 +353,4 @@ export const watch = () => {
 
 // Default
 
-export default gulp.series(
-  build,
-  gulp.parallel(
-    watch,
-    server
-  )
-)
+export default gulp.series(build, gulp.parallel(watch, server))
