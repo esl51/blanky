@@ -10,7 +10,7 @@ import Animator from '../controls/animator'
 
 // Init content
 
-export function initContent (container) {
+export function initContent(container) {
   if (!container) {
     container = document
   }
@@ -18,16 +18,18 @@ export function initContent (container) {
   // Popups
 
   const xPopups = container.querySelectorAll('.js-xpopup')
-  xPopups.forEach(xpopup => {
+  xPopups.forEach((xpopup) => {
     new XPopup(xpopup).mount()
   })
 
   // Popup Forms
 
   const xPopupForms = container.querySelectorAll('.js-xpopup-form')
-  xPopupForms.forEach(xpopup => {
+  xPopupForms.forEach((xpopup) => {
     xpopup.addEventListener('show', function () {
-      const focusable = xpopup.querySelectorAll('input:not([type=hidden]), select, textarea')
+      const focusable = xpopup.querySelectorAll(
+        'input:not([type=hidden]), select, textarea',
+      )
       if (focusable.length) {
         setTimeout(function () {
           focusable[0].focus()
@@ -40,7 +42,7 @@ export function initContent (container) {
   // Popup Iframes
 
   const xPopupIframes = container.querySelectorAll('.js-xpopup-iframe')
-  xPopupIframes.forEach(xpopup => {
+  xPopupIframes.forEach((xpopup) => {
     const iframe = xpopup.querySelector('[data-iframe]')
     if (iframe) {
       xpopup.addEventListener('show', () => {
@@ -60,7 +62,7 @@ export function initContent (container) {
   // Popup Ajaxes
 
   const xPopupAjaxes = container.querySelectorAll('.js-xpopup-ajax')
-  xPopupAjaxes.forEach(xpopup => {
+  xPopupAjaxes.forEach((xpopup) => {
     const ajax = xpopup.querySelector('[data-ajax]')
     if (ajax) {
       xpopup.addEventListener('show', function () {
@@ -73,8 +75,8 @@ export function initContent (container) {
   // Inline iframe
 
   const inlineIframes = container.querySelectorAll('[data-iframe]')
-  inlineIframes.forEach(iframe => {
-    iframe.addEventListener('click', e => {
+  inlineIframes.forEach((iframe) => {
+    iframe.addEventListener('click', (e) => {
       e.preventDefault()
       const iframeElem = iframe.querySelector('iframe')
       iframeElem.src = iframeElem.dataset.src
@@ -86,7 +88,7 @@ export function initContent (container) {
   // Tables
 
   const contentTables = container.querySelectorAll('.text table')
-  contentTables.forEach(table => {
+  contentTables.forEach((table) => {
     const tableContainer = document.createElement('div')
     tableContainer.classList.add('table-container')
     table.parentNode.insertBefore(tableContainer, table)
@@ -96,7 +98,7 @@ export function initContent (container) {
   // xForms
 
   const xForms = container.querySelectorAll('.js-xform')
-  xForms.forEach(xform => {
+  xForms.forEach((xform) => {
     xform.addEventListener('success', () => {
       const xpopup = xform.closest('.xpopup')
       if (xpopup && xpopup.xPopup && xpopup.classList.contains('is-active')) {
@@ -109,26 +111,27 @@ export function initContent (container) {
   // xMaps
 
   const xMaps = container.querySelectorAll('.js-xmap')
-  xMaps.forEach(xmap => {
+  xMaps.forEach((xmap) => {
     new XMap(xmap).mount()
   })
 
   // xSliders
 
   const xSliders = container.querySelectorAll('.js-xslider')
-  xSliders.forEach(xslider => {
+  xSliders.forEach((xslider) => {
     new XSlider(xslider, {
-      loop: true
+      loop: true,
     }).mount()
   })
 
   // xLightboxes
 
   new XLightbox({
-    selector: '.text a[href$=".jpg"], .text a[href$=".jpeg"], .text a[href$=".png"], .text a[href$=".gif"], .text a[href*="youtu"], .text a[href*=".mp4"]'
+    selector:
+      '.text a[href$=".jpg"], .text a[href$=".jpeg"], .text a[href$=".png"], .text a[href$=".gif"], .text a[href*="youtu"], .text a[href*=".mp4"]',
   }).mount()
   new XLightbox({
-    selector: '.js-gallery-link'
+    selector: '.js-gallery-link',
   }).mount()
 
   // Header
@@ -156,44 +159,46 @@ export function initContent (container) {
   // Animator
 
   const animators = container.querySelectorAll('.js-animator')
-  animators.forEach(animator => {
+  animators.forEach((animator) => {
     new Animator(animator).mount()
   })
   const tableAnimators = container.querySelectorAll('.text tr')
-  tableAnimators.forEach(animator => {
+  tableAnimators.forEach((animator) => {
     new Animator(animator, {
       animation: 'fade-in',
-      once: false
+      once: false,
     }).mount()
   })
   const listAnimators = container.querySelectorAll('.text li')
-  listAnimators.forEach(animator => {
+  listAnimators.forEach((animator) => {
     new Animator(animator, {
       animation: 'fade-in slide-left',
-      once: false
+      once: false,
     }).mount()
   })
-  const textAnimators = container.querySelectorAll('.text > *:not(.table-container, table, ul, ol)')
-  textAnimators.forEach(animator => {
+  const textAnimators = container.querySelectorAll(
+    '.text > *:not(.table-container, table, ul, ol)',
+  )
+  textAnimators.forEach((animator) => {
     new Animator(animator, {
-      once: false
+      once: false,
     }).mount()
   })
   const fileAnimators = container.querySelectorAll('.files__item')
-  fileAnimators.forEach(animator => {
+  fileAnimators.forEach((animator) => {
     animator.animator = new Animator(animator, {
-      once: false
+      once: false,
     }).mount()
   })
   const blockAnimators = container.querySelectorAll('.block')
   if (window.IntersectionObserver) {
-    blockAnimators.forEach(animator => {
+    blockAnimators.forEach((animator) => {
       new Animator(animator, {
         animation: false,
         baseClass: '',
         finishedClass: 'is-visible',
         ratio: 0.25,
-        once: false
+        once: false,
       }).mount()
     })
   }

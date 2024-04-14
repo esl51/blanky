@@ -1,4 +1,4 @@
-@import "../../node_modules/glightbox/dist/css/glightbox";
+@import '../../node_modules/glightbox/dist/css/glightbox';
 
 .gprev {
   &::before {
@@ -39,7 +39,7 @@
     }
 
     &::before {
-      content: "";
+      content: '';
       display: block;
       width: 1.5rem;
       height: 1.5rem;
@@ -60,7 +60,7 @@
     right: var(--spacing);
   }
 
-  @include media(">=992px") {
+  @include media('>=992px') {
     .gclose {
       right: var(--spacing);
     }

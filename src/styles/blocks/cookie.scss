@@ -6,7 +6,7 @@
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow);
 
-  @include media(">=tablet") {
+  @include media('>=tablet') {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,11 +27,11 @@
 
   padding: var(--spacing-xs) var(--spacing-lg);
 
-  @include media("<tablet") {
+  @include media('<tablet') {
     margin-top: var(--spacing);
   }
 
-  @include media(">=tablet") {
+  @include media('>=tablet') {
     margin-left: var(--spacing);
   }
 }

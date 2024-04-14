@@ -61,7 +61,7 @@
   .xslider--carousel-3 & {
     flex-basis: 33.3333%;
 
-    @include media("<laptop") {
+    @include media('<laptop') {
       flex-basis: 50%;
     }
   }
@@ -69,7 +69,7 @@
   .xslider--carousel-4 & {
     flex-basis: 25%;
 
-    @include media("<laptop") {
+    @include media('<laptop') {
       flex-basis: 50%;
     }
   }
@@ -77,7 +77,7 @@
   .xslider--carousel-5 & {
     flex-basis: 20%;
 
-    @include media("<laptop") {
+    @include media('<laptop') {
       flex-basis: 50%;
     }
   }
@@ -95,7 +95,7 @@
   width: 100%;
   transition: all 0.3s var(--easing);
 
-  .xslider__item:not(.is-pre-current,.is-current) & {
+  .xslider__item:not(.is-pre-current, .is-current) & {
     opacity: 0.5;
   }
 }
@@ -140,7 +140,9 @@
 .xslider__title {
   @include h1;
 
-  transition: opacity 1s 0.5s var(--easing), transform 1s 0.5s var(--easing);
+  transition:
+    opacity 1s 0.5s var(--easing),
+    transform 1s 0.5s var(--easing);
 
   .xslider__item:not(.is-active) & {
     opacity: 0;
@@ -170,7 +172,7 @@
   justify-content: space-between;
   pointer-events: none;
 
-  @include media("hover") {
+  @include media('hover') {
     display: flex;
   }
 }
@@ -200,7 +202,7 @@
     pointer-events: none;
   }
 
-  @include media("<tablet") {
+  @include media('<tablet') {
     width: 40px;
     height: 50px;
     font-size: 12px;
@@ -229,7 +231,7 @@
     padding: 4px;
 
     &::before {
-      content: "";
+      content: '';
       display: block;
       width: 10px;
       height: 10px;
@@ -334,6 +336,6 @@ a.xslider__thumbs-link {
 
 .xslider__counter-all {
   &::before {
-    content: "/";
+    content: '/';
   }
 }

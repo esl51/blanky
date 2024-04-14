@@ -37,7 +37,7 @@
   width: 100%;
 
   &::before {
-    @include absolute-block(100%,100%);
+    @include absolute-block(100%, 100%);
 
     z-index: 1;
     left: 0;
@@ -47,7 +47,7 @@
   }
 
   &::after {
-    @include absolute-block(30px,30px);
+    @include absolute-block(30px, 30px);
 
     bottom: 0;
     right: 0;
@@ -103,7 +103,7 @@
 
   .xform__field--required & {
     &::after {
-      content: " *";
+      content: ' *';
       color: var(--main-color);
     }
   }
@@ -147,9 +147,20 @@
   --corner-size: 6px;
   --corner-color: var(--xform-input-placeholder-color);
 
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--corner-color) 50%, var(--corner-color) calc(50% + 1px), transparent calc(50% + 1px)),
-    linear-gradient(-45deg, transparent 50%, var(--corner-color) 50%, var(--corner-color) calc(50% + 1px), transparent calc(50% + 1px));
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--corner-color) 50%,
+      var(--corner-color) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 50%,
+      var(--corner-color) 50%,
+      var(--corner-color) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
   background-position:
     right calc(var(--xform-input-padding-x) + var(--corner-size) * 0.5) top 50%,
     right calc(var(--xform-input-padding-x) - var(--corner-size) * 0.5) top 50%;
@@ -174,7 +185,7 @@
     }
 
     &::after {
-      @include absolute-block(0.6em,0.6em);
+      @include absolute-block(0.6em, 0.6em);
 
       left: 0.45em;
       top: 0.45em;
@@ -191,7 +202,7 @@
     }
 
     &::after {
-      @include absolute-block(0.5em,0.8em);
+      @include absolute-block(0.5em, 0.8em);
 
       left: 0.5em;
       top: 0.25em;
@@ -222,7 +233,8 @@
 
       left: 0;
       top: 0;
-      border: var(--xform-input-border-width) solid var(--xform-input-border-color);
+      border: var(--xform-input-border-width) solid
+        var(--xform-input-border-color);
       background-color: var(--xform-input-background-color);
     }
 
@@ -284,7 +296,7 @@
   display: flex;
   overflow: hidden;
 
-  input[type="file"] {
+  input[type='file'] {
     position: absolute;
     left: 0;
     top: 0;

@@ -1,5 +1,5 @@
 export default class Nav {
-  constructor (elem, toggle) {
+  constructor(elem, toggle) {
     this.navElem = elem
     this.navToggle = toggle
     this.activeClass = 'is-active'
@@ -12,34 +12,40 @@ export default class Nav {
     this.leaveTimeout = null
   }
 
-  toggleClick () {
+  toggleClick() {
     const isActive = this.navElem.classList.contains(this.activeClass)
     this.navElem.classList.toggle(this.activeClass, !isActive)
     this.navToggle.classList.toggle(this.activeClass, !isActive)
 
     document.body.classList.toggle('is-nav-shown', !isActive)
-    document.body.style.marginRight = isActive ? '' : this.getScrollbarWidth() + 'px'
+    document.body.style.marginRight = isActive
+      ? ''
+      : this.getScrollbarWidth() + 'px'
     document.body.style.overflow = isActive ? '' : 'hidden'
   }
 
-  linkMouseEnter (link) {
+  linkMouseEnter(link) {
     clearTimeout(this.leaveTimeout)
     const item = link.closest('.' + this.itemClass)
-    const siblings = item.parentNode.querySelectorAll(this.scoped + '.' + this.itemClass)
-    siblings.forEach(item => {
+    const siblings = item.parentNode.querySelectorAll(
+      this.scoped + '.' + this.itemClass,
+    )
+    siblings.forEach((item) => {
       item.classList.remove(this.activeClass)
     })
     item.classList.add(this.activeClass)
   }
 
-  linkTap (link, e) {
+  linkTap(link, e) {
     const item = link.closest('.' + this.itemClass)
     const sub = item.querySelector(this.scoped + '.' + this.subClass)
     if (sub) {
       e.preventDefault()
       if (!item.classList.contains(this.activeClass)) {
-        const siblings = item.parentNode.querySelectorAll(this.scoped + '.' + this.itemClass)
-        siblings.forEach(item => {
+        const siblings = item.parentNode.querySelectorAll(
+          this.scoped + '.' + this.itemClass,
+        )
+        siblings.forEach((item) => {
           item.classList.remove(this.activeClass)
         })
         item.classList.add(this.activeClass)
@@ -50,20 +56,20 @@ export default class Nav {
     }
   }
 
-  subMouseEnter () {
+  subMouseEnter() {
     clearTimeout(this.leaveTimeout)
   }
 
-  mouseLeave () {
+  mouseLeave() {
     clearTimeout(this.leaveTimeout)
     this.leaveTimeout = setTimeout(() => {
-      this.items.forEach(item => {
+      this.items.forEach((item) => {
         item.classList.remove(this.activeClass)
       })
     }, 250)
   }
 
-  getScrollbarWidth () {
+  getScrollbarWidth() {
     const outer = document.createElement('div')
     outer.style.visibility = 'hidden'
     outer.style.overflow = 'scroll'
@@ -71,47 +77,47 @@ export default class Nav {
     document.body.appendChild(outer)
     const inner = document.createElement('div')
     outer.appendChild(inner)
-    const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth)
+    const scrollbarWidth = outer.offsetWidth - inner.offsetWidth
     outer.parentNode.removeChild(outer)
     return scrollbarWidth
   }
 
-  mount () {
+  mount() {
     this._mouseLeaveHandler = this.mouseLeave.bind(this)
     this._toggleClickHandler = this.toggleClick.bind(this)
     this._subMouseEnterHandler = this.subMouseEnter.bind(this)
     this.navElem.addEventListener('mouseleave', this._mouseLeaveHandler)
     this.navToggle.addEventListener('click', this._toggleClickHandler)
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       const link = item.querySelector('.' + this.linkClass)
       link._linkMouseEnterHandler = this.linkMouseEnter.bind(this, link)
       link._linkTapHandler = this.linkTap.bind(this, link)
       link.addEventListener('mouseenter', link._linkMouseEnterHandler)
       link.addEventListener('touchend', link._linkTapHandler)
     })
-    this.subs.forEach(sub => {
+    this.subs.forEach((sub) => {
       sub.addEventListener('mouseenter', this._subMouseEnterHandler)
       sub.addEventListener('mouseleave', this._mouseLeaveHandler)
     })
   }
 
-  unmount () {
+  unmount() {
     this.navElem.removeEventListener('mouseleave', this._mouseLeaveHandler)
     this.navToggle.removeEventListener('click', this._toggleClickHandler)
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       const link = item.querySelector('.' + this.linkClass)
       link.removeEventListener('mouseenter', link._linkMouseEnterHandler)
       delete link._linkMouseEnterHandler
       link.removeEventListener('touchend', link._linkTapHandler)
       delete link._linkTapHandler
     })
-    this.subs.forEach(sub => {
+    this.subs.forEach((sub) => {
       sub.removeEventListener('mouseenter', this._subMouseEnterHandler)
       sub.removeEventListener('mouseleave', this._mouseLeaveHandler)
     })
   }
 
-  destroy () {
+  destroy() {
     this.unmount()
   }
 }

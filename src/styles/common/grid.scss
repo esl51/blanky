@@ -10,7 +10,7 @@
 
 @each $bp-name, $bp-size in $breakpoints {
   @for $column from 1 through $grid-columns {
-    @include media(">=" + $bp-name) {
+    @include media('>=' + $bp-name) {
       .col--#{str-slice($bp-name, 0, 1)}-#{$column} {
         grid-column-end: span #{$column};
       }

@@ -1,9 +1,9 @@
-@import "../../node_modules/include-media/dist/include-media";
-@import "common/variables";
-@import "common/utils";
-@import "common/fonts";
-@import "common/layout";
-@import "content/text";
+@import '../../node_modules/include-media/dist/include-media';
+@import 'common/variables';
+@import 'common/utils';
+@import 'common/fonts';
+@import 'common/layout';
+@import 'content/text';
 
 body {
   @extend %text;

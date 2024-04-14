@@ -1,13 +1,13 @@
 import { Notyf } from 'notyf'
 
 export default class XNotify {
-  constructor () {
+  constructor() {
     this.notyf = new Notyf({
       duration: 5000,
       dismissible: true,
       position: {
         x: 'center',
-        y: 'top'
+        y: 'top',
       },
       types: [
         {
@@ -15,70 +15,70 @@ export default class XNotify {
           background: 'var(--success-color)',
           icon: {
             className: 'notyf__icon--success',
-            tagName: 'i'
-          }
+            tagName: 'i',
+          },
         },
         {
           type: 'error',
           background: 'var(--danger-color)',
           icon: {
             className: 'notyf__icon--error',
-            tagName: 'i'
-          }
+            tagName: 'i',
+          },
         },
         {
           type: 'warning',
           background: 'var(--orange-color)',
           icon: {
             className: 'notyf__icon--warning',
-            tagName: 'i'
-          }
+            tagName: 'i',
+          },
         },
         {
           type: 'info',
           background: 'var(--info-color)',
           icon: {
             className: 'notyf__icon--info',
-            tagName: 'i'
-          }
-        }
-      ]
+            tagName: 'i',
+          },
+        },
+      ],
     })
   }
 
-  success (message, duration) {
+  success(message, duration) {
     this.notyf.open({
       type: 'success',
       message,
-      duration
+      duration,
     })
   }
 
-  error (message, duration) {
+  error(message, duration) {
     this.notyf.open({
       type: 'error',
       message,
-      duration
+      duration,
     })
   }
 
-  warning (message, duration) {
+  warning(message, duration) {
     this.notyf.open({
       type: 'warning',
       message,
-      duration
+      duration,
     })
   }
 
-  info (message, duration) {
+  info(message, duration) {
     this.notyf.open({
       type: 'info',
       message,
-      duration
+      duration,
     })
   }
 
-  dismissAll () {
+  dismissAll() {
     this.notyf.dismissAll()
   }
 }

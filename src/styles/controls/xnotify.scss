@@ -1,4 +1,4 @@
-@import "../../node_modules/notyf/notyf.min";
+@import '../../node_modules/notyf/notyf.min';
 
 .notyf {
   @include dark;
@@ -26,7 +26,7 @@
   padding-top: var(--spacing-sm);
   padding-bottom: var(--spacing-sm);
 
-  @include media("<=480px") {
+  @include media('<=480px') {
     .notyf__toast--dismissible & {
       padding-right: 50px;
     }

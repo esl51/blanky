@@ -1,12 +1,12 @@
-@use "sass:color";
-@use "sass:map";
+@use 'sass:color';
+@use 'sass:map';
 
 .text,
 %text {
   // Clearfix
 
   &::after {
-    content: "";
+    content: '';
     display: block;
     clear: both;
   }
@@ -148,7 +148,7 @@
   th {
     padding: var(--spacing-sm) var(--spacing);
 
-    @include media("<tablet") {
+    @include media('<tablet') {
       padding-left: var(--spacing-sm);
       padding-right: var(--spacing-sm);
     }
@@ -244,7 +244,7 @@
       font-size: 0.5em;
       margin-left: -4em;
       width: 4em;
-      content: "●";
+      content: '●';
     }
   }
 
@@ -254,7 +254,7 @@
     li::before {
       margin-left: -2em;
       width: 2em;
-      content: counter(list) ".";
+      content: counter(list) '.';
       counter-increment: list;
     }
   }
@@ -284,7 +284,7 @@
 // Columns
 
 .text--columns-2 {
-  @include media(">=laptop") {
+  @include media('>=laptop') {
     columns: 2;
     column-gap: var(--grid-col-gap);
   }

@@ -2,7 +2,7 @@ import animateScrollTo from 'animated-scroll-to'
 
 // Scroll to target
 
-export function scrollTo (target, duration, callback) {
+export function scrollTo(target, duration, callback) {
   const headerElem = document.querySelector('.section--header')
   let offset = 0
   if (headerElem) {
@@ -26,7 +26,7 @@ export function scrollTo (target, duration, callback) {
     verticalOffset: offset,
     // easeInOutQuad
     // https://gist.github.com/gre/1650294
-    easing: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+    easing: (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
   }).then(() => {
     if (typeof callback === 'function') {
       callback()
@@ -36,7 +36,7 @@ export function scrollTo (target, duration, callback) {
 
 // Show preloader
 
-export function showPreloader (duration, callback) {
+export function showPreloader(duration, callback) {
   if (typeof duration === 'function') {
     callback = duration
     duration = 500
@@ -58,7 +58,7 @@ export function showPreloader (duration, callback) {
 
 // Hide preloader
 
-export function hidePreloader (duration, callback) {
+export function hidePreloader(duration, callback) {
   if (typeof duration === 'function') {
     callback = duration
     duration = 500
@@ -80,10 +80,11 @@ export function hidePreloader (duration, callback) {
 
 // Generate ID
 
-export function makeId (length) {
+export function makeId(length) {
   length = length === undefined ? 8 : length
   let text = ''
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
   for (let i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length))
@@ -94,11 +95,11 @@ export function makeId (length) {
 
 // Set cookie
 
-export function setCookie (name, value, days) {
+export function setCookie(name, value, days) {
   let expires = ''
   if (days) {
     const date = new Date()
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
     expires = '; expires=' + date.toUTCString()
   }
   document.cookie = name + '=' + (value || '') + expires + '; path=/'
@@ -106,7 +107,7 @@ export function setCookie (name, value, days) {
 
 // Get cookie
 
-export function getCookie (name) {
+export function getCookie(name) {
   const nameEQ = name + '='
   const ca = document.cookie.split(';')
   for (let i = 0; i < ca.length; i++) {
@@ -123,6 +124,6 @@ export function getCookie (name) {
 
 // Erase cookie
 
-export function eraseCookie (name) {
+export function eraseCookie(name) {
   document.cookie = name + '=; Max-Age=-99999999;'
 }

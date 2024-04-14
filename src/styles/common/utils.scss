@@ -1,9 +1,14 @@
-@use "sass:string";
-@use "sass:map";
-@use "sass:color";
+@use 'sass:string';
+@use 'sass:map';
+@use 'sass:color';
 
-@mixin scrollbar($width: 10px, $radius: 5px, $color: rgba(#000, 0.3), $background: rgba(#000, 0.1)) {
-  @include media("hover") {
+@mixin scrollbar(
+  $width: 10px,
+  $radius: 5px,
+  $color: rgba(#000, 0.3),
+  $background: rgba(#000, 0.1)
+) {
+  @include media('hover') {
     &::-webkit-scrollbar-track {
       background-color: $background;
       border-radius: $radius;
@@ -22,7 +27,7 @@
 }
 
 @mixin absolute-block($width: auto, $height: auto) {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   width: $width;
@@ -56,12 +61,14 @@
 
   .sections > &:first-child,
   .sections > .visually-hidden:first-child + & {
-    --section-padding-top: calc(var(--section-spacing) * 0.5 + var(--header-offset, 0px));
+    --section-padding-top: calc(
+      var(--section-spacing) * 0.5 + var(--header-offset, 0px)
+    );
   }
 }
 
 @mixin section-paddings {
-  &:not(.section--no-spacing,.section--image,.visually-hidden) + & {
+  &:not(.section--no-spacing, .section--image, .visually-hidden) + & {
     &:not(.section--large-spacing) {
       --section-padding-top: 0;
     }
@@ -124,9 +131,9 @@
   --text-color: #fff;
   --heading-color: #fff;
   --surface-color: var(--dark-color);
-  --surface-secondary-color: #{color.mix(#fff, map.get($colors, "dark"), 3%)};
-  --surface-tertiary-color: #{color.mix(#fff, map.get($colors, "dark"), 50%)};
-  --border-color: #{color.mix(#fff, map.get($colors, "dark"), 15%)};
+  --surface-secondary-color: #{color.mix(#fff, map.get($colors, 'dark'), 3%)};
+  --surface-tertiary-color: #{color.mix(#fff, map.get($colors, 'dark'), 50%)};
+  --border-color: #{color.mix(#fff, map.get($colors, 'dark'), 15%)};
   --marker-color: var(--dark-main-color);
 
   color: var(--text-color);
@@ -188,22 +195,41 @@
   text-underline-offset: $offset;
 }
 
-@function str-replace($string, $search, $replace: "") {
+@function str-replace($string, $search, $replace: '') {
   $index: string.index($string, $search);
 
   @if $index {
-    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+    @return string.slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        string.slice($string, $index + string.length($search)),
+        $search,
+        $replace
+      );
   }
 
   @return $string;
 }
 
 @function grid-cols($col-count, $base-count: var(--grid-columns), $add: 0) {
-  @return calc((((100% - (#{$base-count} - 1) * var(--grid-col-gap)) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * var(--grid-col-gap)) + #{$add});
+  @return calc(
+    (
+        ((100% - (#{$base-count} - 1) * var(--grid-col-gap)) / #{$base-count}) *
+          #{$col-count} + (#{$col-count} - 1) * var(--grid-col-gap)
+      ) + #{$add}
+  );
 }
 
-@function grid-offset($col-count, $base-count: var(--grid-columns), $add: var(--grid-col-gap)) {
-  @return calc((((100% - (#{$base-count} - 1) * var(--grid-col-gap)) / #{$base-count}) * #{$col-count} + (#{$col-count} - 1) * var(--grid-col-gap)) + #{$add});
+@function grid-offset(
+  $col-count,
+  $base-count: var(--grid-columns),
+  $add: var(--grid-col-gap)
+) {
+  @return calc(
+    (
+        ((100% - (#{$base-count} - 1) * var(--grid-col-gap)) / #{$base-count}) *
+          #{$col-count} + (#{$col-count} - 1) * var(--grid-col-gap)
+      ) + #{$add}
+  );
 }
 
 @function svg-data-url($svg, $color: #fff) {
@@ -216,5 +242,9 @@
 
   $escaped-color: str-replace(#{$color-value}, '#', '%23');
 
-  @return url('data:image/svg+xml;utf8,' + str-replace($svg, 'currentColor', $escaped-color));
+  @return url('data:image/svg+xml;utf8,' + str-replace(
+      $svg,
+      'currentColor',
+      $escaped-color
+    ));
 }

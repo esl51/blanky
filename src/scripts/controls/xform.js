@@ -2,7 +2,7 @@ import { xnotify } from './xnotify'
 import animateScrollTo from 'animated-scroll-to'
 
 export default class XForm {
-  constructor (elem, options) {
+  constructor(elem, options) {
     this.settings = {
       submittingClass: 'xform--submitting',
       fieldClass: 'xform__field',
@@ -19,7 +19,7 @@ export default class XForm {
       filePlaceholderText: '...',
       fileButtonText: '...',
       action: null,
-      ajax: true
+      ajax: true,
     }
     for (const attrname in options) {
       this.settings[attrname] = options[attrname]
@@ -47,31 +47,46 @@ export default class XForm {
     this.files = this.form.querySelectorAll('input[type=file]')
     this.submitButtons = this.form.querySelectorAll('button[type=submit]')
 
-    this.fileApi = !!((window.File && window.FileReader && window.FileList && window.Blob))
+    this.fileApi = !!(
+      window.File &&
+      window.FileReader &&
+      window.FileList &&
+      window.Blob
+    )
 
     elem.xForm = this
   }
 
-  toggleEvent (name) {
+  toggleEvent(name) {
     const event = new Event(name)
     this.form.dispatchEvent(event)
   }
 
-  _inputChange (e) {
+  _inputChange(e) {
     const input = e.target
     const field = input.closest('.' + this.settings.fieldClass)
-    if (input.value !== '' && !field.classList.contains(this.settings.fieldActivatedClass)) {
+    if (
+      input.value !== '' &&
+      !field.classList.contains(this.settings.fieldActivatedClass)
+    ) {
       field.classList.add(this.settings.fieldActivatedClass)
-    } else if (input.value === '' && field.classList.contains(this.settings.fieldActivatedClass)) {
+    } else if (
+      input.value === '' &&
+      field.classList.contains(this.settings.fieldActivatedClass)
+    ) {
       field.classList.remove(this.settings.fieldActivatedClass)
     }
   }
 
-  _fileChange (e) {
+  _fileChange(e) {
     const fileInput = e.target
     const fileWrapper = fileInput.closest('.' + this.settings.fileClass)
-    const fileValue = fileWrapper.querySelector('.' + this.settings.fileValueClass)
-    const fileButton = fileWrapper.querySelector('.' + this.settings.fileButtonClass)
+    const fileValue = fileWrapper.querySelector(
+      '.' + this.settings.fileValueClass,
+    )
+    const fileButton = fileWrapper.querySelector(
+      '.' + this.settings.fileButtonClass,
+    )
     const field = fileInput.closest('.' + this.settings.fieldClass)
     let fileName
     if (this.fileApi && fileInput.files.length) {
@@ -90,7 +105,11 @@ export default class XForm {
       field.classList.remove(this.settings.fieldActivatedClass)
       return
     }
-    if (fileValue.offsetWidth || fileValue.offsetHeight || fileValue.getClientRects().length) {
+    if (
+      fileValue.offsetWidth ||
+      fileValue.offsetHeight ||
+      fileValue.getClientRects().length
+    ) {
       fileValue.textContent = fileName
       fileValue.classList.add(this.settings.fileValueActivatedClass)
       field.classList.add(this.settings.fieldActivatedClass)
@@ -100,21 +119,21 @@ export default class XForm {
     }
   }
 
-  reset () {
+  reset() {
     this.form.reset()
-    this.inputs.forEach(input => {
+    this.inputs.forEach((input) => {
       input.dispatchEvent(new CustomEvent('blur'))
     })
-    this.files.forEach(fileInput => {
+    this.files.forEach((fileInput) => {
       fileInput.dispatchEvent(new CustomEvent('change'))
     })
   }
 
-  submit () {
+  submit() {
     return this._formSubmit()
   }
 
-  getElementOffset (element) {
+  getElementOffset(element) {
     const de = document.documentElement
     const box = element.getBoundingClientRect()
     const top = box.top + window.pageYOffset - de.clientTop
@@ -122,12 +141,12 @@ export default class XForm {
     return { top, left }
   }
 
-  readFiles (callback) {
+  readFiles(callback) {
     if (!this.fileApi) return null
     const rfiles = {}
     let filesCount = 0
     let filesReaded = 0
-    this.files.forEach(fileInput => {
+    this.files.forEach((fileInput) => {
       const files = fileInput.files
       const curName = fileInput.name
       rfiles[curName] = []
@@ -145,7 +164,7 @@ export default class XForm {
             name: event.target.file.name,
             type: event.target.file.type,
             size: event.target.file.size,
-            data: event.target.result
+            data: event.target.result,
           })
           filesReaded++
           if (filesReaded >= filesCount && typeof callback === 'function') {
@@ -159,7 +178,7 @@ export default class XForm {
     }
   }
 
-  handleErrors (error, errors) {
+  handleErrors(error, errors) {
     if (error && error.length) {
       xnotify.error(error)
     }
@@ -168,7 +187,7 @@ export default class XForm {
         if (Object.prototype.hasOwnProperty.call(errors, field)) {
           const input = this.form.querySelector('[name=' + field + ']')
           if (input) {
-            errors[field].forEach(err => {
+            errors[field].forEach((err) => {
               const errElem = document.createElement('div')
               errElem.classList.add(this.settings.errorClass)
               errElem.textContent = err
@@ -185,7 +204,8 @@ export default class XForm {
       if (fieldElem) {
         const fieldOffsetTop = this.getElementOffset(fieldElem).top
         let scrollTop = fieldOffsetTop
-        let scrollContainer = document.scrollingElement || document.documentElement
+        let scrollContainer =
+          document.scrollingElement || document.documentElement
         const wrap = fieldElem.closest('.js-xform-scroll')
         if (wrap) {
           const baseScrollTop = scrollContainer.scrollTop
@@ -194,27 +214,28 @@ export default class XForm {
         }
         animateScrollTo(scrollTop, {
           elementToScroll: scrollContainer,
-          speed: 300
+          speed: 300,
         })
       }
     }
     this.toggleEvent('error')
   }
 
-  async sendForm (formData) {
+  async sendForm(formData) {
     const errored = this.form.querySelectorAll('.' + this.settings.errorClass)
-    errored.forEach(err => {
+    errored.forEach((err) => {
       err.remove()
     })
     const response = await fetch(this.settings.action, {
       method: 'post',
-      body: formData
+      body: formData,
     })
     if (response.ok) {
       const data = await response.json()
       const error = data.error
       const errors = data.errors
-      const hasErrors = (error && error.length) || (errors && Object.keys(errors).length > 0)
+      const hasErrors =
+        (error && error.length) || (errors && Object.keys(errors).length > 0)
       if (hasErrors) {
         this.handleErrors(error, errors)
       } else {
@@ -233,14 +254,14 @@ export default class XForm {
     if (this.securityInput) {
       this.securityInput.remove()
     }
-    this.submitButtons.forEach(button => {
+    this.submitButtons.forEach((button) => {
       button.disabled = false
     })
     this.form.classList.remove(this.settings.submittingClass)
     this.toggleEvent('complete')
   }
 
-  _formSubmit (e) {
+  _formSubmit(e) {
     if (this.settings.ajax) {
       if (e) {
         e.preventDefault()
@@ -258,7 +279,7 @@ export default class XForm {
       this.securityInput.value = '1'
       this.form.appendChild(this.securityInput)
 
-      this.submitButtons.forEach(button => {
+      this.submitButtons.forEach((button) => {
         button.disabled = true
       })
 
@@ -267,7 +288,7 @@ export default class XForm {
 
       const formData = new FormData(this.form)
 
-      this.readFiles(files => {
+      this.readFiles((files) => {
         if (files !== undefined) {
           formData.append('files', JSON.stringify(files))
         }
@@ -278,10 +299,10 @@ export default class XForm {
     }
   }
 
-  mount () {
+  mount() {
     this._inputChangeHandler = this._inputChange.bind(this)
     this._fileChangeHandler = this._fileChange.bind(this)
-    this.inputs.forEach(input => {
+    this.inputs.forEach((input) => {
       input.addEventListener('change', this._inputChangeHandler)
       input.addEventListener('input', this._inputChangeHandler)
       input.addEventListener('blur', this._inputChangeHandler)
@@ -289,7 +310,7 @@ export default class XForm {
     })
 
     /* File inputs */
-    this.files.forEach(fileInput => {
+    this.files.forEach((fileInput) => {
       const fileWrapper = document.createElement('div')
       fileWrapper.classList.add(this.settings.fileClass)
       fileInput.parentNode.insertBefore(fileWrapper, fileInput)
@@ -315,27 +336,27 @@ export default class XForm {
     this.toggleEvent('mount')
   }
 
-  unmount () {
-    this.inputs.forEach(input => {
+  unmount() {
+    this.inputs.forEach((input) => {
       input.removeEventListener('change', this._inputChangeHandler)
       input.removeEventListener('input', this._inputChangeHandler)
       input.removeEventListener('blur', this._inputChangeHandler)
     })
-    this.files.forEach(fileInput => {
+    this.files.forEach((fileInput) => {
       fileInput.removeEventListener('change', this._fileChangeHandler)
       const fileWrapper = fileInput.closest('.' + this.settings.fileClass)
       const initialParent = fileInput.parentNode.parentNode
       initialParent.appendChild(fileInput)
       fileWrapper.remove()
     })
-    this.fields.forEach(field => {
+    this.fields.forEach((field) => {
       field.classList.remove(this.settings.fieldActivatedClass)
     })
     this.form.removeEventListener('submit', this._formSubmitHandler)
   }
 
-  destroy () {
+  destroy() {
     this.unmount()
-    delete (this.form.xForm)
+    delete this.form.xForm
   }
 }

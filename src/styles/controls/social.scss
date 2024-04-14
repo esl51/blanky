@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   gap: var(--spacing);
 
-  @include media("<tablet") {
+  @include media('<tablet') {
     --size: 36px;
   }
 }

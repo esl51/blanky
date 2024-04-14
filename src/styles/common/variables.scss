@@ -1,5 +1,5 @@
-@use "sass:color";
-@use "sass:map";
+@use 'sass:color';
+@use 'sass:map';
 
 // Breakpoints
 
@@ -8,15 +8,18 @@ $breakpoints: (
   tablet: 768px,
   laptop: 1280px,
   desktop: 1440px,
-  wide: 1600px
+  wide: 1600px,
 );
 
 // Media expressions
 
-$media-expressions: map.merge($media-expressions, (
-  "touch": "(hover: none)",
-  "hover": "(hover: hover)"
-));
+$media-expressions: map.merge(
+  $media-expressions,
+  (
+    'touch': '(hover: none)',
+    'hover': '(hover: hover)',
+  )
+);
 
 // Grid
 
@@ -25,36 +28,43 @@ $grid-columns: 12;
 // Colors
 
 $colors: (
-  "gray": #d5d5d5,
-  "light-gray": #f7f7f7,
-  "dark-gray": #333,
-  "blue": #3782a4,
-  "red": #d63939,
-  "orange": #f59f00,
-  "green": #2fb344,
-  "cyan": #17a2b8
+  'gray': #d5d5d5,
+  'light-gray': #f7f7f7,
+  'dark-gray': #333,
+  'blue': #3782a4,
+  'red': #d63939,
+  'orange': #f59f00,
+  'green': #2fb344,
+  'cyan': #17a2b8,
 );
-$colors: map.merge($colors, (
-  "light": map.get($colors, "light-gray"),
-  "dark": map.get($colors, "dark-gray"),
-  "main": map.get($colors, "blue"),
-  "danger": map.get($colors, "red"),
-  "warning": map.get($colors, "orange"),
-  "success": map.get($colors, "green"),
-  "info": map.get($colors, "cyan")
-));
-$colors: map.merge($colors, (
-  "light-main": color.mix(#fff, map.get($colors, "main"), 75%),
-  "dark-main": color.mix(#000, map.get($colors, "main"), 25%),
-));
-
+$colors: map.merge(
+  $colors,
+  (
+    'light': map.get($colors, 'light-gray'),
+    'dark': map.get($colors, 'dark-gray'),
+    'main': map.get($colors, 'blue'),
+    'danger': map.get($colors, 'red'),
+    'warning': map.get($colors, 'orange'),
+    'success': map.get($colors, 'green'),
+    'info': map.get($colors, 'cyan'),
+  )
+);
+$colors: map.merge(
+  $colors,
+  (
+    'light-main': color.mix(#fff, map.get($colors, 'main'), 75%),
+    'dark-main': color.mix(#000, map.get($colors, 'main'), 25%),
+  )
+);
 
 :root {
   // Colors
 
   @each $name, $color in $colors {
     --#{$name}-color: #{$color};
-    --#{$name}-color-rgb: #{color.red($color) color.green($color) color.blue($color)};
+    --#{$name}-color-rgb: #{color.red($color)
+      color.green($color)
+      color.blue($color)};
   }
 
   // Surface colors
@@ -71,7 +81,7 @@ $colors: map.merge($colors, (
   --spacing-lg: 24px;
   --spacing-xl: 36px;
 
-  @include media("<tablet") {
+  @include media('<tablet') {
     --spacing: 12px;
     --spacing-xs: 2px;
     --spacing-sm: 8px;
@@ -100,7 +110,9 @@ $colors: map.merge($colors, (
 
   // Text
 
-  --default-fonts: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --default-fonts: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
+    'Helvetica', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
   --text-size: 16px;
   --text-height: 24px;
   --text-size-sm: 14px;
@@ -109,12 +121,12 @@ $colors: map.merge($colors, (
   --text-height-lg: 28px;
   --text-color: var(--dark-gray-color);
   --text-weight: 400;
-  --text-family: "Open Sans", var(--default-fonts);
+  --text-family: 'Open Sans', var(--default-fonts);
   --text-spacing: var(--text-size);
   --strong-weight: 600;
   --marker-color: var(--light-main-color);
 
-  @include media("<laptop") {
+  @include media('<laptop') {
     --text-size: 14px;
     --text-height: 22px;
     --text-size-sm: 12px;
@@ -142,7 +154,7 @@ $colors: map.merge($colors, (
   --heading-family: var(--text-family);
   --heading-spacing: var(--spacing-lg);
 
-  @include media("<laptop") {
+  @include media('<laptop') {
     --h1-size: 24px;
     --h1-height: 32px;
     --h2-size: 20px;
@@ -164,19 +176,19 @@ $colors: map.merge($colors, (
   --inner-spacing: 40px;
   --block-spacing: var(--spacing-lg);
   --min-width: 320px;
-  --max-width: #{map.get($breakpoints, "desktop")};
+  --max-width: #{map.get($breakpoints, 'desktop')};
   --max-body-width: 2560px;
 
-  @include media("<tablet") {
+  @include media('<tablet') {
     --section-spacing: 60px;
     --section-spacing-lg: 120px;
     --inner-spacing: 16px;
     --block-spacing: 16px;
   }
 
-  @include media(">=desktop") {
+  @include media('>=desktop') {
     --inner-spacing: 80px;
-    --max-width: #{map.get($breakpoints, "desktop")};
+    --max-width: #{map.get($breakpoints, 'desktop')};
   }
 
   // Easing

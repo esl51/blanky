@@ -1,19 +1,19 @@
 import { getCookie, setCookie } from '../modules/utils'
 
 export default class CookieConsent {
-  constructor (elem) {
+  constructor(elem) {
     this.cookieElem = elem
     this.submitClass = 'cookie__submit'
 
     this.submit = this.cookieElem.querySelector('.' + this.submitClass)
   }
 
-  submitClick () {
+  submitClick() {
     setCookie('cookieConsent', true, 365)
     this.cookieElem.style.display = 'none'
   }
 
-  mount () {
+  mount() {
     if (!getCookie('cookieConsent')) {
       this.cookieElem.style.display = ''
     }
@@ -22,11 +22,11 @@ export default class CookieConsent {
     this.submit.addEventListener('click', this._submitClickHandler)
   }
 
-  unmount () {
+  unmount() {
     window.removeEventListener('click', this._submitClickHandler)
   }
 
-  destroy () {
+  destroy() {
     this.unmount()
   }
 }

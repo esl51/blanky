@@ -1,5 +1,5 @@
 export default class XSlider {
-  constructor (elem, options) {
+  constructor(elem, options) {
     this.settings = {
       loop: false,
       autoSize: false,
@@ -31,7 +31,7 @@ export default class XSlider {
       wheel: false,
       wheelSensitivity: 25,
       muteVideos: true,
-      sync: null
+      sync: null,
     }
     for (const attrname in options) {
       this.settings[attrname] = options[attrname]
@@ -86,12 +86,12 @@ export default class XSlider {
     elem.xSlider = this
   }
 
-  toggleEvent (name) {
+  toggleEvent(name) {
     const event = new Event(name)
     this.slider.dispatchEvent(event)
   }
 
-  getTransitionDuration (elem) {
+  getTransitionDuration(elem) {
     if (!elem) return null
     const cStyle = window.getComputedStyle(elem)
     const value = cStyle.getPropertyValue('transition-duration')
@@ -100,27 +100,33 @@ export default class XSlider {
     return isMs ? duration : duration * 1000
   }
 
-  getFlexBasis (elem) {
+  getFlexBasis(elem) {
     if (!elem) return null
     const cStyle = window.getComputedStyle(elem)
     return cStyle.getPropertyValue('flex-basis')
   }
 
-  getFlexDirection (elem) {
+  getFlexDirection(elem) {
     if (!elem) return null
     const cStyle = window.getComputedStyle(elem)
     return cStyle.getPropertyValue('flex-direction')
   }
 
-  loadItems () {
-    this.items = this.track.querySelectorAll(':scope > ' + this.settings.itemSelector + ':not(.' + this.settings.cloneClass + ')')
+  loadItems() {
+    this.items = this.track.querySelectorAll(
+      ':scope > ' +
+        this.settings.itemSelector +
+        ':not(.' +
+        this.settings.cloneClass +
+        ')',
+    )
   }
 
-  mod (index, total) {
-    return (index % total + total) % total
+  mod(index, total) {
+    return ((index % total) + total) % total
   }
 
-  goTo (index, preventSync) {
+  goTo(index, preventSync) {
     if (this.items.length < 1) return
 
     if (preventSync === undefined) {
@@ -128,7 +134,11 @@ export default class XSlider {
     }
 
     // prevent fast click
-    if (this.settings.loop && this.inTransition && (index <= this.minLoopActive || index >= this.maxLoopActive)) {
+    if (
+      this.settings.loop &&
+      this.inTransition &&
+      (index <= this.minLoopActive || index >= this.maxLoopActive)
+    ) {
       return
     }
 
@@ -149,36 +159,40 @@ export default class XSlider {
     return this.reposition()
   }
 
-  goToPrev () {
+  goToPrev() {
     const index = this.settings.loop ? this.loopCurrent : this.current
     return this.goTo(index - this.settings.perSlide)
   }
 
-  goToNext () {
+  goToNext() {
     const index = this.settings.loop ? this.loopCurrent : this.current
     return this.goTo(index + this.settings.perSlide)
   }
 
-  goToFirst () {
+  goToFirst() {
     return this.goTo(this.minCurrent)
   }
 
-  goToLast () {
+  goToLast() {
     return this.goTo(this.maxCurrent)
   }
 
-  goToLastView () {
+  goToLastView() {
     return this.goTo(this.maxActive)
   }
 
-  recalc () {
+  recalc() {
     this.loadItems()
     this.duration = this.getTransitionDuration(this.track)
     this.type = 'horizontal'
     if (this.getFlexDirection(this.track) === 'column') {
       this.type = 'vertical'
     }
-    if (this.settings.autoplay > 0 && this.duration && this.settings.autoplay < this.duration) {
+    if (
+      this.settings.autoplay > 0 &&
+      this.duration &&
+      this.settings.autoplay < this.duration
+    ) {
       this.settings.autoplay = this.duration
     }
     this.flexBasis = this.getFlexBasis(this.items[0])
@@ -187,7 +201,7 @@ export default class XSlider {
     }
     this.itemSize = 100
     let size = 0
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       item.style.flexBasis = ''
     })
     if (this.flexBasis === 'auto') {
@@ -213,7 +227,7 @@ export default class XSlider {
       this.itemSize = size
     }
     if (this.flexBasis === 'auto') {
-      this.items.forEach(item => {
+      this.items.forEach((item) => {
         item.style.flexBasis = this.itemSize + '%'
       })
     }
@@ -222,21 +236,25 @@ export default class XSlider {
       this.settings.perSlide = this.perView
     }
 
-    this.nextClonesCount = this.settings.loop ? this.settings.perSlide + this.perView : 0
-    this.prevClonesCount = this.settings.loop ? this.settings.perSlide + this.perView : 0
+    this.nextClonesCount = this.settings.loop
+      ? this.settings.perSlide + this.perView
+      : 0
+    this.prevClonesCount = this.settings.loop
+      ? this.settings.perSlide + this.perView
+      : 0
 
-    Array.from(this.nextClones).forEach(clone => {
+    Array.from(this.nextClones).forEach((clone) => {
       clone.remove()
     })
-    Array.from(this.prevClones).forEach(clone => {
+    Array.from(this.prevClones).forEach((clone) => {
       clone.remove()
     })
 
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       item.dataset.id = Array.from(this.items).indexOf(item)
     })
     if (this.settings.loop) {
-      this.items.forEach(item => {
+      this.items.forEach((item) => {
         item.dataset.loopId = Array.from(this.items).indexOf(item)
       })
       for (let i = 0; i < this.nextClonesCount; i++) {
@@ -249,7 +267,11 @@ export default class XSlider {
         this.track.appendChild(clone)
       }
 
-      for (let i = this.items.length - this.prevClonesCount; i < this.items.length; i++) {
+      for (
+        let i = this.items.length - this.prevClonesCount;
+        i < this.items.length;
+        i++
+      ) {
         const id = this.mod(i, this.items.length)
         const clone = this.items[id].cloneNode(true)
         clone.classList.add(this.settings.cloneClass)
@@ -263,16 +285,20 @@ export default class XSlider {
     this.minCurrent = 0
     this.maxCurrent = this.items.length - 1
     this.minActive = 0
-    this.minLoopActive = this.settings.loop ? this.minActive - this.prevClonesCount : this.minActive
+    this.minLoopActive = this.settings.loop
+      ? this.minActive - this.prevClonesCount
+      : this.minActive
     this.maxActive = this.items.length - this.perView
-    this.maxLoopActive = this.settings.loop ? this.maxActive + this.nextClonesCount : this.maxActive
+    this.maxLoopActive = this.settings.loop
+      ? this.maxActive + this.nextClonesCount
+      : this.maxActive
 
     this.initBullets()
 
     return this
   }
 
-  reposition () {
+  reposition() {
     let first = this.settings.loop ? this.loopCurrent : this.current
     if (first < this.minLoopActive) {
       first = this.minLoopActive
@@ -287,18 +313,18 @@ export default class XSlider {
     this.handleThumbs()
     this.handleLazyLoad(first)
 
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       item.classList.remove(this.settings.preCurrentClass)
       item.classList.remove(this.settings.currentClass)
       item.classList.remove(this.settings.activeClass)
     })
     if (this.settings.loop) {
-      this.prevClones.forEach(item => {
+      this.prevClones.forEach((item) => {
         item.classList.remove(this.settings.preCurrentClass)
         item.classList.remove(this.settings.currentClass)
         item.classList.remove(this.settings.activeClass)
       })
-      this.nextClones.forEach(item => {
+      this.nextClones.forEach((item) => {
         item.classList.remove(this.settings.preCurrentClass)
         item.classList.remove(this.settings.currentClass)
         item.classList.remove(this.settings.activeClass)
@@ -321,18 +347,25 @@ export default class XSlider {
     if (activeStart > this.maxActive) {
       activeStart = this.maxActive
     }
-    this.activeItems = Array.from(this.items).slice(activeStart, activeStart + this.perView)
+    this.activeItems = Array.from(this.items).slice(
+      activeStart,
+      activeStart + this.perView,
+    )
     this.items[this.current].classList.add(this.settings.preCurrentClass)
-    this.activeItems.forEach(item => {
+    this.activeItems.forEach((item) => {
       item.classList.add(this.settings.activeClass)
       if (this.settings.loop) {
         const index = Array.from(this.items).indexOf(item)
-        const prevClones = this.prevClones.filter(c => parseInt(c.dataset.id) === index)
-        prevClones.forEach(clone => {
+        const prevClones = this.prevClones.filter(
+          (c) => parseInt(c.dataset.id) === index,
+        )
+        prevClones.forEach((clone) => {
           clone.classList.add(this.settings.activeClass)
         })
-        const nextClones = this.nextClones.filter(c => parseInt(c.dataset.id) === index)
-        nextClones.forEach(clone => {
+        const nextClones = this.nextClones.filter(
+          (c) => parseInt(c.dataset.id) === index,
+        )
+        nextClones.forEach((clone) => {
           clone.classList.add(this.settings.activeClass)
         })
       }
@@ -379,18 +412,23 @@ export default class XSlider {
       if (this.settings.loop) {
         if (this.loopCurrent !== this.current) {
           this.loopCurrent = this.current
-          this.distance = -1 * (this.loopCurrent + this.prevClonesCount) * this.itemSize
+          this.distance =
+            -1 * (this.loopCurrent + this.prevClonesCount) * this.itemSize
           this.currentTransform = this._getTransform(this.distance, '%')
           this.track.style.transition = 'none'
           this.track.style.transform = this.currentTransform
         }
-        const prevClones = this.prevClones.filter(c => parseInt(c.dataset.id) === this.current)
-        prevClones.forEach(clone => {
+        const prevClones = this.prevClones.filter(
+          (c) => parseInt(c.dataset.id) === this.current,
+        )
+        prevClones.forEach((clone) => {
           clone.classList.remove(this.settings.preCurrentClass)
           clone.classList.add(this.settings.currentClass)
         })
-        const nextClones = this.nextClones.filter(c => parseInt(c.dataset.id) === this.current)
-        nextClones.forEach(clone => {
+        const nextClones = this.nextClones.filter(
+          (c) => parseInt(c.dataset.id) === this.current,
+        )
+        nextClones.forEach((clone) => {
           clone.classList.remove(this.settings.preCurrentClass)
           clone.classList.add(this.settings.currentClass)
         })
@@ -411,7 +449,7 @@ export default class XSlider {
     return this
   }
 
-  refreshButtonsState () {
+  refreshButtonsState() {
     if (!this.settings.loop && this.settings.disableButtons) {
       const buttons = []
       const disabledButtons = []
@@ -425,7 +463,11 @@ export default class XSlider {
         buttons.push(...this.lastButtons)
         disabledButtons.push(...this.prevButtons)
         disabledButtons.push(...this.firstButtons)
-      } else if ((this.settings.disableButtonsPerView && this.current >= this.maxActive) || (this.current >= this.maxCurrent)) {
+      } else if (
+        (this.settings.disableButtonsPerView &&
+          this.current >= this.maxActive) ||
+        this.current >= this.maxCurrent
+      ) {
         buttons.push(...this.prevButtons)
         buttons.push(...this.firstButtons)
         disabledButtons.push(...this.nextButtons)
@@ -436,34 +478,34 @@ export default class XSlider {
         buttons.push(...this.nextButtons)
         buttons.push(...this.lastButtons)
       }
-      disabledButtons.forEach(item => {
+      disabledButtons.forEach((item) => {
         item.disabled = true
         item.tabindex = -1
         item.classList.add(this.settings.disabledClass)
       })
-      buttons.forEach(item => {
+      buttons.forEach((item) => {
         item.disabled = false
         item.removeAttribute('tabindex')
         item.classList.remove(this.settings.disabledClass)
       })
       if (this.settings.hideControls && buttons.length === 0) {
-        disabledButtons.forEach(button => {
+        disabledButtons.forEach((button) => {
           button.classList.add(this.settings.hiddenClass)
         })
       }
     }
   }
 
-  refreshCounter () {
-    this.counterCurrents.forEach(current => {
+  refreshCounter() {
+    this.counterCurrents.forEach((current) => {
       current.innerText = this.current + 1
     })
-    this.counterCounts.forEach(count => {
+    this.counterCounts.forEach((count) => {
       count.innerText = this.items.length
     })
   }
 
-  initBullets () {
+  initBullets() {
     if (this.bulletsContainer) {
       while (this.bulletsContainer.firstChild) {
         this.bulletsContainer.removeChild(this.bulletsContainer.firstChild)
@@ -477,15 +519,18 @@ export default class XSlider {
       }
       for (let i = 0; i < bulletsCount; i++) {
         const bulletBtn = Object.assign(document.createElement('button'), {
-          type: 'button'
+          type: 'button',
         })
         bulletBtn.addEventListener('click', () => {
           const idx = Array.from(this.bullets).indexOf(bullet)
           this.goTo(idx)
         })
-        const bullet = Object.assign(document.createElement(this.settings.bulletTag), {
-          className: 'xslider__bullet'
-        })
+        const bullet = Object.assign(
+          document.createElement(this.settings.bulletTag),
+          {
+            className: 'xslider__bullet',
+          },
+        )
         bullet.appendChild(bulletBtn)
         this.bulletsContainer.appendChild(bullet)
       }
@@ -498,12 +543,14 @@ export default class XSlider {
     }
   }
 
-  handleBullets () {
+  handleBullets() {
     if (this.bulletsContainer) {
-      this.bullets.forEach(bullet => {
+      this.bullets.forEach((bullet) => {
         bullet.classList.remove(this.settings.activeClass)
       })
-      const maxActive = this.settings.bulletsPerView ? this.maxActive : this.maxCurrent
+      const maxActive = this.settings.bulletsPerView
+        ? this.maxActive
+        : this.maxCurrent
       if (this.current < this.minCurrent) {
         this.bullets[0].classList.add(this.settings.activeClass)
       } else if (this.current <= maxActive) {
@@ -514,15 +561,15 @@ export default class XSlider {
     }
   }
 
-  lazyLoadItem (item) {
+  lazyLoadItem(item) {
     const lazyLoadObjects = item.querySelectorAll('[data-src]')
-    lazyLoadObjects.forEach(obj => {
+    lazyLoadObjects.forEach((obj) => {
       obj.src = obj.dataset.src
       delete obj.dataset.src
     })
   }
 
-  handleLazyLoad (first) {
+  handleLazyLoad(first) {
     const index = this.mod(first, this.items.length)
     const count = this.settings.perSlide * this.settings.lazyLoad * 2
     let minIndex = index - count
@@ -535,7 +582,7 @@ export default class XSlider {
     lazyLoadItems.push(...Array.from(this.items).slice(index, maxIndex))
 
     const ids = []
-    lazyLoadItems.forEach(item => {
+    lazyLoadItems.forEach((item) => {
       if (!ids.includes(item.dataset.id)) {
         ids.push(item.dataset.id)
       }
@@ -544,7 +591,7 @@ export default class XSlider {
 
     if (this.settings.loop) {
       const cloneItems = [...this.prevClones, ...this.nextClones]
-      cloneItems.forEach(clone => {
+      cloneItems.forEach((clone) => {
         if (ids.includes(clone.dataset.id)) {
           this.lazyLoadItem(clone)
         }
@@ -552,16 +599,16 @@ export default class XSlider {
     }
   }
 
-  handleThumbs () {
+  handleThumbs() {
     if (this.thumbsContainer) {
-      this.thumbs.forEach(thumb => {
+      this.thumbs.forEach((thumb) => {
         thumb.classList.remove(this.settings.activeClass)
       })
       this.thumbs[this.current].classList.add(this.settings.activeClass)
     }
   }
 
-  playCurrentVideo (reset) {
+  playCurrentVideo(reset) {
     const video = this.items[this.current].querySelector('video')
     if (video && video.readyState >= 2) {
       if (reset === true) {
@@ -571,8 +618,8 @@ export default class XSlider {
     }
   }
 
-  pauseVideos (reset) {
-    this.videos.forEach(video => {
+  pauseVideos(reset) {
+    this.videos.forEach((video) => {
       video.pause()
       if (reset === true) {
         video.currentTime = 0
@@ -580,7 +627,7 @@ export default class XSlider {
     })
   }
 
-  getAutoplayDuration () {
+  getAutoplayDuration() {
     const video = this.items[this.current].querySelector('video')
     if (video && video.dataset.duration) {
       return video.dataset.duration
@@ -588,28 +635,34 @@ export default class XSlider {
     return this.settings.autoplay
   }
 
-  pauseAutoplay () {
+  pauseAutoplay() {
     clearTimeout(this.autoplayTimeout)
     clearInterval(this.autoplayPositionInterval)
     return this
   }
 
-  updateAutoplayPosition (position) {
+  updateAutoplayPosition(position) {
     this.autoplayPosition = position
     this.progressBars.forEach((progress) => {
       if (progress.dataset.progress === 'width') {
         progress.style.width = this.getAutoplayProgress(position) + '%'
       } else {
-        progress.style.setProperty('--value', this.getAutoplayProgress(position))
+        progress.style.setProperty(
+          '--value',
+          this.getAutoplayProgress(position),
+        )
       }
     })
   }
 
-  getAutoplayProgress (position) {
-    return Math.min(Math.round(position / this.getAutoplayDuration() * 100), 100)
+  getAutoplayProgress(position) {
+    return Math.min(
+      Math.round((position / this.getAutoplayDuration()) * 100),
+      100,
+    )
   }
 
-  startAutoplay () {
+  startAutoplay() {
     if (this.settings.autoplay > 0) {
       this.pauseAutoplay()
       const video = this.items[this.current].querySelector('video')
@@ -635,7 +688,7 @@ export default class XSlider {
     return this
   }
 
-  _getMoveTo () {
+  _getMoveTo() {
     const vRect = this.viewport.getBoundingClientRect()
     const tRect = this.track.getBoundingClientRect()
     let moveTo = -1
@@ -646,12 +699,14 @@ export default class XSlider {
       offset = tRect.top - vRect.top
       offsetProp = 'offsetTop'
     }
-    allItems.forEach(item => {
-      if (item[offsetProp] < (offset * -1)) {
+    allItems.forEach((item) => {
+      if (item[offsetProp] < offset * -1) {
         const index = Array.from(allItems).indexOf(item)
-        const id = parseInt(this.settings.loop ? item.dataset.loopId : item.dataset.id)
+        const id = parseInt(
+          this.settings.loop ? item.dataset.loopId : item.dataset.id,
+        )
         const nextItem = allItems[index + 1]
-        if (nextItem && nextItem[offsetProp] > (offset * -1)) {
+        if (nextItem && nextItem[offsetProp] > offset * -1) {
           moveTo = this.moveDirection === 'prev' ? id : id + 1
         } else if (!nextItem) {
           moveTo = id
@@ -661,7 +716,7 @@ export default class XSlider {
     return moveTo
   }
 
-  _getTransform (value, units) {
+  _getTransform(value, units) {
     if (!units) {
       units = 'px'
     }
@@ -672,11 +727,11 @@ export default class XSlider {
     }
   }
 
-  _click (e) {
+  _click(e) {
     e.preventDefault()
   }
 
-  _dragSwipe (e, type) {
+  _dragSwipe(e, type) {
     e.stopPropagation()
     if (!this.isMoving || !this.xDown || !this.yDown) {
       return
@@ -701,9 +756,15 @@ export default class XSlider {
     this.yDiff = this.yDown - this.yUp
 
     let diff = null
-    if (this.type === 'horizontal' && Math.abs(this.xDiff) > Math.abs(this.yDiff)) {
+    if (
+      this.type === 'horizontal' &&
+      Math.abs(this.xDiff) > Math.abs(this.yDiff)
+    ) {
       diff = this.xDiff
-    } else if (this.type === 'vertical' && Math.abs(this.yDiff) > Math.abs(this.xDiff)) {
+    } else if (
+      this.type === 'vertical' &&
+      Math.abs(this.yDiff) > Math.abs(this.xDiff)
+    ) {
       diff = this.yDiff
     }
     if (diff !== null) {
@@ -712,7 +773,11 @@ export default class XSlider {
       }
       const transform = this._getTransform(diff * -1)
       let canMove = true
-      if (!this.settings.loop && ((this.current === this.maxCurrent && diff > 0) || (this.current === this.minCurrent && diff < 0))) {
+      if (
+        !this.settings.loop &&
+        ((this.current === this.maxCurrent && diff > 0) ||
+          (this.current === this.minCurrent && diff < 0))
+      ) {
         canMove = false
       }
       if (canMove) {
@@ -723,16 +788,24 @@ export default class XSlider {
     this.viewport.addEventListener('click', this._click)
   }
 
-  _dragSwipeEnd (e, type) {
+  _dragSwipeEnd(e) {
     e.stopPropagation()
     const xDiff = Math.abs(this.xDiff)
     const yDiff = Math.abs(this.yDiff)
     let moveTo
 
     let diff = null
-    if (this.type === 'horizontal' && xDiff > yDiff && xDiff > this.settings.threshold) {
+    if (
+      this.type === 'horizontal' &&
+      xDiff > yDiff &&
+      xDiff > this.settings.threshold
+    ) {
       diff = this.xDiff
-    } else if (this.type === 'vertical' && yDiff > xDiff && yDiff > this.settings.threshold) {
+    } else if (
+      this.type === 'vertical' &&
+      yDiff > xDiff &&
+      yDiff > this.settings.threshold
+    ) {
       diff = this.yDiff
     }
     if (diff !== null) {
@@ -760,7 +833,7 @@ export default class XSlider {
     this.isMoving = false
   }
 
-  _dragLeave (e) {
+  _dragLeave() {
     if (this.isMoving) {
       this.reposition()
       this.xDown = 0
@@ -772,23 +845,23 @@ export default class XSlider {
     }
   }
 
-  _dragEnd (e) {
+  _dragEnd(e) {
     return this._dragSwipeEnd(e, 'drag')
   }
 
-  _swipeEnd (e) {
+  _swipeEnd(e) {
     return this._dragSwipeEnd(e, 'swipe')
   }
 
-  _drag (e) {
+  _drag(e) {
     return this._dragSwipe(e, 'drag')
   }
 
-  _swipe (e) {
+  _swipe(e) {
     return this._dragSwipe(e, 'swipe')
   }
 
-  _wheel (e) {
+  _wheel(e) {
     e.stopPropagation()
     if (this.xDiff === undefined) {
       this.xDiff = 0
@@ -809,10 +882,16 @@ export default class XSlider {
       if (e.cancelable) {
         e.preventDefault()
       }
-      const transform = this._getTransform(this.xDiff * -(this.settings.wheelSensitivity / 100))
+      const transform = this._getTransform(
+        this.xDiff * -(this.settings.wheelSensitivity / 100),
+      )
       this.track.style.transform = this.currentTransform + ' ' + transform
       let canMove = true
-      if (!this.settings.loop && ((this.current === this.maxCurrent && this.xDiff > 0) || (this.current === this.minCurrent && this.xDiff < 0))) {
+      if (
+        !this.settings.loop &&
+        ((this.current === this.maxCurrent && this.xDiff > 0) ||
+          (this.current === this.minCurrent && this.xDiff < 0))
+      ) {
         canMove = false
       }
       if (canMove) {
@@ -848,7 +927,7 @@ export default class XSlider {
     }
   }
 
-  mount () {
+  mount() {
     this.recalc()
 
     window.addEventListener('resize', () => {
@@ -870,7 +949,7 @@ export default class XSlider {
 
     this.videos = this.track.querySelectorAll('video')
 
-    this.videos.forEach(video => {
+    this.videos.forEach((video) => {
       video.playsinline = true
       video.loop = true
       if (this.settings.muteVideos) {
@@ -897,20 +976,27 @@ export default class XSlider {
       })
     })
 
-    if (this.settings.autoplay > 0 && this.settings.autoplayVisible && window.IntersectionObserver) {
-      this.autoplayObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio < this.settings.autoplayThreshold) {
-            this.pauseVideos()
-            this.pauseAutoplay()
-          } else {
-            this.playCurrentVideo()
-            this.startAutoplay()
-          }
-        })
-      }, {
-        threshold: this.settings.autoplayThreshold
-      })
+    if (
+      this.settings.autoplay > 0 &&
+      this.settings.autoplayVisible &&
+      window.IntersectionObserver
+    ) {
+      this.autoplayObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.intersectionRatio < this.settings.autoplayThreshold) {
+              this.pauseVideos()
+              this.pauseAutoplay()
+            } else {
+              this.playCurrentVideo()
+              this.startAutoplay()
+            }
+          })
+        },
+        {
+          threshold: this.settings.autoplayThreshold,
+        },
+      )
       this.autoplayObserver.observe(this.viewport)
     }
 
@@ -923,7 +1009,7 @@ export default class XSlider {
       this.thumbs = Array.from(this.thumbsContainer.children)
     }
 
-    this.thumbs.forEach(thumb => {
+    this.thumbs.forEach((thumb) => {
       const btn = thumb.querySelector('button')
       btn.addEventListener('click', () => {
         const idx = Array.from(this.thumbs).indexOf(thumb)
@@ -931,7 +1017,7 @@ export default class XSlider {
       })
     })
 
-    this.goTos.forEach(goTo => {
+    this.goTos.forEach((goTo) => {
       goTo.addEventListener('click', () => {
         const idx = goTo.dataset.goto
         if (idx) {
@@ -940,7 +1026,7 @@ export default class XSlider {
       })
     })
 
-    this.viewport.addEventListener('mousedown', e => {
+    this.viewport.addEventListener('mousedown', (e) => {
       e.preventDefault()
       e.stopPropagation()
       this.xDown = e.clientX
@@ -948,7 +1034,11 @@ export default class XSlider {
       this.isMoving = true
       this.viewport.addEventListener('mousemove', this._dragHandler, false)
       this.viewport.addEventListener('mouseup', this._dragEndHandler, false)
-      this.viewport.addEventListener('mouseleave', this._dragLeaveHandler, false)
+      this.viewport.addEventListener(
+        'mouseleave',
+        this._dragLeaveHandler,
+        false,
+      )
     })
 
     if (this.settings.wheel) {
@@ -958,7 +1048,7 @@ export default class XSlider {
     this._swipeHandler = this._swipe.bind(this)
     this._swipeEndHandler = this._swipeEnd.bind(this)
 
-    this.viewport.addEventListener('touchstart', e => {
+    this.viewport.addEventListener('touchstart', (e) => {
       e.stopPropagation()
       this.xDown = e.touches[0].clientX
       this.yDown = e.touches[0].clientY
@@ -967,22 +1057,22 @@ export default class XSlider {
       this.viewport.addEventListener('touchend', this._swipeEndHandler, false)
     })
 
-    this.prevButtons.forEach(item => {
+    this.prevButtons.forEach((item) => {
       item.addEventListener('click', () => {
         this.goToPrev()
       })
     })
-    this.nextButtons.forEach(item => {
+    this.nextButtons.forEach((item) => {
       item.addEventListener('click', () => {
         this.goToNext()
       })
     })
-    this.firstButtons.forEach(item => {
+    this.firstButtons.forEach((item) => {
       item.addEventListener('click', () => {
         this.goToFirst()
       })
     })
-    this.lastButtons.forEach(item => {
+    this.lastButtons.forEach((item) => {
       item.addEventListener('click', () => {
         this.goToLast()
       })
@@ -996,15 +1086,15 @@ export default class XSlider {
     this.toggleEvent('mount')
   }
 
-  unmount () {
+  unmount() {
     this.track.style = ''
     this.slider.classList.remove(this.settings.mountedClass)
     const clone = this.slider.cloneNode(true)
     this.slider.parentNode.replaceChild(clone, this.slider)
   }
 
-  destroy () {
+  destroy() {
     this.unmount()
-    delete (this.slider.xSlider)
+    delete this.slider.xSlider
   }
 }

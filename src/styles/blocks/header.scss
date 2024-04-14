@@ -8,7 +8,7 @@
 .header__logo {
   margin-right: var(--spacing);
 
-  @include media("<laptop") {
+  @include media('<laptop') {
     position: relative;
     z-index: 2001;
   }
@@ -17,7 +17,7 @@
 .header__nav {
   z-index: 2000;
 
-  @include media(">=laptop") {
+  @include media('>=laptop') {
     margin-left: auto;
   }
 }
@@ -25,12 +25,12 @@
 .header__nav-toggle {
   margin-left: auto;
 
-  @include media("<laptop") {
+  @include media('<laptop') {
     position: relative;
     z-index: 2001;
   }
 
-  @include media(">=laptop") {
+  @include media('>=laptop') {
     display: none;
   }
 }
@@ -45,7 +45,7 @@
 // Nav
 
 .nav {
-  @include media("<laptop") {
+  @include media('<laptop') {
     @include transition;
 
     display: flex;
@@ -68,13 +68,13 @@
 }
 
 .nav__list {
-  @include media("<laptop") {
+  @include media('<laptop') {
     overflow-x: hidden;
     overflow-y: auto;
     width: 100%;
   }
 
-  @include media(">=laptop") {
+  @include media('>=laptop') {
     display: flex;
   }
 }
@@ -82,7 +82,7 @@
 .nav__item {
   display: flex;
 
-  @include media("<laptop") {
+  @include media('<laptop') {
     .nav__list > & {
       @include transition;
 
@@ -101,7 +101,7 @@
     }
   }
 
-  @include media(">=laptop") {
+  @include media('>=laptop') {
     &:not(:first-child) {
       margin-left: var(--spacing-sm);
     }
@@ -124,13 +124,13 @@
     color: var(--main-color);
   }
 
-  @include media("<laptop") {
+  @include media('<laptop') {
     display: block;
     padding: var(--spacing) var(--inner-spacing);
     font-size: var(--text-size-lg);
   }
 
-  @include media(">=laptop") {
+  @include media('>=laptop') {
     display: block;
     padding: var(--spacing-xs) var(--spacing);
   }

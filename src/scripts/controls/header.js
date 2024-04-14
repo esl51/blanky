@@ -1,5 +1,5 @@
 export default class Header {
-  constructor (elem) {
+  constructor(elem) {
     this.headerElem = elem
     this.scrolledClass = 'is-scrolled'
     this.forwardClass = 'is-forward'
@@ -9,11 +9,18 @@ export default class Header {
     this.scrollTop = 0
   }
 
-  windowScroll () {
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-    if (scrollTop > 100 && !this.headerElem.classList.contains(this.scrolledClass)) {
+  windowScroll() {
+    const scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop
+    if (
+      scrollTop > 100 &&
+      !this.headerElem.classList.contains(this.scrolledClass)
+    ) {
       this.headerElem.classList.add(this.scrolledClass)
-    } else if (scrollTop <= 100 && this.headerElem.classList.contains(this.scrolledClass)) {
+    } else if (
+      scrollTop <= 100 &&
+      this.headerElem.classList.contains(this.scrolledClass)
+    ) {
       this.headerElem.classList.remove(this.scrolledClass)
     }
     clearTimeout(this.resizeTimeout)
@@ -37,18 +44,26 @@ export default class Header {
     }, 100)
   }
 
-  setHeight () {
-    document.documentElement.style.setProperty('--header-height', this.headerElem.offsetHeight + 'px')
-    document.documentElement.style.setProperty('--header-offset', this.headerElem.offsetHeight + 'px')
+  setHeight() {
+    document.documentElement.style.setProperty(
+      '--header-height',
+      this.headerElem.offsetHeight + 'px',
+    )
+    document.documentElement.style.setProperty(
+      '--header-offset',
+      this.headerElem.offsetHeight + 'px',
+    )
   }
 
-  mount () {
+  mount() {
     this._windowScrollHandler = this.windowScroll.bind(this)
     window.addEventListener('scroll', this._windowScrollHandler)
     window.addEventListener('DOMContentLoaded', this._windowScrollHandler)
     window.addEventListener('resize', this._windowScrollHandler)
 
-    const sections = document.querySelectorAll('.sections .section:not(.visually-hidden)')
+    const sections = document.querySelectorAll(
+      '.sections .section:not(.visually-hidden)',
+    )
     if (
       !document.documentElement.classList.contains('has-light-top') &&
       sections.length &&
@@ -58,13 +73,13 @@ export default class Header {
     }
   }
 
-  unmount () {
+  unmount() {
     window.removeEventListener('scroll', this._windowScrollHandler)
     window.removeEventListener('DOMContentLoaded', this._windowScrollHandler)
     window.removeEventListener('resize', this._windowScrollHandler)
   }
 
-  destroy () {
+  destroy() {
     this.unmount()
   }
 }

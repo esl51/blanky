@@ -9,7 +9,7 @@
 }
 
 @mixin animator() {
-  &:not(.animator--children,.animator--active),
+  &:not(.animator--children, .animator--active),
   &.animator--children:not(.animator--active) > * {
     @content;
   }
@@ -29,19 +29,17 @@
   &:not(.animator--children),
   &.animator--children > * {
     transition:
-      opacity var(--animator-duration) var(--animator-delay) var(--animator-easing),
-      transform var(--animator-duration) var(--animator-delay) var(--animator-easing);
-    transform:
-      var(--animator-slide-up-transform,)
+      opacity var(--animator-duration) var(--animator-delay)
+        var(--animator-easing),
+      transform var(--animator-duration) var(--animator-delay)
+        var(--animator-easing);
+    transform: var(--animator-slide-up-transform,)
       var(--animator-slide-down-transform,)
       var(--animator-slide-left-transform,)
-      var(--animator-slide-right-transform,)
-      var(--animator-tilt-transform,)
-      var(--animator-scale-transform,)
-      var(--animator-flip-transform,);
+      var(--animator-slide-right-transform,) var(--animator-tilt-transform,)
+      var(--animator-scale-transform,) var(--animator-flip-transform,);
   }
 }
-
 
 .animator--fade-in {
   @include animator {
@@ -63,7 +61,9 @@
 
 .animator--slide-down {
   @include animator {
-    --animator-slide-down-transform: translateY(calc(-1 * var(--animator-slide-distance)));
+    --animator-slide-down-transform: translateY(
+      calc(-1 * var(--animator-slide-distance))
+    );
   }
 }
 
@@ -75,7 +75,9 @@
 
 .animator--slide-right {
   @include animator {
-    --animator-slide-right-transform: translateX(calc(-1 * var(--animator-slide-distance)));
+    --animator-slide-right-transform: translateX(
+      calc(-1 * var(--animator-slide-distance))
+    );
   }
 }
 

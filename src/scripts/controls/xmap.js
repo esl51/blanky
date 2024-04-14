@@ -1,7 +1,7 @@
 import ymaps from 'ymaps'
 
 export default class XMap {
-  constructor (elem, options) {
+  constructor(elem, options) {
     this.settings = {
       zoom: 15,
       lat: 37.618552,
@@ -13,7 +13,7 @@ export default class XMap {
       iconOffset: null,
       language: 'en_US',
       route: false,
-      key: null
+      key: null,
     }
     for (const attrname in options) {
       this.settings[attrname] = options[attrname]
@@ -36,7 +36,9 @@ export default class XMap {
 
     this.markerElements = []
     if (this.settings.markersSelector) {
-      this.markerElements = this.container.querySelectorAll(this.settings.markersSelector)
+      this.markerElements = this.container.querySelectorAll(
+        this.settings.markersSelector,
+      )
     } else {
       this.markerElements = this.container.children
     }
@@ -46,51 +48,62 @@ export default class XMap {
     elem.xMap = this
   }
 
-  toggleEvent (name) {
+  toggleEvent(name) {
     const event = new Event(name)
     this.container.dispatchEvent(event)
   }
 
-  loadMarkers () {
-    [].forEach.call(this.markerElements, item => {
+  loadMarkers() {
+    ;[].forEach.call(this.markerElements, (item) => {
       const markerOptions = {}
       const icon = item.dataset.icon || this.settings.icon
-      const iconSize = item.dataset.iconSize ? JSON.parse(item.dataset.iconSize) : this.settings.iconSize
-      const iconOffset = item.dataset.iconOffset ? JSON.parse(item.dataset.iconOffset) : this.settings.iconOffset
+      const iconSize = item.dataset.iconSize
+        ? JSON.parse(item.dataset.iconSize)
+        : this.settings.iconSize
+      const iconOffset = item.dataset.iconOffset
+        ? JSON.parse(item.dataset.iconOffset)
+        : this.settings.iconOffset
       if (icon && iconSize && iconOffset) {
         markerOptions.iconLayout = 'default#image'
         markerOptions.iconImageHref = icon
         markerOptions.iconImageSize = iconSize
         markerOptions.iconImageOffset = iconOffset
       }
-      const marker = new this.ymaps.Placemark([item.dataset.lat, item.dataset.lng], {
-        hintContent: item.dataset.title,
-        balloonContentBody: item.innerHTML,
-        balloonContentHeader: item.dataset.title
-      }, markerOptions)
+      const marker = new this.ymaps.Placemark(
+        [item.dataset.lat, item.dataset.lng],
+        {
+          hintContent: item.dataset.title,
+          balloonContentBody: item.innerHTML,
+          balloonContentHeader: item.dataset.title,
+        },
+        markerOptions,
+      )
       this.markers.push(marker)
       item.style.display = 'none'
     })
   }
 
-  initMap () {
+  initMap() {
     this.ymap = new this.ymaps.Map(this.container.id, {
       center: [this.settings.lat, this.settings.lng],
-      zoom: this.settings.zoom
+      zoom: this.settings.zoom,
     })
     if (this.settings.route && this.settings.key) {
       const referencePoints = []
-      this.markers.forEach(item => {
+      this.markers.forEach((item) => {
         referencePoints.push(item.geometry.getCoordinates())
       })
-      const multiRoute = new this.ymaps.multiRouter.MultiRoute({
-        referencePoints
-      }, {
-        boundsAutoApply: true
-      })
+      const multiRoute = new this.ymaps.multiRouter.MultiRoute(
+        {
+          referencePoints,
+        },
+        {
+          boundsAutoApply: true,
+        },
+      )
       this.ymap.geoObjects.add(multiRoute)
     } else {
-      [].forEach.call(this.markers, item => {
+      ;[].forEach.call(this.markers, (item) => {
         this.ymap.geoObjects.add(item)
       })
     }
@@ -101,7 +114,7 @@ export default class XMap {
     this.ymap.controls.remove('typeSelector')
   }
 
-  refresh () {
+  refresh() {
     if (this.settings.autoHeight) {
       this.container.style.height = ''
       const maxHeight = Math.round(document.documentElement.clientHeight * 0.6)
@@ -112,28 +125,33 @@ export default class XMap {
     this.ymap.container.fitToViewport()
   }
 
-  async mount () {
-    this.container.id = this.container.id || 'map-' + Math.random().toString(36).substr(2, 10)
+  async mount() {
+    this.container.id =
+      this.container.id || 'map-' + Math.random().toString(36).substr(2, 10)
     this.toggleEvent('mount')
     this.resizeTimout = null
-    this.ymaps = await ymaps.load('https://api-maps.yandex.ru/2.1/?lang=' + this.settings.language + (this.settings.key ? ('&apikey=' + this.settings.key) : ''))
+    this.ymaps = await ymaps.load(
+      'https://api-maps.yandex.ru/2.1/?lang=' +
+        this.settings.language +
+        (this.settings.key ? '&apikey=' + this.settings.key : ''),
+    )
     this.loadMarkers()
     this.initMap()
     this.refresh()
     window.xMapInstance = this
   }
 
-  unmount () {
+  unmount() {
     this.container.id = ''
-    this.container.style.height = '';
-    [].forEach.call(this.markerElements, item => {
+    this.container.style.height = ''
+    ;[].forEach.call(this.markerElements, (item) => {
       item.style.display = ''
     })
     this.ymap.destroy()
   }
 
-  destroy () {
+  destroy() {
     this.unmount()
-    delete (this.container.xMap)
+    delete this.container.xMap
   }
 }

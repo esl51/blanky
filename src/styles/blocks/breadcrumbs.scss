@@ -12,7 +12,7 @@
   &:not(:last-child) {
     &::after {
       margin-left: var(--gap);
-      content: "/";
+      content: '/';
     }
   }
 }

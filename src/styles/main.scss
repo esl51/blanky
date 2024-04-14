@@ -1,56 +1,56 @@
 // Vendor utils
 
-@import "../../node_modules/normalize.css/normalize";
-@import "../../node_modules/include-media/dist/include-media";
+@import '../../node_modules/normalize.css/normalize';
+@import '../../node_modules/include-media/dist/include-media';
 
 // Common
 
-@import "common/variables";
-@import "common/utils";
-@import "common/reset";
-@import "common/animations";
-@import "common/grid";
-@import "common/fonts";
-@import "common/layout";
+@import 'common/variables';
+@import 'common/utils';
+@import 'common/reset';
+@import 'common/animations';
+@import 'common/grid';
+@import 'common/fonts';
+@import 'common/layout';
 
 // Content
 
-@import "content/text";
+@import 'content/text';
 
 // Controls
 
-@import "controls/animator";
-@import "controls/buttons";
-@import "controls/icons";
-@import "controls/media";
-@import "controls/social";
+@import 'controls/animator';
+@import 'controls/buttons';
+@import 'controls/icons';
+@import 'controls/media';
+@import 'controls/social';
 
 // XControls
 
-@import "controls/xform";
-@import "controls/xlightbox";
-@import "controls/xmap";
-@import "controls/xnotify";
-@import "controls/xpopup";
-@import "controls/xslider";
+@import 'controls/xform';
+@import 'controls/xlightbox';
+@import 'controls/xmap';
+@import 'controls/xnotify';
+@import 'controls/xpopup';
+@import 'controls/xslider';
 
 // Sections
 
-@import "sections/header";
-@import "sections/cookie";
-@import "sections/page-header";
-@import "sections/basic";
-@import "sections/dark";
-@import "sections/footer";
+@import 'sections/header';
+@import 'sections/cookie';
+@import 'sections/page-header';
+@import 'sections/basic';
+@import 'sections/dark';
+@import 'sections/footer';
 
 // Blocks
 
-@import "blocks/header";
-@import "blocks/breadcrumbs";
-@import "blocks/cookie";
-@import "blocks/files";
-@import "blocks/pagination";
-@import "blocks/search-form";
-@import "blocks/search-results";
-@import "blocks/footer";
-@import "blocks/demo";
+@import 'blocks/header';
+@import 'blocks/breadcrumbs';
+@import 'blocks/cookie';
+@import 'blocks/files';
+@import 'blocks/pagination';
+@import 'blocks/search-form';
+@import 'blocks/search-results';
+@import 'blocks/footer';
+@import 'blocks/demo';
