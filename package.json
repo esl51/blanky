@@ -59,6 +59,8 @@
     "gulp-terser": "^2.1.0",
     "gulp-twig": "^1.2.0",
     "gulp-webp": "^5.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.2",
     "penthouse": "^2.3.3",
     "postcss": "^8.4.22",
     "prettier": "^3.2.5",
@@ -71,7 +73,6 @@
     "stylelint-prettier": "^5.0.0",
     "through2": "^4.0.2",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0",
-    "husky": "^8.0.0"
+    "vinyl-source-stream": "^2.0.0"
   }
 }
