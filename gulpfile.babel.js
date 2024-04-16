@@ -266,7 +266,7 @@ export const styles = () => {
 
 export const criticalStyles = () => {
   return gulp
-    .src(config.dest + '*.html.twig')
+    .src(config.dest + '*.html')
     .pipe(
       cache(
         through.obj(async function (src, enc, cb) {
