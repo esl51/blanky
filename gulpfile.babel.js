@@ -327,6 +327,7 @@ export const pw = gulp.series(build, criticalStyles, function () {
         config.dest + 'img/**/*',
         config.dest + 'js/**/*',
         config.dest + 'css/**/*',
+        config.dest + 'fonts/**/*',
       ],
       {
         base: config.dest,
