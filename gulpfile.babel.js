@@ -332,6 +332,7 @@ export const pw = gulp.series(build, criticalStyles, function () {
       {
         base: config.dest,
         ignore: [config.dest + 'img/temp/**/*', config.dest + 'img/temp'],
+        encoding: false,
       },
     )
     .pipe(gulp.dest(config.pw))
