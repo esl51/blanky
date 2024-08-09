@@ -351,7 +351,21 @@ export default class XSlider {
       activeStart,
       activeStart + this.perView,
     )
+
     this.items[this.current].classList.add(this.settings.preCurrentClass)
+    const prevCurrentClones = this.prevClones.filter(
+      (c) => parseInt(c.dataset.id) === this.current,
+    )
+    prevCurrentClones.forEach((clone) => {
+      clone.classList.add(this.settings.preCurrentClass)
+    })
+    const nextCurrentClones = this.nextClones.filter(
+      (c) => parseInt(c.dataset.id) === this.current,
+    )
+    nextCurrentClones.forEach((clone) => {
+      clone.classList.add(this.settings.preCurrentClass)
+    })
+
     this.activeItems.forEach((item) => {
       item.classList.add(this.settings.activeClass)
       if (this.settings.loop) {
@@ -418,17 +432,17 @@ export default class XSlider {
           this.track.style.transition = 'none'
           this.track.style.transform = this.currentTransform
         }
-        const prevClones = this.prevClones.filter(
+        const prevCurrentClones = this.prevClones.filter(
           (c) => parseInt(c.dataset.id) === this.current,
         )
-        prevClones.forEach((clone) => {
+        prevCurrentClones.forEach((clone) => {
           clone.classList.remove(this.settings.preCurrentClass)
           clone.classList.add(this.settings.currentClass)
         })
-        const nextClones = this.nextClones.filter(
+        const nextCurrentClones = this.nextClones.filter(
           (c) => parseInt(c.dataset.id) === this.current,
         )
-        nextClones.forEach((clone) => {
+        nextCurrentClones.forEach((clone) => {
           clone.classList.remove(this.settings.preCurrentClass)
           clone.classList.add(this.settings.currentClass)
         })
