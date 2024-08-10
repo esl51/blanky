@@ -53,6 +53,10 @@ export default class Nav {
         item.classList.remove(this.activeClass)
       }
       return false
+    } else {
+      setTimeout(() => {
+        this.toggleClick()
+      }, 50)
     }
   }
 
