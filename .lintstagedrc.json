@@ -1,5 +1,5 @@
 {
-  "*.{js,html,html.twig}": "npx eslint --fix",
+  "*.{js,html.twig}": "npx eslint --fix",
   "*.{scss,css}": "npx stylelint --fix",
-  "*.{html,html.twig}": "npx bemlint --mod='--' --errors"
+  "*.html.twig": "npx bemlint --mod='--' --errors"
 }
