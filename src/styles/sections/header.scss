@@ -1,7 +1,3 @@
-:root {
-  --header-height: 0px !important;
-}
-
 .section--header {
   @include dark;
   @include transition;
@@ -15,6 +11,9 @@
   flex-shrink: 0;
   z-index: 1000;
   overflow: visible;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
 
   html.has-light-top &,
   &.is-scrolled {

@@ -40,19 +40,7 @@ export default class Header {
         }
       }
       this.scrollTop = scrollTop
-      this.setHeight()
     }, 100)
-  }
-
-  setHeight() {
-    document.documentElement.style.setProperty(
-      '--header-height',
-      this.headerElem.offsetHeight + 'px',
-    )
-    document.documentElement.style.setProperty(
-      '--header-offset',
-      this.headerElem.offsetHeight + 'px',
-    )
   }
 
   mount() {

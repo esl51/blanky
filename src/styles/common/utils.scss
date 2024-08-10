@@ -1,6 +1,7 @@
 @use 'sass:string';
 @use 'sass:map';
 @use 'sass:color';
+@use 'sass:meta';
 
 @mixin scrollbar(
   $width: 10px,
@@ -62,7 +63,7 @@
   .sections > &:first-child,
   .sections > .visually-hidden:first-child + & {
     --section-padding-top: calc(
-      var(--section-spacing) * 0.5 + var(--header-offset, 0px)
+      var(--section-spacing) * 0.5 + var(--header-height, 0px)
     );
   }
 }
@@ -236,7 +237,7 @@
   $color-value: $color;
   $escaped-color: $color-value;
 
-  @if type-of($color) == string {
+  @if meta.type-of($color) == string {
     $color-value: map.get($colors, $color);
   }
 
