@@ -175,7 +175,7 @@ $colors: map.merge(
   --section-spacing-lg: 200px;
   --inner-spacing: 40px;
   --block-spacing: var(--spacing-lg);
-  --min-width: 320px;
+  --min-width: #{map.get($breakpoints, 'phone')};
   --max-width: #{map.get($breakpoints, 'desktop')};
   --max-body-width: 2560px;
 

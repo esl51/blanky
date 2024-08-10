@@ -265,46 +265,21 @@
               </li>
             </ul>
           </div>
-          <div class="xslider__arrows">
-            <button class="xslider__arrow" type="button" data-prev>
-              {{ 'prev' | icon }}
-            </button>
-            <button class="xslider__arrow" type="button" data-next>
-              {{ 'next' | icon }}
-            </button>
-          </div>
+          {% include 'parts/xslider-arrows.html.twig' %}
         </div>
         <ul class="xslider__thumbs" data-thumbs>
-          <li class="xslider__thumbs-item">
-            <button class="xslider__thumbs-link" type="button" aria-label="slide 1">
-              <img src="img/temp/tmp1s.jpg" alt="">
-              <span class="xslider__progress" data-progress></span>
-            </button>
-          </li>
-          <li class="xslider__thumbs-item">
-            <button class="xslider__thumbs-link" type="button" aria-label="slide 2">
-              <img src="img/temp/tmp2s.jpg" alt="">
-              <span class="xslider__progress" data-progress></span>
-            </button>
-          </li>
-          <li class="xslider__thumbs-item">
-            <button class="xslider__thumbs-link" type="button" aria-label="slide 3">
-              <img src="img/temp/tmp3s.jpg" alt="">
-              <span class="xslider__progress" data-progress></span>
-            </button>
-          </li>
-          <li class="xslider__thumbs-item">
-            <button class="xslider__thumbs-link" type="button" aria-label="slide 4">
-              <img src="img/temp/tmp4s.jpg" alt="">
-              <span class="xslider__progress" data-progress></span>
-            </button>
-          </li>
-          <li class="xslider__thumbs-item">
-            <button class="xslider__thumbs-link" type="button" aria-label="slide 5">
-              <img src="img/temp/tmp5s.jpg" alt="">
-              <span class="xslider__progress" data-progress></span>
-            </button>
-          </li>
+
+          {% for i in 1..5 %}
+
+            <li class="xslider__thumbs-item">
+              <button class="xslider__thumbs-link" type="button" aria-label="slide {{ i }}">
+                <img src="img/temp/tmp{{ i }}s.jpg" alt="">
+                <span class="xslider__progress" data-progress></span>
+              </button>
+            </li>
+
+          {% endfor %}
+
         </ul>
         <ul class="xslider__bullets" data-bullets></ul>
       </div>
@@ -332,45 +307,24 @@
               </li>
             </ul>
           </div>
-          <div class="xslider__arrows">
-            <button class="xslider__arrow" type="button" data-prev>
-              {{ 'prev' | icon }}
-            </button>
-            <button class="xslider__arrow" type="button" data-next>
-              {{ 'next' | icon }}
-            </button>
-          </div>
+          {% include 'parts/xslider-arrows.html.twig' %}
         </div>
       </div>
       <div class="xslider xslider--carousel-3 xslider--thumbs js-xslider" data-loop="false" data-sync=".xslider--sync">
         <div class="xslider__inner">
           <div class="xslider__viewport" data-viewport>
             <ul class="xslider__track" data-track>
-              <li class="xslider__item" style="height: 100px;">
-                <button class="xslider__thumb" type="button" aria-label="slide 1" data-goto="0">
-                  <img src="img/temp/tmp1s.jpg" alt="">
-                </button>
-              </li>
-              <li class="xslider__item" style="height: 100px;">
-                <button class="xslider__thumb" type="button" aria-label="slide 2" data-goto="1">
-                  <img src="img/temp/tmp2s.jpg" alt="">
-                </button>
-              </li>
-              <li class="xslider__item" style="height: 100px;">
-                <button class="xslider__thumb" type="button" aria-label="slide 3" data-goto="2">
-                  <img src="img/temp/tmp3s.jpg" alt="">
-                </button>
-              </li>
-              <li class="xslider__item" style="height: 100px;">
-                <button class="xslider__thumb" type="button" aria-label="slide 4" data-goto="3">
-                  <img src="img/temp/tmp4s.jpg" alt="">
-                </button>
-              </li>
-              <li class="xslider__item" style="height: 100px;">
-                <button class="xslider__thumb" type="button" aria-label="slide 5" data-goto="4">
-                  <img src="img/temp/tmp5s.jpg" alt="">
-                </button>
-              </li>
+
+              {% for i in 1..5 %}
+
+                <li class="xslider__item" style="height: 100px;">
+                  <button class="xslider__thumb" type="button" aria-label="slide {{ i }}" data-goto="{{ i - 1 }}">
+                    <img src="img/temp/tmp{{ i }}s.jpg" alt="">
+                  </button>
+                </li>
+
+              {% endfor %}
+
             </ul>
           </div>
         </div>
@@ -382,61 +336,22 @@
         <div class="xslider__inner">
           <div class="xslider__viewport" data-viewport>
             <ul class="xslider__track" data-track>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp1s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp2s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp3s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp4s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp5s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp1s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp2s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp3s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp4s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp5s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp1s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp2s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp3s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp4s.jpg">
-              </li>
-              <li class="xslider__item" style="height: 300px;">
-                <img alt="" data-src="img/temp/tmp5s.jpg">
-              </li>
+
+              {% for i in 1..3 %}
+
+                {% for j in 1..5 %}
+
+                  <li class="xslider__item" style="height: 300px;">
+                    <img alt="" data-src="img/temp/tmp{{ j }}s.jpg?v={{ i * j }}">
+                  </li>
+
+                {% endfor %}
+
+              {% endfor %}
+
             </ul>
           </div>
-          <div class="xslider__arrows">
-            <button class="xslider__arrow" type="button" data-prev>
-              {{ 'prev' | icon }}
-            </button>
-            <button class="xslider__arrow" type="button" data-next>
-              {{ 'next' | icon }}
-            </button>
-          </div>
+          {% include 'parts/xslider-arrows.html.twig' %}
         </div>
         <ul class="xslider__bullets" data-bullets></ul>
       </div>
@@ -446,31 +361,18 @@
       <div class="xslider xslider--carousel-3 xslider--vertical js-xslider">
         <div class="xslider__viewport" data-viewport>
           <ul class="xslider__track" data-track>
-            <li class="xslider__item">
-              <img src="img/temp/tmp1s.jpg" alt="">
-            </li>
-            <li class="xslider__item">
-              <img src="img/temp/tmp2s.jpg" alt="">
-            </li>
-            <li class="xslider__item">
-              <img src="img/temp/tmp3s.jpg" alt="">
-            </li>
-            <li class="xslider__item">
-              <img src="img/temp/tmp4s.jpg" alt="">
-            </li>
-            <li class="xslider__item">
-              <img src="img/temp/tmp5s.jpg" alt="">
-            </li>
+
+            {% for i in 1..5 %}
+
+              <li class="xslider__item">
+                <img src="img/temp/tmp{{ i }}s.jpg" alt="">
+              </li>
+
+            {% endfor %}
+
           </ul>
         </div>
-        <div class="xslider__arrows">
-          <button class="xslider__arrow" type="button" data-prev>
-            {{ 'prev' | icon }}
-          </button>
-          <button class="xslider__arrow" type="button" data-next>
-            {{ 'next' | icon }}
-          </button>
-        </div>
+        {% include 'parts/xslider-arrows.html.twig' %}
       </div>
     </div>
     <div class="block">
