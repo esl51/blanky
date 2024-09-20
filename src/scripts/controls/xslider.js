@@ -201,6 +201,7 @@ export default class XSlider {
     }
     this.itemSize = 100
     let size = 0
+    this.shift = 0
     this.items.forEach((item) => {
       item.style.flexBasis = ''
     })
@@ -216,6 +217,7 @@ export default class XSlider {
     } else {
       size = parseFloat(this.flexBasis)
       this.perView = Math.floor(100 / size)
+      this.shift = 100 - size * this.perView
     }
     if (this.perView < 1) {
       this.perView = 1
@@ -392,6 +394,13 @@ export default class XSlider {
     })
 
     this.distance = -1 * (first + this.prevClonesCount) * this.itemSize
+    if (
+      !this.settings.loop &
+      (this.shift > 0) &
+      (first === this.items.length - this.perView)
+    ) {
+      this.distance = this.distance + this.shift
+    }
     this.inTransition = true
     this.currentTransform = this._getTransform(this.distance, '%')
     this.track.style.transition = ''
