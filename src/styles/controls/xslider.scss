@@ -45,6 +45,7 @@
   position: relative;
   overflow: hidden;
   display: flex;
+  min-width: 0;
 
   img,
   video {
@@ -84,6 +85,7 @@
 
   .xslider--vertical & {
     width: 100%;
+    min-height: 0;
   }
 
   .xslider--100vh & {
