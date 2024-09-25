@@ -158,48 +158,48 @@ export function initContent(container) {
 
   // Animator
 
-//   const animators = container.querySelectorAll('.js-animator')
-//   animators.forEach((animator) => {
-//     new Animator(animator).mount()
-//   })
-//   const tableAnimators = container.querySelectorAll('.text tr')
-//   tableAnimators.forEach((animator) => {
-//     new Animator(animator, {
-//       animation: 'fade-in',
-//       once: false,
-//     }).mount()
-//   })
-//   const listAnimators = container.querySelectorAll('.text li')
-//   listAnimators.forEach((animator) => {
-//     new Animator(animator, {
-//       animation: 'fade-in slide-left',
-//       once: false,
-//     }).mount()
-//   })
-//   const textAnimators = container.querySelectorAll(
-//     '.text > *:not(.table-container, table, ul, ol)',
-//   )
-//   textAnimators.forEach((animator) => {
-//     new Animator(animator, {
-//       once: false,
-//     }).mount()
-//   })
-//   const fileAnimators = container.querySelectorAll('.files__item')
-//   fileAnimators.forEach((animator) => {
-//     animator.animator = new Animator(animator, {
-//       once: false,
-//     }).mount()
-//   })
-//   const blockAnimators = container.querySelectorAll('.block')
-//   if (window.IntersectionObserver) {
-//     blockAnimators.forEach((animator) => {
-//       new Animator(animator, {
-//         animation: false,
-//         baseClass: '',
-//         finishedClass: 'is-visible',
-//         ratio: 0.25,
-//         once: false,
-//       }).mount()
-//     })
-//   }
-// }
+  //   const animators = container.querySelectorAll('.js-animator')
+  //   animators.forEach((animator) => {
+  //     new Animator(animator).mount()
+  //   })
+  //   const tableAnimators = container.querySelectorAll('.text tr')
+  //   tableAnimators.forEach((animator) => {
+  //     new Animator(animator, {
+  //       animation: 'fade-in',
+  //       once: false,
+  //     }).mount()
+  //   })
+  //   const listAnimators = container.querySelectorAll('.text li')
+  //   listAnimators.forEach((animator) => {
+  //     new Animator(animator, {
+  //       animation: 'fade-in slide-left',
+  //       once: false,
+  //     }).mount()
+  //   })
+  //   const textAnimators = container.querySelectorAll(
+  //     '.text > *:not(.table-container, table, ul, ol)',
+  //   )
+  //   textAnimators.forEach((animator) => {
+  //     new Animator(animator, {
+  //       once: false,
+  //     }).mount()
+  //   })
+  //   const fileAnimators = container.querySelectorAll('.files__item')
+  //   fileAnimators.forEach((animator) => {
+  //     animator.animator = new Animator(animator, {
+  //       once: false,
+  //     }).mount()
+  //   })
+  //   const blockAnimators = container.querySelectorAll('.block')
+  //   if (window.IntersectionObserver) {
+  //     blockAnimators.forEach((animator) => {
+  //       new Animator(animator, {
+  //         animation: false,
+  //         baseClass: '',
+  //         finishedClass: 'is-visible',
+  //         ratio: 0.25,
+  //         once: false,
+  //       }).mount()
+  //     })
+  //   }
+}
