@@ -543,6 +543,7 @@ export default class XSlider {
       for (let i = 0; i < bulletsCount; i++) {
         const bulletBtn = Object.assign(document.createElement('button'), {
           type: 'button',
+          ariaLabel: i + 1,
         })
         bulletBtn.addEventListener('click', () => {
           const idx = Array.from(this.bullets).indexOf(bullet)
