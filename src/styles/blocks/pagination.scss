@@ -1,3 +1,5 @@
+@use '../common/globals' as *;
+
 .pagination {
   --gap: var(--spacing-xs);
 }

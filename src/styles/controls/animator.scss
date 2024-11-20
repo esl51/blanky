@@ -1,19 +1,4 @@
-@mixin animator-delay($count: 10, $base: 0ms, $increment: 50ms) {
-  @for $i from 0 through $count {
-    $d: $base + $i * $increment;
-
-    &:nth-child(#{$i}) {
-      --animator-delay: #{$d};
-    }
-  }
-}
-
-@mixin animator() {
-  &:not(.animator--children, .animator--active),
-  &.animator--children:not(.animator--active) > * {
-    @content;
-  }
-}
+@use '../common/globals' as *;
 
 :root {
   --animator-delay: 250ms;

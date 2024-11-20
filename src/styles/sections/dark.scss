@@ -1,3 +1,5 @@
+@use '../common/globals' as *;
+
 .section--dark {
   @include section-paddings;
   @include dark;

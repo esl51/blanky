@@ -1,3 +1,5 @@
+@use '../common/globals' as *;
+
 .button {
   @include t1;
   @include transition;

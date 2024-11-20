@@ -1,3 +1,5 @@
+@use '../common/globals' as *;
+
 .grid-demo__item {
   @include animator-delay(12, 100ms, 100ms);
 

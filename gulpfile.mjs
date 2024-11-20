@@ -2,13 +2,12 @@ import gulp from 'gulp'
 import cache from 'gulp-cache'
 import cleancss from 'gulp-clean-css'
 import gulpif from 'gulp-if'
-import imagemin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin'
+import svgo from 'gulp-svgo'
 import postcss from 'gulp-postcss'
 import * as sassCompiler from 'sass'
 import gulpSass from 'gulp-sass'
 import sourcemaps from 'gulp-sourcemaps'
 import terser from 'gulp-terser'
-import cwebp from 'gulp-webp'
 import babelify from 'babelify'
 import browserify from 'browserify'
 import sync from 'browser-sync'
@@ -90,18 +89,9 @@ export const favicon = () => {
             img.extname = '.' + ext
             this.push(img)
           }
-
           cb()
         }),
         { name: 'favicon' },
-      ),
-    )
-    .pipe(
-      cache(
-        imagemin([optipng({ optimizationLevel: 7 })], {
-          verbose: true,
-        }),
-        { name: 'favicon-optimize' },
       ),
     )
     .pipe(gulp.dest(config.dest))
@@ -124,20 +114,13 @@ export const icons = () => {
     .src(config.assets + 'icons/**/*.svg')
     .pipe(
       cache(
-        imagemin(
-          [
-            svgo({
-              plugins: [
-                { name: 'removeXMLNS', active: true },
-                { name: 'removeViewBox', active: false },
-                { name: 'removeDimensions', active: true },
-              ],
-            }),
+        svgo({
+          plugins: [
+            { removeXMLNS: true },
+            { removeViewBox: false },
+            { removeDimensions: true },
           ],
-          {
-            verbose: true,
-          },
-        ),
+        }),
         { name: 'icons' },
       ),
     )
@@ -149,20 +132,28 @@ export const icons = () => {
 
 export const images = () => {
   return gulp
-    .src(config.assets + 'images/**/*.{png,jpg,gif,svg}', { encoding: false })
+    .src(config.assets + 'images/**/*.{png,jpg,gif}', { encoding: false })
     .pipe(
       cache(
-        imagemin(
-          [
-            gifsicle({ interlaced: true }),
-            mozjpeg({ progressive: true, quality: 90 }),
-            optipng({ optimizationLevel: 7 }),
-            svgo(),
-          ],
-          {
-            verbose: true,
-          },
-        ),
+        through.obj(async function (src, enc, cb) {
+          let buf = null
+          if (src.extname === '.gif') {
+            buf = await sharp(src.path).gif({ quality: 90 }).toBuffer()
+          } else if (src.extname === '.png') {
+            buf = await sharp(src.path).png({ quality: 90 }).toBuffer()
+          } else {
+            buf = await sharp(src.path).jpeg({ quality: 90 }).toBuffer()
+          }
+          const img = src.clone()
+          img.contents = buf
+          const webp = src.clone()
+          const webpBuf = await sharp(src.path).webp({ quality: 90 }).toBuffer()
+          webp.contents = webpBuf
+          webp.extname = '.webp'
+          this.push(img)
+          this.push(webp)
+          cb()
+        }),
         { name: 'images' },
       ),
     )
@@ -170,19 +161,12 @@ export const images = () => {
     .pipe(sync.stream())
 }
 
-// Webp
+// Svg
 
-export const webp = () => {
+export const svg = () => {
   return gulp
-    .src(config.assets + 'images/**/*.{png,jpg,gif}', { encoding: false })
-    .pipe(
-      cache(
-        cwebp({
-          quality: 90,
-        }),
-        { name: 'webp' },
-      ),
-    )
+    .src(config.assets + 'images/**/*.{svg}', { encoding: false })
+    .pipe(cache(svgo(), { name: 'svg' }))
     .pipe(gulp.dest(config.dest + 'img/'))
     .pipe(sync.stream())
 }
@@ -223,7 +207,7 @@ export const html = () => {
     .pipe(sync.stream())
 }
 
-// JSON
+// // JSON
 
 export const json = () => {
   return gulp
@@ -306,7 +290,7 @@ export const build = gulp.series(
   gulp.parallel(
     icons,
     images,
-    webp,
+    svg,
     root,
     favicon,
     fonts,
@@ -371,10 +355,8 @@ export const watch = () => {
   gulp.watch(config.assets + 'root/icon.svg', favicon)
   gulp.watch(config.assets + 'fonts/**/*.*', fonts)
   gulp.watch(config.assets + 'icons/**/*.svg', icons)
-  gulp.watch(
-    config.assets + 'images/**/*.{png,jpg,gif,svg}',
-    gulp.parallel(images, webp),
-  )
+  gulp.watch(config.assets + 'images/**/*.{png,jpg,gif}', images)
+  gulp.watch(config.assets + 'images/**/*.svg', svg)
   gulp.watch(config.html + '**/*.html.twig', html)
   gulp.watch(config.html + '**/*.json', json)
   gulp.watch(config.scripts + '**/*.js', scripts)

@@ -1,56 +1,54 @@
 // Vendor utils
 
-@import '../../node_modules/normalize.css/normalize';
-@import '../../node_modules/include-media/dist/include-media';
+@use '../../node_modules/normalize.css/normalize';
 
 // Common
 
-@import 'common/variables';
-@import 'common/utils';
-@import 'common/reset';
-@import 'common/animations';
-@import 'common/grid';
-@import 'common/fonts';
-@import 'common/layout';
+@use 'common/variables';
+@use 'common/reset';
+@use 'common/animations';
+@use 'common/grid';
+@use 'common/fonts';
+@use 'common/layout';
 
 // Content
 
-@import 'content/text';
+@use 'content/text';
 
 // Controls
 
-@import 'controls/animator';
-@import 'controls/buttons';
-@import 'controls/icons';
-@import 'controls/media';
-@import 'controls/social';
+@use 'controls/animator';
+@use 'controls/buttons';
+@use 'controls/icons';
+@use 'controls/media';
+@use 'controls/social';
 
 // XControls
 
-@import 'controls/xform';
-@import 'controls/xlightbox';
-@import 'controls/xmap';
-@import 'controls/xnotify';
-@import 'controls/xpopup';
-@import 'controls/xslider';
+@use 'controls/xform';
+@use 'controls/xlightbox';
+@use 'controls/xmap';
+@use 'controls/xnotify';
+@use 'controls/xpopup';
+@use 'controls/xslider';
 
 // Sections
 
-@import 'sections/header';
-@import 'sections/cookie';
-@import 'sections/page-header';
-@import 'sections/basic';
-@import 'sections/dark';
-@import 'sections/footer';
+@use 'sections/header';
+@use 'sections/cookie';
+@use 'sections/page-header';
+@use 'sections/basic';
+@use 'sections/dark';
+@use 'sections/footer';
 
 // Blocks
 
-@import 'blocks/header';
-@import 'blocks/breadcrumbs';
-@import 'blocks/cookie';
-@import 'blocks/files';
-@import 'blocks/pagination';
-@import 'blocks/search-form';
-@import 'blocks/search-results';
-@import 'blocks/footer';
-@import 'blocks/demo';
+@use 'blocks/header' as bHeader;
+@use 'blocks/breadcrumbs';
+@use 'blocks/cookie' as bCookie;
+@use 'blocks/files';
+@use 'blocks/pagination';
+@use 'blocks/search-form';
+@use 'blocks/search-results';
+@use 'blocks/footer' as bFooter;
+@use 'blocks/demo';

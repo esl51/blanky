@@ -1,4 +1,5 @@
-@import '../../node_modules/glightbox/dist/css/glightbox';
+@use '../common/globals' as *;
+@use '../../node_modules/glightbox/dist/css/glightbox';
 
 .gprev {
   &::before {

@@ -1,3 +1,5 @@
+@use '../common/globals' as *;
+
 .search-results__summary {
   @include t3;
   @include vmargin(var(--spacing));

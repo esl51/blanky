@@ -1,85 +1,32 @@
+@use 'globals' as *;
 @use 'sass:color';
 @use 'sass:map';
-
-// Breakpoints
-
-$breakpoints: (
-  phone: 320px,
-  tablet: 768px,
-  laptop: 1280px,
-  desktop: 1440px,
-  wide: 1600px,
-);
-
-// Media expressions
-
-$media-expressions: map.merge(
-  $media-expressions,
-  (
-    'touch': '(hover: none)',
-    'hover': '(hover: hover)',
-  )
-);
-
-// Grid
-
-$grid-columns: 12;
-
-// Colors
-
-$colors: (
-  'gray': #d5d5d5,
-  'light-gray': #f7f7f7,
-  'dark-gray': #333,
-  'blue': #3782a4,
-  'red': #d63939,
-  'orange': #f59f00,
-  'green': #2fb344,
-  'cyan': #17a2b8,
-);
-$colors: map.merge(
-  $colors,
-  (
-    'light': map.get($colors, 'light-gray'),
-    'dark': map.get($colors, 'dark-gray'),
-    'main': map.get($colors, 'blue'),
-    'danger': map.get($colors, 'red'),
-    'warning': map.get($colors, 'orange'),
-    'success': map.get($colors, 'green'),
-    'info': map.get($colors, 'cyan'),
-  )
-);
-$colors: map.merge(
-  $colors,
-  (
-    'light-main': color.mix(#fff, map.get($colors, 'main'), 75%),
-    'dark-main': color.mix(#000, map.get($colors, 'main'), 25%),
-  )
-);
 
 :root {
   // Colors
 
   @each $name, $color in $colors {
     --#{$name}-color: #{$color};
-    --#{$name}-color-rgb: #{color.red($color)
-      color.green($color)
-      color.blue($color)};
+    --#{$name}-color-rgb: #{color.channel($color, 'red')
+      color.channel($color, 'green')
+      color.channel($color, 'blue')};
   }
 
-  // Surface colors
+  & {
+    // Surface colors
 
-  --surface-color: #fff;
-  --surface-secondary-color: var(--light-gray-color);
-  --surface-tertiary-color: var(--dark-gray-color);
+    --surface-color: #fff;
+    --surface-secondary-color: var(--light-gray-color);
+    --surface-tertiary-color: var(--dark-gray-color);
 
-  // Spacing
+    // Spacing
 
-  --spacing: 16px;
-  --spacing-xs: 3px;
-  --spacing-sm: 12px;
-  --spacing-lg: 24px;
-  --spacing-xl: 36px;
+    --spacing: 16px;
+    --spacing-xs: 3px;
+    --spacing-sm: 12px;
+    --spacing-lg: 24px;
+    --spacing-xl: 36px;
+  }
 
   @include media('<tablet') {
     --spacing: 12px;
@@ -89,42 +36,44 @@ $colors: map.merge(
     --spacing-xl: 24px;
   }
 
-  // Grid
+  & {
+    // Grid
 
-  --grid-columns: #{$grid-columns};
-  --grid-row-gap: var(--spacing);
-  --grid-col-gap: var(--spacing);
+    --grid-columns: #{$grid-columns};
+    --grid-row-gap: var(--spacing);
+    --grid-col-gap: var(--spacing);
 
-  // Border
+    // Border
 
-  --border-color: var(--gray-color);
-  --border-radius: 4px;
-  --border-radius-sm: 2px;
-  --border-radius-lg: 8px;
+    --border-color: var(--gray-color);
+    --border-radius: 4px;
+    --border-radius-sm: 2px;
+    --border-radius-lg: 8px;
 
-  // Shadow
+    // Shadow
 
-  --shadow: 0 8px 16px rgb(0 0 0 / 15%);
-  --shadow-sm: 0 2px 4px rgb(0 0 0 / 8%);
-  --shadow-lg: 0 16px 48px rgb(0 0 0 / 17%);
+    --shadow: 0 8px 16px rgb(0 0 0 / 15%);
+    --shadow-sm: 0 2px 4px rgb(0 0 0 / 8%);
+    --shadow-lg: 0 16px 48px rgb(0 0 0 / 17%);
 
-  // Text
+    // Text
 
-  --default-fonts: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
-    'Helvetica', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol';
-  --text-size: 16px;
-  --text-height: 24px;
-  --text-size-sm: 14px;
-  --text-height-sm: 22px;
-  --text-size-lg: 20px;
-  --text-height-lg: 28px;
-  --text-color: var(--dark-gray-color);
-  --text-weight: 400;
-  --text-family: 'Open Sans', var(--default-fonts);
-  --text-spacing: var(--text-size);
-  --strong-weight: 600;
-  --marker-color: var(--light-main-color);
+    --default-fonts: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
+      'Helvetica', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol';
+    --text-size: 16px;
+    --text-height: 24px;
+    --text-size-sm: 14px;
+    --text-height-sm: 22px;
+    --text-size-lg: 20px;
+    --text-height-lg: 28px;
+    --text-color: var(--dark-gray-color);
+    --text-weight: 400;
+    --text-family: 'Open Sans', var(--default-fonts);
+    --text-spacing: var(--text-size);
+    --strong-weight: 600;
+    --marker-color: var(--light-main-color);
+  }
 
   @include media('<laptop') {
     --text-size: 14px;
@@ -135,24 +84,26 @@ $colors: map.merge(
     --text-height-lg: 24px;
   }
 
-  // Headings
+  & {
+    // Headings
 
-  --h1-size: 32px;
-  --h1-height: 42px;
-  --h2-size: 30px;
-  --h2-height: 38px;
-  --h3-size: 24px;
-  --h3-height: 32px;
-  --h4-size: 20px;
-  --h4-height: 28px;
-  --h5-size: 16px;
-  --h5-height: 24px;
-  --h6-size: 14px;
-  --h6-height: 22px;
-  --heading-color: var(--main-color);
-  --heading-weight: var(--strong-weight);
-  --heading-family: var(--text-family);
-  --heading-spacing: var(--spacing-lg);
+    --h1-size: 32px;
+    --h1-height: 42px;
+    --h2-size: 30px;
+    --h2-height: 38px;
+    --h3-size: 24px;
+    --h3-height: 32px;
+    --h4-size: 20px;
+    --h4-height: 28px;
+    --h5-size: 16px;
+    --h5-height: 24px;
+    --h6-size: 14px;
+    --h6-height: 22px;
+    --heading-color: var(--main-color);
+    --heading-weight: var(--strong-weight);
+    --heading-family: var(--text-family);
+    --heading-spacing: var(--spacing-lg);
+  }
 
   @include media('<laptop') {
     --h1-size: 24px;
@@ -169,15 +120,17 @@ $colors: map.merge(
     --h6-height: 18px;
   }
 
-  // Sizes
+  & {
+    // Sizes
 
-  --section-spacing: 100px;
-  --section-spacing-lg: 200px;
-  --inner-spacing: 40px;
-  --block-spacing: var(--spacing-lg);
-  --min-width: #{map.get($breakpoints, 'phone')};
-  --max-width: #{map.get($breakpoints, 'desktop')};
-  --max-body-width: 2560px;
+    --section-spacing: 100px;
+    --section-spacing-lg: 200px;
+    --inner-spacing: 40px;
+    --block-spacing: var(--spacing-lg);
+    --min-width: #{map.get($breakpoints, 'phone')};
+    --max-width: #{map.get($breakpoints, 'desktop')};
+    --max-body-width: 2560px;
+  }
 
   @include media('<tablet') {
     --section-spacing: 60px;
@@ -191,13 +144,15 @@ $colors: map.merge(
     --max-width: #{map.get($breakpoints, 'desktop')};
   }
 
-  // Easing
+  & {
+    // Easing
 
-  --easing: cubic-bezier(0.23, 1, 0.32, 1);
+    --easing: cubic-bezier(0.23, 1, 0.32, 1);
 
-  // Header
+    // Header
 
-  --header-height: 80px;
+    --header-height: 80px;
+  }
 
   @include media('<tablet') {
     --header-height: 60px;

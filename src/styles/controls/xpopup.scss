@@ -1,3 +1,5 @@
+@use '../common/globals' as *;
+
 .xpopup {
   @include transition(opacity 0.3s var(--easing));
 

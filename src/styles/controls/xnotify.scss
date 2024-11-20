@@ -1,4 +1,5 @@
-@import '../../node_modules/notyf/notyf.min';
+@use '../common/globals' as *;
+@use '../../node_modules/notyf/notyf.min';
 
 .notyf {
   @include dark;

@@ -1,3 +1,5 @@
+@use '../common/globals' as *;
+
 .files {
   --gap: var(--spacing-sm);
 }

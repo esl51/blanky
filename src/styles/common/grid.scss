@@ -1,3 +1,6 @@
+@use 'globals' as *;
+@use 'sass:string';
+
 .row {
   display: grid;
   grid-template-columns: repeat(var(--grid-columns), 1fr);
@@ -11,7 +14,7 @@
 @each $bp-name, $bp-size in $breakpoints {
   @for $column from 1 through $grid-columns {
     @include media('>=' + $bp-name) {
-      .col--#{str-slice($bp-name, 0, 1)}-#{$column} {
+      .col--#{string.slice($bp-name, 0, 1)}-#{$column} {
         grid-column-end: span #{$column};
       }
     }
