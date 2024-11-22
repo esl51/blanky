@@ -127,8 +127,8 @@
     --section-spacing-lg: 200px;
     --inner-spacing: 40px;
     --block-spacing: var(--spacing-lg);
-    --min-width: #{map.get($breakpoints, 'phone')};
-    --max-width: #{map.get($breakpoints, 'desktop')};
+    --min-width: 320px;
+    --max-width: 1440px;
     --max-body-width: 2560px;
   }
 
@@ -141,7 +141,6 @@
 
   @include media('>=desktop') {
     --inner-spacing: 80px;
-    --max-width: #{map.get($breakpoints, 'desktop')};
   }
 
   & {
