@@ -343,16 +343,22 @@ export default class XSlider {
       this.track.style.width = 'auto'
     }
     let activeStart = this.current
-    if (activeStart < this.minActive) {
-      activeStart = this.minActive
+    const minActive = this.settings.loop ? this.minLoopActive : this.minActive
+    const maxActive = this.settings.loop ? this.maxLoopActive : this.maxActive
+    if (activeStart < minActive) {
+      activeStart = minActive
     }
-    if (activeStart > this.maxActive) {
-      activeStart = this.maxActive
+    if (activeStart > maxActive) {
+      activeStart = maxActive
     }
     this.activeItems = Array.from(this.items).slice(
       activeStart,
       activeStart + this.perView,
     )
+    const activeDelta = this.perView - this.activeItems.length
+    if (activeDelta > 0) {
+      this.activeItems.push(...Array.from(this.items).slice(0, activeDelta))
+    }
 
     this.items[this.current].classList.add(this.settings.preCurrentClass)
     const prevCurrentClones = this.prevClones.filter(
