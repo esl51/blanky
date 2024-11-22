@@ -12,6 +12,7 @@
       color.channel($color, 'blue')};
   }
 
+  // stylelint-disable-next-line no-duplicate-selectors
   & {
     // Surface colors
 
@@ -36,6 +37,7 @@
     --spacing-xl: 24px;
   }
 
+  // stylelint-disable-next-line no-duplicate-selectors
   & {
     // Grid
 
@@ -84,6 +86,7 @@
     --text-height-lg: 24px;
   }
 
+  // stylelint-disable-next-line no-duplicate-selectors
   & {
     // Headings
 
@@ -120,6 +123,7 @@
     --h6-height: 18px;
   }
 
+  // stylelint-disable-next-line no-duplicate-selectors
   & {
     // Sizes
 
@@ -143,6 +147,7 @@
     --inner-spacing: 80px;
   }
 
+  // stylelint-disable-next-line no-duplicate-selectors
   & {
     // Easing
 
