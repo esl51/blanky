@@ -14,6 +14,10 @@
 
   // stylelint-disable-next-line no-duplicate-selectors
   & {
+    // Section background
+
+    --section-bg-color: #fff;
+
     // Surface colors
 
     --surface-color: #fff;
@@ -92,18 +96,23 @@
 
     --h1-size: 32px;
     --h1-height: 42px;
+    --h1-weight: var(--strong-weight);
     --h2-size: 30px;
     --h2-height: 38px;
+    --h2-weight: var(--strong-weight);
     --h3-size: 24px;
     --h3-height: 32px;
+    --h3-weight: var(--strong-weight);
     --h4-size: 20px;
     --h4-height: 28px;
+    --h4-weight: var(--strong-weight);
     --h5-size: 16px;
     --h5-height: 24px;
+    --h5-weight: var(--strong-weight);
     --h6-size: 14px;
     --h6-height: 22px;
+    --h6-weight: var(--strong-weight);
     --heading-color: var(--main-color);
-    --heading-weight: var(--strong-weight);
     --heading-family: var(--text-family);
     --heading-spacing: var(--spacing-lg);
   }
@@ -127,8 +136,10 @@
   & {
     // Sizes
 
-    --section-spacing: 100px;
-    --section-spacing-lg: 200px;
+    --section-spacing-top: 50px;
+    --section-spacing-bottom: 50px;
+    --section-spacing-top-lg: 100px;
+    --section-spacing-bottom-lg: 100px;
     --inner-spacing: 40px;
     --block-spacing: var(--spacing-lg);
     --min-width: 320px;
@@ -137,8 +148,10 @@
   }
 
   @include media('<tablet') {
-    --section-spacing: 60px;
-    --section-spacing-lg: 120px;
+    --section-spacing-top: 30px;
+    --section-spacing-bottom: 30px;
+    --section-spacing-top-lg: 60px;
+    --section-spacing-bottom-lg: 60px;
     --inner-spacing: 16px;
     --block-spacing: 16px;
   }

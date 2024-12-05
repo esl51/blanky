@@ -3,6 +3,6 @@
 .section--footer {
   @include dark;
 
-  background-color: var(--dark-color);
+  --section-bg-color: var(--dark-color);
   flex-shrink: 0;
 }

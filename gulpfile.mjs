@@ -238,7 +238,12 @@ export const styles = () => {
   return gulp
     .src(config.styles + '*.scss')
     .pipe(gulpif(isDev, sourcemaps.init({ loadMaps: true }).on('error', error)))
-    .pipe(sass().on('error', sass.logError))
+    .pipe(
+      sass({
+        quietDeps: true,
+        silenceDeprecations: ['legacy-js-api'],
+      }).on('error', sass.logError),
+    )
     .pipe(postcss().on('error', error))
     .pipe(gulpif(!isDev, cleancss().on('error', error)))
     .pipe(gulpif(isDev, sourcemaps.write('.')))

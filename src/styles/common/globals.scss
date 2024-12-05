@@ -112,34 +112,13 @@ $colors: map.merge(
 }
 
 @mixin section {
-  --section-padding-top: calc(var(--section-spacing) * 0.5);
-  --section-padding-bottom: calc(var(--section-spacing) * 0.5);
-
-  max-width: 100%;
-  padding-top: var(--section-padding-top);
-  padding-bottom: var(--section-padding-bottom);
-
-  .sections > &:first-child,
-  .sections > .visually-hidden:first-child + & {
-    --section-padding-top: calc(
-      var(--section-spacing) * 0.5 + var(--header-height, 0px)
-    );
-  }
+  padding-top: var(--section-spacing-top);
+  padding-bottom: var(--section-spacing-bottom);
 }
 
 @mixin section-paddings {
   &:not(.section--no-spacing, .section--image, .visually-hidden) + & {
-    &:not(.section--large-spacing) {
-      --section-padding-top: 0;
-    }
-
-    &.section--large-spacing {
-      --section-padding-top: calc(var(--section-spacing) * 0.25);
-
-      .section__image + .section__inner {
-        padding-top: calc(var(--section-spacing) * 0.25);
-      }
-    }
+    --section-spacing-top: 0;
   }
 }
 
@@ -195,58 +174,63 @@ $colors: map.merge(
   --surface-tertiary-color: #{color.mix(#fff, map.get($colors, 'dark'), 50%)};
   --border-color: #{color.mix(#fff, map.get($colors, 'dark'), 15%)};
   --marker-color: var(--dark-main-color);
-
-  color: var(--text-color);
 }
 
-@mixin heading {
-  @include vmargin(var(--heading-spacing));
+@mixin heading($margin: true) {
+  @if ($margin == true) {
+    @include vmargin(var(--heading-spacing));
+  }
 
   font-family: var(--heading-family);
-  font-weight: var(--heading-weight);
   color: var(--heading-color);
 }
 
-@mixin h1 {
-  @include heading;
+@mixin h1($margin: true) {
+  @include heading($margin);
 
   font-size: var(--h1-size);
   line-height: var(--h1-height);
+  font-weight: var(--h1-weight);
 }
 
-@mixin h2 {
-  @include heading;
+@mixin h2($margin: true) {
+  @include heading($margin);
 
   font-size: var(--h2-size);
   line-height: var(--h2-height);
+  font-weight: var(--h2-weight);
 }
 
-@mixin h3 {
-  @include heading;
+@mixin h3($margin: true) {
+  @include heading($margin);
 
   font-size: var(--h3-size);
   line-height: var(--h3-height);
+  font-weight: var(--h3-weight);
 }
 
-@mixin h4 {
-  @include heading;
+@mixin h4($margin: true) {
+  @include heading($margin);
 
   font-size: var(--h4-size);
   line-height: var(--h4-height);
+  font-weight: var(--h4-weight);
 }
 
-@mixin h5 {
-  @include heading;
+@mixin h5($margin: true) {
+  @include heading($margin);
 
   font-size: var(--h5-size);
   line-height: var(--h5-height);
+  font-weight: var(--h5-weight);
 }
 
-@mixin h6 {
-  @include heading;
+@mixin h6($margin: true) {
+  @include heading($margin);
 
   font-size: var(--h6-size);
   line-height: var(--h6-height);
+  font-weight: var(--h6-weight);
 }
 
 @mixin underline($style: underline, $thickness: 1px, $offset: 0.25em) {

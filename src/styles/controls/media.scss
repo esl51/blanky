@@ -37,8 +37,7 @@
 .image-link__title,
 %image-link__title {
   @include dark;
-  @include h2;
-  @include vmargin(0);
+  @include h2(false);
 
   position: absolute;
   left: 0;

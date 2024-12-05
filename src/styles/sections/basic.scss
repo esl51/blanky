@@ -3,5 +3,5 @@
 .section--basic {
   @include section-paddings;
 
-  background-color: #fff;
+  --section-bg-color: #fff;
 }

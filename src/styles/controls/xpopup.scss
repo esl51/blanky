@@ -65,7 +65,7 @@
 }
 
 .xpopup__header {
-  @include h1;
+  @include h1(false);
 
   margin-bottom: var(--spacing-lg);
   display: flex;

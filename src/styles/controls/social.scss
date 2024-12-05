@@ -17,7 +17,6 @@
 }
 
 .social__link {
-  @include dark;
   @include transition;
 
   display: flex;
@@ -27,6 +26,7 @@
   height: var(--size);
   border-radius: var(--border-radius);
   background-color: var(--main-color);
+  color: #fff;
 
   &:hover,
   &:focus {

@@ -40,8 +40,7 @@
 // Logo
 
 .logo {
-  @include h1;
-  @include vmargin(0);
+  @include h1(false);
 }
 
 // Nav

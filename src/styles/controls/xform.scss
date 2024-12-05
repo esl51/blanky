@@ -72,8 +72,7 @@
 }
 
 .xform__section-title {
-  @include h2;
-  @include vmargin(0);
+  @include h2(false);
 }
 
 .xform__row {

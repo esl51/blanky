@@ -1,9 +1,16 @@
+@use '../common/globals' as *;
+
 .section--cookie {
+  @include dark;
+
+  --section-bg-color: transparent;
+
   position: fixed;
   z-index: 99999;
   left: 0;
   bottom: 0;
-  width: 100%;
+  width: 100vw;
+  max-width: 100vw;
   padding-bottom: var(--spacing-lg);
   padding-top: 0;
 }

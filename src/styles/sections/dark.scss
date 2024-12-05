@@ -4,5 +4,5 @@
   @include section-paddings;
   @include dark;
 
-  background-color: var(--dark-color);
+  --section-bg-color: var(--dark-color);
 }

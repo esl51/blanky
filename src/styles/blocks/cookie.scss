@@ -1,8 +1,6 @@
 @use '../common/globals' as *;
 
 .cookie {
-  @include dark;
-
   background-color: var(--dark-color);
   padding: var(--spacing);
   border-radius: var(--border-radius-lg);

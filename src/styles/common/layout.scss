@@ -54,6 +54,7 @@
 html {
   background: var(--light-color);
   height: 100%;
+  height: -webkit-fill-available;
   -webkit-tap-highlight-color: rgba(#000, 0);
   margin: 0;
   padding: 0;
@@ -64,10 +65,11 @@ html {
 body {
   @include t1;
 
-  min-height: 100%;
+  width: 100vw;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   min-width: var(--min-width);
   max-width: var(--max-body-width);
-  width: 100vw;
   margin: 0 auto;
   padding: 0;
   overflow-x: hidden;
@@ -93,7 +95,8 @@ body {
   @include section;
 
   position: relative;
-  overflow: hidden;
+  background-color: var(--section-bg-color);
+  color: var(--text-color);
 
   .sections &:last-child {
     flex-grow: 1;
@@ -158,12 +161,8 @@ body {
   @include block;
 
   display: flex;
-  flex-wrap: wrap;
-
-  & > * {
-    flex: 0 0 100%;
-    width: 100%;
-  }
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .block__header {
@@ -173,7 +172,11 @@ body {
 }
 
 .block__title {
-  @include h1;
+  @include h1(false);
+
+  .block > & {
+    @include vmargin(var(--heading-spacing));
+  }
 
   display: block;
 
@@ -182,8 +185,6 @@ body {
   }
 
   .block__header & {
-    @include vmargin(0);
-
     &:not(:last-child) {
       margin-right: var(--heading-spacing);
     }
