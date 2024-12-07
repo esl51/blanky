@@ -13,8 +13,4 @@ body {
   min-height: 0;
   display: block;
   background: #fff;
-
-  &::after {
-    display: none !important;
-  }
 }
