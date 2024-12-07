@@ -1,40 +1,7 @@
 @use '../common/globals' as *;
-
-// Header
-
-.header {
-  display: flex;
-  align-items: center;
-}
-
-.header__logo {
-  margin-right: var(--spacing);
-
-  @include media('<laptop') {
-    position: relative;
-    z-index: 2001;
-  }
-}
-
-.header__nav {
-  z-index: 2000;
-
-  @include media('>=laptop') {
-    margin-left: auto;
-  }
-}
-
-.header__nav-toggle {
-  margin-left: auto;
-
-  @include media('<laptop') {
-    position: relative;
-    z-index: 2001;
-  }
-
-  @include media('>=laptop') {
-    display: none;
-  }
+// Block
+.block--header {
+  flex: 1;
 }
 
 // Logo
@@ -66,17 +33,22 @@
       visibility: hidden;
     }
   }
-}
-
-.nav__list {
-  @include media('<laptop') {
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: 100%;
-  }
 
   @include media('>=laptop') {
     display: flex;
+    align-items: stretch;
+  }
+}
+
+.nav__list {
+  display: flex;
+
+  @include media('<laptop') {
+    flex-direction: column;
+    align-items: stretch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
   }
 }
 
@@ -101,12 +73,6 @@
       transform: translate3d(100px, 0, 0);
     }
   }
-
-  @include media('>=laptop') {
-    &:not(:first-child) {
-      margin-left: var(--spacing-sm);
-    }
-  }
 }
 
 .nav__item--current {
@@ -116,23 +82,22 @@
 .nav__link {
   @include transition;
 
-  border-radius: var(--border-radius);
-
   &:hover,
   &:focus {
     outline: none;
-    background-color: #fff;
-    color: var(--main-color);
+    background-color: var(--main-color);
+    color: #fff;
   }
 
   @include media('<laptop') {
-    display: block;
+    flex: 1;
     padding: var(--spacing) var(--inner-spacing);
     font-size: var(--text-size-lg);
   }
 
   @include media('>=laptop') {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: var(--spacing-xs) var(--spacing);
   }
 }
@@ -189,5 +154,44 @@
     span:nth-child(2) {
       width: 75%;
     }
+  }
+}
+
+// Header
+
+.header {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.header__logo {
+  margin-right: var(--spacing);
+
+  @include media('<laptop') {
+    position: relative;
+    z-index: 2001;
+  }
+}
+
+.header__nav {
+  z-index: 2000;
+
+  @include media('>=laptop') {
+    margin-left: auto;
+    align-self: stretch;
+  }
+}
+
+.header__nav-toggle {
+  margin-left: auto;
+
+  @include media('<laptop') {
+    position: relative;
+    z-index: 2001;
+  }
+
+  @include media('>=laptop') {
+    display: none;
   }
 }

@@ -5,8 +5,8 @@
   @include transition;
   --section-bg-color: var(--dark-color);
 
-  padding-top: var(--spacing);
-  padding-bottom: var(--spacing);
+  padding-top: 0;
+  padding-bottom: 0;
   position: sticky;
   top: 0;
   left: 0;
@@ -15,11 +15,16 @@
   overflow: visible;
   height: var(--header-height);
   display: flex;
-  align-items: center;
 
   html.has-light-top &,
   &.is-scrolled {
     --section-bg-color: var(--dark-color);
     box-shadow: var(--shadow-sm);
+  }
+
+  .section__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
   }
 }
