@@ -171,6 +171,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
+  height: 100%;
   display: none;
   align-items: center;
   justify-content: space-between;
@@ -192,6 +193,10 @@
   pointer-events: auto;
   border-radius: var(--border-radius);
   padding: var(--spacing-sm);
+
+  &::before {
+    @include absolute-block(25%, 100%);
+  }
 
   &:hover,
   &:focus {
