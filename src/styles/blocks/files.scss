@@ -1,19 +1,18 @@
 @use '../common/globals' as *;
 
-.files {
-  --gap: var(--spacing-sm);
-}
-
 .files__list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap);
+  .files--columns-2 & {
+    columns: 2;
+    column-gap: var(--spacing-sm);
+  }
 }
 
 .files__item {
   @include animator-delay;
 
-  flex: 0 0 100%;
+  &:not(:last-child) {
+    margin-bottom: var(--spacing-sm);
+  }
 }
 
 .files__link {
