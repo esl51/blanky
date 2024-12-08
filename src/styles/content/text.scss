@@ -186,7 +186,7 @@
   // Lists
 
   li {
-    @include vmargin(var(--spacing-sm));
+    @include vmargin(var(--spacing-xs));
 
     list-style-type: none;
 
@@ -207,7 +207,10 @@
   ul,
   ol {
     padding-left: 2em;
-    margin-left: var(--spacing-lg);
+
+    & & {
+      margin-left: var(--spacing-lg);
+    }
   }
 
   ul {
