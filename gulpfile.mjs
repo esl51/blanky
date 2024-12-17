@@ -1,6 +1,6 @@
 import gulp from 'gulp'
 import cache from 'gulp-cache'
-import cleancss from 'gulp-clean-css'
+import cleancss from '@sequencemedia/gulp-clean-css'
 import gulpif from 'gulp-if'
 import svgo from 'gulp-svgo'
 import postcss from 'gulp-postcss'
