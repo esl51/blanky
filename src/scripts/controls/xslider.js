@@ -14,6 +14,8 @@ export default class XSlider {
       disableButtonsPerView: true,
       threshold: 50,
       moveToFirst: false,
+      effect: 'slide',
+      effectClassPrefix: 'is-effect-',
       movingClass: 'is-moving',
       disabledClass: 'is-disabled',
       preCurrentClass: 'is-pre-current',
@@ -136,6 +138,7 @@ export default class XSlider {
     // prevent fast click
     if (
       this.settings.loop &&
+      this.settings.effect === 'slide' &&
       this.inTransition &&
       (index <= this.minLoopActive || index >= this.maxLoopActive)
     ) {
@@ -238,12 +241,14 @@ export default class XSlider {
       this.settings.perSlide = this.perView
     }
 
-    this.nextClonesCount = this.settings.loop
-      ? this.settings.perSlide + this.perView
-      : 0
-    this.prevClonesCount = this.settings.loop
-      ? this.settings.perSlide + this.perView
-      : 0
+    this.nextClonesCount =
+      this.settings.loop && this.settings.effect === 'slide'
+        ? this.settings.perSlide + this.perView
+        : 0
+    this.prevClonesCount =
+      this.settings.loop && this.settings.effect === 'slide'
+        ? this.settings.perSlide + this.perView
+        : 0
 
     Array.from(this.nextClones).forEach((clone) => {
       clone.remove()
@@ -255,7 +260,7 @@ export default class XSlider {
     this.items.forEach((item) => {
       item.dataset.id = Array.from(this.items).indexOf(item)
     })
-    if (this.settings.loop) {
+    if (this.settings.loop && this.settings.effect === 'slide') {
       this.items.forEach((item) => {
         item.dataset.loopId = Array.from(this.items).indexOf(item)
       })
@@ -287,13 +292,15 @@ export default class XSlider {
     this.minCurrent = 0
     this.maxCurrent = this.items.length - 1
     this.minActive = 0
-    this.minLoopActive = this.settings.loop
-      ? this.minActive - this.prevClonesCount
-      : this.minActive
+    this.minLoopActive =
+      this.settings.loop && this.settings.effect === 'slide'
+        ? this.minActive - this.prevClonesCount
+        : this.minActive
     this.maxActive = this.items.length - this.perView
-    this.maxLoopActive = this.settings.loop
-      ? this.maxActive + this.nextClonesCount
-      : this.maxActive
+    this.maxLoopActive =
+      this.settings.loop && this.settings.effect === 'slide'
+        ? this.maxActive + this.nextClonesCount
+        : this.maxActive
 
     this.initBullets()
 
@@ -301,7 +308,10 @@ export default class XSlider {
   }
 
   reposition() {
-    let first = this.settings.loop ? this.loopCurrent : this.current
+    let first =
+      this.settings.loop && this.settings.effect === 'slide'
+        ? this.loopCurrent
+        : this.current
     if (first < this.minLoopActive) {
       first = this.minLoopActive
     }
@@ -320,7 +330,7 @@ export default class XSlider {
       item.classList.remove(this.settings.currentClass)
       item.classList.remove(this.settings.activeClass)
     })
-    if (this.settings.loop) {
+    if (this.settings.loop && this.settings.effect === 'slide') {
       this.prevClones.forEach((item) => {
         item.classList.remove(this.settings.preCurrentClass)
         item.classList.remove(this.settings.currentClass)
@@ -343,8 +353,14 @@ export default class XSlider {
       this.track.style.width = 'auto'
     }
     let activeStart = this.current
-    const minActive = this.settings.loop ? this.minLoopActive : this.minActive
-    const maxActive = this.settings.loop ? this.maxLoopActive : this.maxActive
+    const minActive =
+      this.settings.loop && this.settings.effect === 'slide'
+        ? this.minLoopActive
+        : this.minActive
+    const maxActive =
+      this.settings.loop && this.settings.effect === 'slide'
+        ? this.maxLoopActive
+        : this.maxActive
     if (activeStart < minActive) {
       activeStart = minActive
     }
@@ -376,7 +392,7 @@ export default class XSlider {
 
     this.activeItems.forEach((item) => {
       item.classList.add(this.settings.activeClass)
-      if (this.settings.loop) {
+      if (this.settings.loop && this.settings.effect === 'slide') {
         const index = Array.from(this.items).indexOf(item)
         const prevClones = this.prevClones.filter(
           (c) => parseInt(c.dataset.id) === index,
@@ -401,14 +417,18 @@ export default class XSlider {
 
     this.distance = -1 * (first + this.prevClonesCount) * this.itemSize
     if (
-      !this.settings.loop &
-      (this.shift > 0) &
-      (first === this.items.length - this.perView)
+      !(this.settings.loop && this.settings.effect === 'slide') &&
+      this.shift > 0 &&
+      first === this.items.length - this.perView
     ) {
       this.distance = this.distance + this.shift
     }
     this.inTransition = true
-    this.currentTransform = this._getTransform(this.distance, '%')
+    if (this.settings.effect === 'slide') {
+      this.currentTransform = this._getTransform(this.distance, '%')
+    } else {
+      this.currentTransform = 'none'
+    }
     this.track.style.transition = ''
     this.track.style.transform = this.currentTransform
     if (this.settings.autoSize) {
@@ -438,7 +458,7 @@ export default class XSlider {
     this.pauseVideos(true)
     clearTimeout(this.durationTimeout)
     this.durationTimeout = setTimeout(() => {
-      if (this.settings.loop) {
+      if (this.settings.loop && this.settings.effect === 'slide') {
         if (this.loopCurrent !== this.current) {
           this.loopCurrent = this.current
           this.distance =
@@ -619,7 +639,7 @@ export default class XSlider {
       this.lazyLoadItem(item)
     })
 
-    if (this.settings.loop) {
+    if (this.settings.loop && this.settings.effect === 'slide') {
       const cloneItems = [...this.prevClones, ...this.nextClones]
       cloneItems.forEach((clone) => {
         if (ids.includes(clone.dataset.id)) {
@@ -733,7 +753,9 @@ export default class XSlider {
       if (item[offsetProp] < offset * -1) {
         const index = Array.from(allItems).indexOf(item)
         const id = parseInt(
-          this.settings.loop ? item.dataset.loopId : item.dataset.id,
+          this.settings.loop && this.settings.effect === 'slide'
+            ? item.dataset.loopId
+            : item.dataset.id,
         )
         const nextItem = allItems[index + 1]
         if (nextItem && nextItem[offsetProp] > offset * -1) {
@@ -801,7 +823,10 @@ export default class XSlider {
       if (e.cancelable) {
         e.preventDefault()
       }
-      const transform = this._getTransform(diff * -1)
+      let transform = ''
+      if (this.effect === 'slide') {
+        transform = this._getTransform(diff * -1)
+      }
       let canMove = true
       if (
         !this.settings.loop &&
@@ -1112,6 +1137,9 @@ export default class XSlider {
     this.startAutoplay()
 
     this.slider.classList.add(this.settings.mountedClass)
+    this.slider.classList.add(
+      this.settings.effectClassPrefix + this.settings.effect,
+    )
 
     this.toggleEvent('mount')
   }
@@ -1119,6 +1147,9 @@ export default class XSlider {
   unmount() {
     this.track.style = ''
     this.slider.classList.remove(this.settings.mountedClass)
+    this.slider.classList.remove(
+      this.settings.effectClassPrefix + this.settings.effect,
+    )
     const clone = this.slider.cloneNode(true)
     this.slider.parentNode.replaceChild(clone, this.slider)
   }

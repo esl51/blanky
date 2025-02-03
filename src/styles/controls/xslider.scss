@@ -93,6 +93,20 @@
   .xslider--100vh & {
     height: 100vh;
   }
+
+  .xslider.is-effect-fade & {
+    @include transition(all 0.7s var(--easing));
+
+    &:not(.is-active) {
+      position: absolute;
+      opacity: 0;
+    }
+
+    &.is-active {
+      position: relative;
+      z-index: 1;
+    }
+  }
 }
 
 .xslider__thumb {
